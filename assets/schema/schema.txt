@@ -64,7 +64,7 @@
                         ROOM_ID:
                             {
                                 correct: boolean,
-                                time_stamp: epoch_seconds
+                                time_voted: epoch_seconds
                             }
                     }
         }
