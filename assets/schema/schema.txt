@@ -39,18 +39,16 @@
     },
     users: {
         USER_ID: {
-            rooms:{
-                    ROOM_ID
-                },
             meta_data:
                 {
                     email: string,
                     picture: url,
-                    name: string
+                    name: string,
+                    badge: enum [normal, styleMaven, outfitAdviser]
                 },
-            badge:
+            rooms:
                 {
-                    enum [normal, styleMaven, outfitAdviser]
+                    ROOM_ID
                 },
             votes:
                 {
