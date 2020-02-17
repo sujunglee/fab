@@ -26,11 +26,11 @@
                         {
                             USER_ID
                         },
-                    voters_styleMavens:
+                    voters_styleMaven:
                         {
                             USER_ID
                         },
-                    voters_outfitAdvisers:
+                    voters_outfitAdviser:
                         {
                             USER_ID
                         }
