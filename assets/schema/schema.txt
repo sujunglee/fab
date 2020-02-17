@@ -1,43 +1,46 @@
 {
+    rooms:{
+        ROOM_ID:
+            {
+                creation_time: epoch_seconds,
+                optionA:
+                {
+                    picture: url,
+                    voters_normal:
+                        {
+                            USER_ID
+                        },
+                    voters_styleMavens:
+                        {
+                            USER_ID
+                        },
+                    voters_outfitAdvisers:
+                        {
+                            USER_ID
+                        }
+                },
+                optionB:
+                {
+                    picture: url,
+                    voters_normal:
+                        {
+                            USER_ID
+                        },
+                    voters_styleMavens:
+                        {
+                            USER_ID
+                        },
+                    voters_outfitAdvisers:
+                        {
+                            USER_ID
+                        }
+                },
+            }
+    },
     users: {
         USER_ID: {
             rooms:{
-                ROOM_ID:
-                    {
-                        creation_time: epoch_seconds,
-                        optionA:
-                        {
-                            picture: url,
-                            voters_normal:
-                                {
-                                    USER_ID
-                                },
-                            voters_styleMavens:
-                                {
-                                    USER_ID
-                                },
-                            voters_outfitAdvisers:
-                                {
-                                    USER_ID
-                                }
-                        },
-                        optionB:
-                        {
-                            picture: url,
-                            voters_normal:
-                                {
-                                    USER_ID
-                                },
-                            voters_styleMavens:
-                                {
-                                    USER_ID
-                                },
-                            voters_outfitAdvisers:
-                                {
-                                    USER_ID
-                                }
-                        },
-                    }
+                    ROOM_ID
                 },
             meta_data:
                 {
@@ -45,19 +48,16 @@
                     picture: url,
                     name: string
                 },
-            connections:
+            badge:
                 {
-                    normal:
+                    enum [normal, styleMaven, outfitAdviser]
+                },
+            votes:
+                {
+                    ROOM_ID:
                         {
-                            USER_ID
-                        },
-                    style_mavens:
-                        {
-                            USER_ID
-                        },
-                    outfit_advisers:
-                        {
-                            USER_ID
+                            correct: boolean,
+                            time_stamp: epoch_seconds
                         }
                 }
         }
