@@ -42,27 +42,28 @@
             }
     },
     users: {
-        USER_ID: {
-            meta_data:
-                {
-                    email: string,
-                    picture: url,
-                    name: string,
-                    badge: enum [normal, styleMaven, outfitAdviser]
-                    time_created: epoch_seconds
-                },
-            rooms:
-                {
-                    ROOM_ID
-                },
-            votes:
-                {
-                    ROOM_ID:
-                        {
-                            correct: boolean,
-                            time_stamp: epoch_seconds
-                        }
-                }
+        USER_ID: 
+            {
+                meta_data:
+                    {
+                        email: string,
+                        picture: url,
+                        name: string,
+                        badge: enum [normal, styleMaven, outfitAdviser]
+                        time_created: epoch_seconds
+                    },
+                rooms_owned:
+                    {
+                        ROOM_ID
+                    },
+                rooms_voted:
+                    {
+                        ROOM_ID:
+                            {
+                                correct: boolean,
+                                time_stamp: epoch_seconds
+                            }
+                    }
         }
     }
 }
