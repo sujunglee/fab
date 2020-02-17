@@ -1,0 +1,65 @@
+{
+    users: {
+        USER_ID: {
+            rooms:{
+                ROOM_ID:
+                    {
+                        creation_time: epoch_seconds,
+                        optionA:
+                        {
+                            picture: url,
+                            voters_normal:
+                                {
+                                    USER_ID
+                                },
+                            voters_styleMavens:
+                                {
+                                    USER_ID
+                                },
+                            voters_outfitAdvisers:
+                                {
+                                    USER_ID
+                                }
+                        },
+                        optionB:
+                        {
+                            picture: url,
+                            voters_normal:
+                                {
+                                    USER_ID
+                                },
+                            voters_styleMavens:
+                                {
+                                    USER_ID
+                                },
+                            voters_outfitAdvisers:
+                                {
+                                    USER_ID
+                                }
+                        },
+                    }
+                },
+            meta_data:
+                {
+                    email: string,
+                    picture: url,
+                    name: string
+                },
+            connections:
+                {
+                    normal:
+                        {
+                            USER_ID
+                        },
+                    style_mavens:
+                        {
+                            USER_ID
+                        },
+                    outfit_advisers:
+                        {
+                            USER_ID
+                        }
+                }
+        }
+    }
+}
