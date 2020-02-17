@@ -2,39 +2,43 @@
     rooms:{
         ROOM_ID:
             {
-                creation_time: epoch_seconds,
+                meta_data:
+                    {
+                        creation_time: epoch_seconds,
+                        owner: USER_ID
+                    },
                 optionA:
-                {
-                    picture: url,
-                    voters_normal:
-                        {
-                            USER_ID
-                        },
-                    voters_styleMavens:
-                        {
-                            USER_ID
-                        },
-                    voters_outfitAdvisers:
-                        {
-                            USER_ID
-                        }
-                },
+                    {
+                        picture: url,
+                        voters_normal:
+                            {
+                                USER_ID
+                            },
+                        voters_styleMavens:
+                            {
+                                USER_ID
+                            },
+                        voters_outfitAdvisers:
+                            {
+                                USER_ID
+                            }
+                    },
                 optionB:
-                {
-                    picture: url,
-                    voters_normal:
-                        {
-                            USER_ID
-                        },
-                    voters_styleMavens:
-                        {
-                            USER_ID
-                        },
-                    voters_outfitAdvisers:
-                        {
-                            USER_ID
-                        }
-                },
+                    {
+                        picture: url,
+                        voters_normal:
+                            {
+                                USER_ID
+                            },
+                        voters_styleMavens:
+                            {
+                                USER_ID
+                            },
+                        voters_outfitAdvisers:
+                            {
+                                USER_ID
+                            }
+                    },
             }
     },
     users: {
