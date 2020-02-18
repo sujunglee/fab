@@ -1,67 +1,108 @@
 {
-    rooms:{
-        ROOM_ID:
+    rooms:
+    {
+        active:
             {
-                meta_data:
+                ROOM_ID:
                     {
-                        time_created: epoch_seconds,
-                        owner: USER_ID,
-                        title: string
-                    },
-                optionA:
-                    {
-                        picture: url,
-                        voters_normal:
+                        meta_data:
                             {
-                                USER_ID
+                                time_created: epoch_seconds,
+                                owner: USER_ID,
+                                title: string
                             },
-                        voters_influencer:
+                        optionA:
                             {
-                                USER_ID
-                            }
-                    },
-                optionB:
-                    {
-                        picture: url,
-                        voters_normal:
-                            {
-                                USER_ID
+                                picture: url,
+                                voters_normal:
+                                    {
+                                        USER_ID
+                                    },
+                                voters_influencer:
+                                    {
+                                        USER_ID
+                                    }
                             },
-                        voters_influencer:
+                        optionB:
                             {
-                                USER_ID
-                            }
-                    },
-            }
-    },
-    users: {
-        USER_ID: 
-            {
-                meta_data:
-                    {
-                        email: string,
-                        picture: url,
-                        name: string,
-                        badge: enum [normal, influencer],
-                        time_created: epoch_seconds, 
-                        number_correct: int, 
-                        number_voted: int
-                    },
-                rooms_owned:
-                    {
-                        ROOM_ID:
-                            {
-                                time_created: epoch_seconds
-                            }
-                    },
-                rooms_voted [OPTIONAL]:
-                    {
-                        ROOM_ID:
-                            {
-                                correct: boolean,
-                                time_voted: epoch_seconds
+                                picture: url,
+                                voters_normal:
+                                    {
+                                        USER_ID
+                                    },
+                                voters_influencer:
+                                    {
+                                        USER_ID
+                                    }
                             }
                     }
+            },
+        inactive:
+            {
+                ROOM_ID:
+                    {
+                        meta_data:
+                            {
+                                time_created: epoch_seconds,
+                                owner: USER_ID,
+                                title: string
+                            },
+                        optionA:
+                            {
+                                picture: url,
+                                voters_normal:
+                                    {
+                                        USER_ID
+                                    },
+                                voters_influencer:
+                                    {
+                                        USER_ID
+                                    }
+                            },
+                        optionB:
+                            {
+                                picture: url,
+                                voters_normal:
+                                    {
+                                        USER_ID
+                                    },
+                                voters_influencer:
+                                    {
+                                        USER_ID
+                                    }
+                            }
+                    }
+            }
+        },
+    users:
+        {
+            USER_ID:
+                {
+                    meta_data:
+                        {
+                            email: string,
+                            picture: url,
+                            name: string,
+                            badge: enum [normal, influencer],
+                            time_created: epoch_seconds,
+                            number_correct: int,
+                            number_voted: int
+                        },
+                    rooms_owned:
+                        {
+                            ROOM_ID:
+                                {
+                                    time_created: epoch_seconds
+                                }
+                        },
+                    rooms_voted [OPTIONAL]:
+                        {
+                            ROOM_ID:
+                                {
+                                    correct: boolean,
+                                    time_voted: epoch_seconds
+                                }
+                        }
+                }
         }
-    }
 }
