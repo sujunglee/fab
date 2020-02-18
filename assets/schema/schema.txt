@@ -15,11 +15,7 @@
                             {
                                 USER_ID
                             },
-                        voters_styleMaven:
-                            {
-                                USER_ID
-                            },
-                        voters_outfitAdviser:
+                        voters_influencer:
                             {
                                 USER_ID
                             }
@@ -31,11 +27,7 @@
                             {
                                 USER_ID
                             },
-                        voters_styleMaven:
-                            {
-                                USER_ID
-                            },
-                        voters_outfitAdviser:
+                        voters_influencer:
                             {
                                 USER_ID
                             }
@@ -50,8 +42,10 @@
                         email: string,
                         picture: url,
                         name: string,
-                        badge: enum [normal, styleMaven, outfitAdviser]
-                        time_created: epoch_seconds
+                        badge: enum [normal, influencer],
+                        time_created: epoch_seconds, 
+                        number_correct: int, 
+                        number_voted: int
                     },
                 rooms_owned:
                     {
@@ -60,7 +54,7 @@
                                 time_created: epoch_seconds
                             }
                     },
-                rooms_voted:
+                rooms_voted [OPTIONAL]:
                     {
                         ROOM_ID:
                             {
