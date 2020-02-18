@@ -5,7 +5,8 @@
                 meta_data:
                     {
                         time_created: epoch_seconds,
-                        owner: USER_ID
+                        owner: USER_ID,
+                        title: string
                     },
                 optionA:
                     {
