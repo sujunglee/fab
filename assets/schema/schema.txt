@@ -7,7 +7,7 @@
                     {
                         meta_data:
                             {
-                                time_created: iso8601 UTC offset,
+                                time_created: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss]Z,
                                 owner: USER_ID,
                                 title: string
                             },
@@ -43,7 +43,7 @@
                     {
                         meta_data:
                             {
-                                time_created: iso8601 UTC offset,
+                                time_created: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss]Z,
                                 owner: USER_ID,
                                 title: string
                             },
@@ -84,7 +84,7 @@
                             picture: url,
                             name: string,
                             badge: enum [normal, influencer],
-                            time_created: iso8601 UTC offset,
+                            time_created: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss]Z,
                             number_correct: int,
                             number_voted: int
                         },
@@ -92,7 +92,7 @@
                         {
                             ROOM_ID:
                                 {
-                                    time_created: iso8601 UTC offset
+                                    time_created: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss]Z
                                 }
                         },
                     rooms_voted [OPTIONAL]:
@@ -100,7 +100,7 @@
                             ROOM_ID:
                                 {
                                     correct: boolean,
-                                    time_voted: iso8601 UTC offset
+                                    time_voted: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss]Z
                                 }
                         }
                 }
