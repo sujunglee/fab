@@ -1,7 +1,12 @@
 import React from 'react';
+import Chart from "./Chart";
+
 
 const Results = () => {
-  return <p>Hello</p>
+  return (
+    <div>
+      <Chart />
+    </div>)
 }
 
 export default Results;
