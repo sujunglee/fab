@@ -3,6 +3,7 @@ import Chart from "./Chart";
 import {db} from "../../App";
 import CountDown from "./countdown/CountDown";
 import {Image, View, Text, StyleSheet} from 'react-native';
+import Navbar from "./navbar";
 
 const data1 = [
     {
@@ -88,6 +89,7 @@ const Results = () => {
     <div style= {{padding: 25}}>
       <Text style={{ fontSize: 20, fontWeight: 'bold'}}>Which cardigan should I wear for a big presentation today?</Text>
     </div>
+      <View>
       <View style={styles.container}>
         <View style={styles.item}>
           <center>
@@ -103,6 +105,8 @@ const Results = () => {
           <Chart data={data2}/>
         </center>
         </View>
+      </View>
+      <Navbar />
       </View>
     </div>)
 }
