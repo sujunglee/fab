@@ -34,6 +34,17 @@ const data1 = [
 const getVoteData = async () => {
   let snapshot = await db.ref("rooms/active/room1").once("value");
   console.log("SNAPSHOT: ", snapshot.val());
+
+  let numInfluencersA = Object.keys(snapshot.val().optionA.voters_influencer).length;
+  let numNormalA = Object.keys(snapshot.val().optionA.voters_normal).length;
+
+  let numInfluencersB = Object.keys(snapshot.val().optionB.voters_influencer).length;
+  let numNormalB = Object.keys(snapshot.val().optionB.voters_normal).length;
+
+  console.log("OPTION A: ", numInfluencersA, " influencers and ", numNormalA, " normies")
+  console.log("OPTION B: ", numInfluencersB, " influencers and ", numNormalB, " normies")
+
+
 }
 
 
