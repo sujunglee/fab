@@ -1,6 +1,6 @@
 import React from 'react';
 import Chart from "./Chart";
-
+import {db} from "../App";
 
 const data1 = [
     {
@@ -31,8 +31,14 @@ const data1 = [
 ]
 
 
+const getVoteData = async () => {
+  let snapshot = await db.ref("rooms/active/room1").once("value");
+  console.log("SNAPSHOT: ", snapshot.val());
+}
+
 
 const Results = () => {
+  getVoteData();
   return (
     <div>
       <Chart data={data1}/>
