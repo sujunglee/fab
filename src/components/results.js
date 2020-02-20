@@ -2,8 +2,7 @@ import React from 'react';
 import Chart from "./Chart";
 import {db} from "../../App";
 import CountDown from "./countdown/CountDown";
-import {View, Text, StyleSheet} from 'react-native';
-
+import {Image, View, Text, StyleSheet} from 'react-native';
 
 const data1 = [
     {
@@ -89,12 +88,14 @@ const Results = () => {
     <View style={styles.container}>
       <View style={styles.item}>
         <center>
+          <Image source={require('../../assets/image_A.jpg')}style={{ width: 150, height: 200 }} />
           <Text>Option A</Text>
           <Chart data={data1}/>
         </center>
       </View>
       <View style={styles.item}>
       <center>
+        <Image source={require('../../assets/image_B.jpg')}style={{ width: 150, height: 200 }} />
         <Text>Option B</Text>
         <Chart data={data2}/>
       </center>
