@@ -1,24 +1,26 @@
 import React from "react"
-import { StyleSheet, SafeAreaView, Text, View } from "react-native"
+import { StyleSheet, SafeAreaView, Text, View, ScrollView } from "react-native"
 import Results from "./src/components/results"
 import Navbar from "./src/components/navbar"
 
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "column",
+    justifyContent: "space-between"
+  }
+})
+
 const App = () => {
   return (
-    <SafeAreaView>
-      <Results />
-      <Navbar />
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <ScrollView>
+          <Results />
+        </ScrollView>
+        <Navbar />
+      </View>
     </SafeAreaView>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
-  }
-})
 
 export default App

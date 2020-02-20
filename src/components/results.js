@@ -38,13 +38,14 @@ const data2 = [
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
     alignItems: "flex-start" // if you want to fill rows left to right
   },
   item: {
-    width: "50%" // is 50% of container width
+    width: "50%", // is 50% of container width
+    flexDirection: "column",
+    alignItems: "center"
   }
 })
 
@@ -97,18 +98,14 @@ const Results = () => {
       <View>
         <View style={styles.container}>
           <View style={styles.item}>
-            <View>
-              <Image source={a_src} style={{ width: 150, height: 200 }} />
-              <Text>Option A</Text>
-              <Chart data={data1} />
-            </View>
+            <Image source={a_src} style={{ width: 150, height: 200 }} />
+            <Text>Option A</Text>
+            <Chart data={data1} />
           </View>
           <View style={styles.item}>
-            <View>
-              <Image source={b_src} style={{ width: 150, height: 200 }} />
-              <Text>Option B</Text>
-              <Chart data={data2} />
-            </View>
+            <Image source={b_src} style={{ width: 150, height: 200 }} />
+            <Text>Option B</Text>
+            <Chart data={data2} />
           </View>
         </View>
       </View>
