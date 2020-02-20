@@ -1,6 +1,6 @@
 import React from 'react';
 import Chart from "./Chart";
-import {db} from "../App";
+import {db} from "../../App";
 
 const data1 = [
     {
