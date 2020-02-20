@@ -85,22 +85,25 @@ const createGraphs = async () => {
 const Results = () => {
   return (
     <div>
-    <View style={styles.container}>
-      <View style={styles.item}>
+    <div style= {{padding: 25}}>
+      <Text style={{ fontSize: 20, fontWeight: 'bold'}}>Which cardigan should I wear for a big presentation today?</Text>
+    </div>
+      <View style={styles.container}>
+        <View style={styles.item}>
+          <center>
+            <Image source={require('../../assets/image_A.jpg')}style={{ width: 150, height: 200 }} />
+            <Text>Option A</Text>
+            <Chart data={data1}/>
+          </center>
+        </View>
+        <View style={styles.item}>
         <center>
-          <Image source={require('../../assets/image_A.jpg')}style={{ width: 150, height: 200 }} />
-          <Text>Option A</Text>
-          <Chart data={data1}/>
+          <Image source={require('../../assets/image_B.jpg')}style={{ width: 150, height: 200 }} />
+          <Text>Option B</Text>
+          <Chart data={data2}/>
         </center>
+        </View>
       </View>
-      <View style={styles.item}>
-      <center>
-        <Image source={require('../../assets/image_B.jpg')}style={{ width: 150, height: 200 }} />
-        <Text>Option B</Text>
-        <Chart data={data2}/>
-      </center>
-      </View>
-    </View>
     </div>)
 }
 
