@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Results from './src/results';
+import Results from './src/components/results';
 import firebase from 'firebase/app';
 import 'firebase/database';
 

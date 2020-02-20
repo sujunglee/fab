@@ -1,6 +1,8 @@
 import React from 'react';
 import Chart from "./Chart";
-import {db} from "../App";
+import {db} from "../../App";
+import CountDown from "./countdown/CountDown";
+import {Image, View, Text, StyleSheet} from 'react-native';
 
 const data1 = [
     {
@@ -33,6 +35,19 @@ const data2 = [
     },
 ]
 
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start' // if you want to fill rows left to right
+  },
+  item: {
+    width: '50%' // is 50% of container width
+  }
+})
+
 const getVoteData = async () => {
   let snapshot = await db.ref("rooms/active/room1").once("value");
   console.log("SNAPSHOT: ", snapshot.val());
@@ -58,6 +73,10 @@ const getVoteData = async () => {
 
 }
 
+const isFinished = () => {
+  console.log("Finished!");
+}
+
 const createGraphs = async () => {
   let scores = await getVoteData();
 }
@@ -66,8 +85,25 @@ const createGraphs = async () => {
 const Results = () => {
   return (
     <div>
-      <Chart data={data1}/>
-      <Chart data={data2}/>
+    <div style= {{padding: 25}}>
+      <Text style={{ fontSize: 20, fontWeight: 'bold'}}>Which cardigan should I wear for a big presentation today?</Text>
+    </div>
+      <View style={styles.container}>
+        <View style={styles.item}>
+          <center>
+            <Image source={require('../../assets/image_A.jpg')}style={{ width: 150, height: 200 }} />
+            <Text>Option A</Text>
+            <Chart data={data1}/>
+          </center>
+        </View>
+        <View style={styles.item}>
+        <center>
+          <Image source={require('../../assets/image_B.jpg')}style={{ width: 150, height: 200 }} />
+          <Text>Option B</Text>
+          <Chart data={data2}/>
+        </center>
+        </View>
+      </View>
     </div>)
 }
 
