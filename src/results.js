@@ -4,32 +4,34 @@ import {db} from "../App";
 
 const data1 = [
     {
-        key: 1,
+        key: 3,
         amount: 50,
-        svg: { fill: '#600080' },
+        svg: { fill: '#1563af' }
     },
     {
         key: 2,
-        amount: 50,
-        svg: { fill: '#9900cc' }
+        amount: 15,
+        svg: { fill: '#dd8300' }
     },
     {
-        key: 3,
-        amount: 40,
-        svg: { fill: '#c61aff' }
-    },
-    {
-        key: 4,
-        amount: 95,
-        svg: { fill: '#d966ff' }
-    },
-    {
-        key: 5,
+        key: 1,
         amount: 35,
-        svg: { fill: '#ecb3ff' }
-    }
+        svg: { fill: '#f4f4f4' },
+    },
 ]
 
+const data2 = [
+    {
+        key: 3,
+        amount: 35,
+        svg: { fill: '#1563af' }
+    },
+    {
+        key: 1,
+        amount: 65,
+        svg: { fill: '#f4f4f4' },
+    },
+]
 
 const getVoteData = async () => {
   let snapshot = await db.ref("rooms/active/room1").once("value");
@@ -65,6 +67,7 @@ const Results = () => {
   return (
     <div>
       <Chart data={data1}/>
+      <Chart data={data2}/>
     </div>)
 }
 
