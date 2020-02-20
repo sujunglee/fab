@@ -44,22 +44,24 @@ const getVoteData = async () => {
   let scoreA = votes.numNormalA + votes.numInfluencersA;
   let scoreB = votes.numNormalB + votes.numInfluencersB;
 
-  return {"numInfluencersA": numInfluencersA*2,
+  let results = {"numInfluencersA": numInfluencersA*2,
           "numNormalA": numNormalA,
           "numInfluencersB": numInfluencersB*2,
           "numNormalB": numNormalB,
           "scoreA": scoreA,
-          "scoreB": scoreB, }
+          "scoreB": scoreB}
+
+  // console.log("THE SCORES!!!: ", results);
+  // return results
+
 }
 
 const createGraphs = async () => {
   let scores = await getVoteData();
-
 }
 
 
 const Results = () => {
-
   return (
     <div>
       <Chart data={data1}/>
