@@ -41,15 +41,25 @@ const getVoteData = async () => {
   let numInfluencersB = Object.keys(snapshot.val().optionB.voters_influencer).length;
   let numNormalB = Object.keys(snapshot.val().optionB.voters_normal).length;
 
-  console.log("OPTION A: ", numInfluencersA, " influencers and ", numNormalA, " normies")
-  console.log("OPTION B: ", numInfluencersB, " influencers and ", numNormalB, " normies")
+  let scoreA = votes.numNormalA + votes.numInfluencersA;
+  let scoreB = votes.numNormalB + votes.numInfluencersB;
 
+  return {"numInfluencersA": numInfluencersA*2,
+          "numNormalA": numNormalA,
+          "numInfluencersB": numInfluencersB*2,
+          "numNormalB": numNormalB,
+          "scoreA": scoreA,
+          "scoreB": scoreB, }
+}
+
+const createGraphs = async () => {
+  let scores = await getVoteData();
 
 }
 
 
 const Results = () => {
-  getVoteData();
+
   return (
     <div>
       <Chart data={data1}/>
