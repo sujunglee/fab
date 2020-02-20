@@ -1,14 +1,14 @@
 import React from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { StyleSheet, SafeAreaView, Text, View } from "react-native"
 import Results from "./src/components/results"
 import Navbar from "./src/components/navbar"
 
 const App = () => {
   return (
-    <View>
+    <SafeAreaView>
       <Results />
       <Navbar />
-    </View>
+    </SafeAreaView>
   )
 }
 
