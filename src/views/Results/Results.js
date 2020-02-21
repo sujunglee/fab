@@ -1,6 +1,6 @@
 import React from "react"
-import Chart from "./Chart"
-import db from "../db/init"
+import Chart from "../../components/Chart"
+import db from "../../db/init"
 // import { CountDown } from "./countdown/CountDown"
 import { Image, View, Text, StyleSheet } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
@@ -86,8 +86,8 @@ const createGraphs = async () => {
 }
 
 const Results = () => {
-  const a_src = require("../assets/image_A.jpg")
-  const b_src = require("../assets/image_B.jpg")
+  const a_src = require("../../assets/image_A.jpg")
+  const b_src = require("../../assets/image_B.jpg")
   return (
     <SafeAreaView>
       <View>
