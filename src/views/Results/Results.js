@@ -6,9 +6,9 @@ import { Image, View, Text, StyleSheet, Dimensions } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { PieChart } from "react-native-svg-charts"
 import { Col, Row, Grid } from "react-native-easy-grid";
+import Labels from "../../components/Labels";
 
 var {height, width} = Dimensions.get('window');
-console.log("Dimensions of current window: ", height, " height and ", width, "width");
 
 const data1 = [
   {
@@ -112,7 +112,8 @@ const Results = () => {
               spacing={0}
               outerRadius={'95%'}
           >
-            </PieChart>
+          <Labels />
+          </PieChart>
         </Col>
         <Col>
           <Image source={b_src} style={{ width: 150, height: 200 }} />
