@@ -91,14 +91,14 @@ const Results = () => {
     <SafeAreaView>
       <View>
       <View style={{ padding: 25 }}>
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+        <Text style={{ fontSize: 23, fontWeight: "bold" }}>
           Which cardigan should I wear for a big presentation today?
         </Text>
       </View>
       <Grid>
-        <Col>
+        <Col style={{ alignItems: 'center'}}>
           <Image source={a_src} style={{ width: 150, height: 200 }} />
-          <Text>Option A</Text>
+          <Text style={{ fontSize: 20, fontWeight: "bold" }}>Option A</Text>
           <PieChart
               style={{ height: 200 }}
               valueAccessor={({ item }) => item.amount}
@@ -106,12 +106,12 @@ const Results = () => {
               spacing={0}
               outerRadius={'95%'}
           >
-          <Labels />
+            <Labels />
           </PieChart>
         </Col>
-        <Col>
+        <Col style={{ alignItems: 'center'}}>
           <Image source={b_src} style={{ width: 150, height: 200 }} />
-          <Text>Option B</Text>
+          <Text style={{ fontSize: 20, fontWeight: "bold" }}>Option B</Text>
           <PieChart
               style={{ height: 200 }}
               valueAccessor={({ item }) => item.amount}
@@ -119,7 +119,8 @@ const Results = () => {
               spacing={0}
               outerRadius={'95%'}
           >
-            </PieChart>
+            <Labels />
+          </PieChart>
         </Col>
       </Grid>
       </View>
