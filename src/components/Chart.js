@@ -38,7 +38,6 @@ const Chart = ({ data }) => {
     >
         <Labels />
       </PieChart>
-
     </View>
   )
 }
