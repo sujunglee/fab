@@ -7,13 +7,12 @@ const Chart = ({ data }) => {
 
   return (
     <View>
-      <Text>Chart</Text>
       <PieChart
-        style={{ height: 200 }}
+        style={{ height: 140, width: 140 }}
         valueAccessor={({ item }) => item.amount}
         data={data}
         spacing={0}
-        outerRadius={"95%"}
+        outerRadius={"100%"}
       />
     </View>
   )
