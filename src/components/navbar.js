@@ -7,9 +7,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     alignItems: "flex-start",
     width: "100%",
-    flex: 1,
+    position: "absolute",
+    bottom: 0,
     height: 30,
-    backgroundColor: "#323232"
+    backgroundColor: "#323232",
+    marginTop: "auto"
   },
   item: {
     backgroundColor: "#323232",

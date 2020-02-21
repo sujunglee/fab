@@ -32,13 +32,14 @@ const createChartData = ({influencer, normal, competitor}) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
     alignItems: "flex-start" // if you want to fill rows left to right
   },
   item: {
-    width: "50%" // is 50% of container width
+    width: "50%", // is 50% of container width
+    flexDirection: "column",
+    alignItems: "center"
   }
 })
 
