@@ -2,13 +2,11 @@ import React from "react"
 import Chart from "../../components/Chart"
 import db from "../../db/init"
 // import { CountDown } from "./countdown/CountDown"
-import { Image, View, Text, StyleSheet, Dimensions } from "react-native"
+import { Image, View, Text, StyleSheet } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { PieChart } from "react-native-svg-charts"
 import { Col, Row, Grid } from "react-native-easy-grid";
 import Labels from "../../components/Labels";
-
-var {height, width} = Dimensions.get('window');
 
 const data1 = [
   {
@@ -80,10 +78,6 @@ const getVoteData = async () => {
 
   // console.log("THE SCORES!!!: ", results);
   // return results
-}
-
-const isFinished = () => {
-  console.log("Finished!")
 }
 
 const createGraphs = async () => {
