@@ -7,7 +7,7 @@ import Navbar from "./navbar"
 
 
 
-const createChartData = ({influencer, normal, competitor}) => {
+const createChartData = ({ influencer, normal, competitor }) => {
   console.log('comp score', competitor)
   const data = [
     {
@@ -67,7 +67,26 @@ const getVoteData = async () => {
     scoreB: scoreB
   }
 
-  // console.log("THE SCORES!!!: ", results);
+  return results
+}
+
+const getRoomData = async () => {
+  let snapshot = await db.ref("rooms/active/room1").once("value")
+  console.log("SNAPSHOT: ", snapshot.val())
+
+  let title = snapshot.val().meta_data.title;
+  let timeCreated = snapshot.val().meta_data.time_created;
+  let pictureA = snapshot.val().optionA.picture;
+  let pictureB = snapshot.val().optionB.picture;
+
+
+  let results = {
+    title: title,
+    timeCreated: timeCreated,
+    pictureA: pictureA,
+    pictureB: pictureB
+  }
+
   return results
 }
 
@@ -78,39 +97,48 @@ const isFinished = () => {
 
 const Results = () => {
 
-  const [scores, setVotes] = useState(null);  
+  const [scores, setScore] = useState(null);
+  const [roomData, setRoomData] = useState(null);
 
   useEffect(() => {
-    const getVotes = async () => {
+    const getScore = async () => {
       const v = await getVoteData()
-      setVotes(v)
+      setScore(v)
     }
-    getVotes()
+    getScore()
+  }, [])
+
+  useEffect(() => {
+    const getRoom = async () => {
+      const data = await getRoomData()
+      setRoomData(data)
+    }
+    getRoom()
   }, [])
 
   const a_src = require("../assets/image_A.jpg")
   const b_src = require("../assets/image_B.jpg")
-  return scores ? (
+  return (scores && roomData) ? (
     <View>
       <View style={{ padding: 25 }}>
         <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-          Which cardigan should I wear for a big presentation today?
+          {roomData.title}
         </Text>
       </View>
       <View>
         <View style={styles.container}>
           <View style={styles.item}>
             <View>
-              <Image source={a_src} style={{ width: 150, height: 200 }} />
+              <Image source={{ uri: roomData.pictureA }} style={{ width: 150, height: 200 }} />
               <Text>Option A</Text>
-              <Chart data={createChartData({influencer:scores.numInfluencersA, normal: scores.numNormalA, competitor: scores.scoreB})} />
+              <Chart data={createChartData({ influencer: scores.numInfluencersA, normal: scores.numNormalA, competitor: scores.scoreB })} />
             </View>
           </View>
           <View style={styles.item}>
             <View>
-              <Image source={b_src} style={{ width: 150, height: 200 }} />
+              <Image source={{ uri: roomData.pictureA }} style={{ width: 150, height: 200 }} />
               <Text>Option B</Text>
-              <Chart data={createChartData({influencer:scores.numInfluencersB, normal: scores.numNormalB, competitor: scores.scoreA})} />
+              <Chart data={createChartData({ influencer: scores.numInfluencersB, normal: scores.numNormalB, competitor: scores.scoreA })} />
             </View>
           </View>
         </View>
