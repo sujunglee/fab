@@ -2,8 +2,13 @@ import React from "react"
 import Chart from "../../components/Chart"
 import db from "../../db/init"
 // import { CountDown } from "./countdown/CountDown"
-import { Image, View, Text, StyleSheet } from "react-native"
+import { Image, View, Text, StyleSheet, Dimensions } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
+import { PieChart } from "react-native-svg-charts"
+import { Col, Row, Grid } from "react-native-easy-grid";
+
+var {height, width} = Dimensions.get('window');
+console.log("Dimensions of current window: ", height, " height and ", width, "width");
 
 const data1 = [
   {
@@ -91,25 +96,37 @@ const Results = () => {
   return (
     <SafeAreaView>
       <View>
-        <View style={{ padding: 25 }}>
-          <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-            Which cardigan should I wear for a big presentation today?
-          </Text>
-        </View>
-        <View>
-          <View style={styles.container}>
-            <View style={styles.item}>
-              <Image source={a_src} style={{ width: 150, height: 200 }} />
-              <Text>Option A</Text>
-              <Chart data={data1} />
-            </View>
-            <View style={styles.item}>
-              <Image source={b_src} style={{ width: 150, height: 200 }} />
-              <Text>Option B</Text>
-              <Chart data={data2} />
-            </View>
-          </View>
-        </View>
+      <View style={{ padding: 25 }}>
+        <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+          Which cardigan should I wear for a big presentation today?
+        </Text>
+      </View>
+      <Grid>
+        <Col>
+          <Image source={a_src} style={{ width: 150, height: 200 }} />
+          <Text>Option A</Text>
+          <PieChart
+              style={{ height: 200 }}
+              valueAccessor={({ item }) => item.amount}
+              data={data1}
+              spacing={0}
+              outerRadius={'95%'}
+          >
+            </PieChart>
+        </Col>
+        <Col>
+          <Image source={b_src} style={{ width: 150, height: 200 }} />
+          <Text>Option B</Text>
+          <PieChart
+              style={{ height: 200 }}
+              valueAccessor={({ item }) => item.amount}
+              data={data2}
+              spacing={0}
+              outerRadius={'95%'}
+          >
+            </PieChart>
+        </Col>
+      </Grid>
       </View>
     </SafeAreaView>
   )

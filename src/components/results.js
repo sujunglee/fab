@@ -145,7 +145,6 @@ const Results = () => {
             <View>
               <Image source={{ uri: roomData.pictureA }} style={{ width: 150, height: 200 }} />
               <Text>Option B</Text>
-
               <Chart
                 data={createChartData({
                   influencer: scores.numInfluencersB,
