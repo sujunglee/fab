@@ -1,40 +1,34 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import Chart from "./Chart"
 import db from "../db/init"
 // import { CountDown } from "./countdown/CountDown"
 import { Image, View, Text, StyleSheet } from "react-native"
 import Navbar from "./navbar"
 
-const data1 = [
-  {
-    key: 3,
-    amount: 50,
-    svg: { fill: "#1563af" }
-  },
-  {
-    key: 2,
-    amount: 15,
-    svg: { fill: "#dd8300" }
-  },
-  {
-    key: 1,
-    amount: 35,
-    svg: { fill: "#f4f4f4" }
-  }
-]
 
-const data2 = [
-  {
-    key: 3,
-    amount: 35,
-    svg: { fill: "#1563af" }
-  },
-  {
-    key: 1,
-    amount: 65,
-    svg: { fill: "#f4f4f4" }
-  }
-]
+
+const createChartData = ({influencer, normal, competitor}) => {
+  console.log('comp score', competitor)
+  const data = [
+    {
+      key: 3,
+      amount: normal,
+      svg: { fill: "#1563af" }
+    },
+    {
+      key: 2,
+      amount: influencer,
+      svg: { fill: "#dd8300" }
+    },
+    {
+      key: 1,
+      amount: competitor,
+      svg: { fill: "#f4f4f4" }
+    }
+  ]
+  console.log('chart data', data)
+  return data;
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -61,8 +55,8 @@ const getVoteData = async () => {
     .length
   let numNormalB = Object.keys(snapshot.val().optionB.voters_normal).length
 
-  let scoreA = votes.numNormalA + votes.numInfluencersA
-  let scoreB = votes.numNormalB + votes.numInfluencersB
+  let scoreA = numNormalA + numInfluencersA
+  let scoreB = numNormalB + numInfluencersB
 
   let results = {
     numInfluencersA: numInfluencersA * 2,
@@ -74,21 +68,29 @@ const getVoteData = async () => {
   }
 
   // console.log("THE SCORES!!!: ", results);
-  // return results
+  return results
 }
 
 const isFinished = () => {
   console.log("Finished!")
 }
 
-const createGraphs = async () => {
-  let scores = await getVoteData()
-}
 
 const Results = () => {
+
+  const [scores, setVotes] = useState(null);  
+
+  useEffect(() => {
+    const getVotes = async () => {
+      const v = await getVoteData()
+      setVotes(v)
+    }
+    getVotes()
+  }, [])
+
   const a_src = require("../assets/image_A.jpg")
   const b_src = require("../assets/image_B.jpg")
-  return (
+  return scores ? (
     <View>
       <View style={{ padding: 25 }}>
         <Text style={{ fontSize: 20, fontWeight: "bold" }}>
@@ -98,19 +100,23 @@ const Results = () => {
       <View>
         <View style={styles.container}>
           <View style={styles.item}>
-            <Image source={a_src} style={{ width: 150, height: 200 }} />
-            <Text>Option A</Text>
-            <Chart data={data1} />
+            <View>
+              <Image source={a_src} style={{ width: 150, height: 200 }} />
+              <Text>Option A</Text>
+              <Chart data={createChartData({influencer:scores.numInfluencersA, normal: scores.numNormalA, competitor: scores.scoreB})} />
+            </View>
           </View>
           <View style={styles.item}>
-            <Image source={b_src} style={{ width: 150, height: 200 }} />
-            <Text>Option B</Text>
-            <Chart data={data2} />
+            <View>
+              <Image source={b_src} style={{ width: 150, height: 200 }} />
+              <Text>Option B</Text>
+              <Chart data={createChartData({influencer:scores.numInfluencersB, normal: scores.numNormalB, competitor: scores.scoreA})} />
+            </View>
           </View>
         </View>
       </View>
     </View>
-  )
+  ) : <Text>Loading...</Text>
 }
 
 export default Results
