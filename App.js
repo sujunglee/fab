@@ -1,7 +1,7 @@
 import React from "react"
-import { StyleSheet, SafeAreaView, Text, View, ScrollView } from "react-native"
-import Results from "./src/components/results"
-import Navbar from "./src/components/navbar"
+import { StyleSheet, Text, View, ScrollView } from "react-native"
+import { SafeAreaProvider } from "react-native-safe-area-context"
+import { Navigation } from "./src/Navigation/"
 
 const styles = StyleSheet.create({
   container: {
@@ -12,14 +12,9 @@ const styles = StyleSheet.create({
 
 const App = () => {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.container}>
-        <ScrollView>
-          <Results />
-        </ScrollView>
-        <Navbar />
-      </View>
-    </SafeAreaView>
+    <SafeAreaProvider>
+      <Navigation />
+    </SafeAreaProvider>
   )
 }
 

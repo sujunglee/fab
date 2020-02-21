@@ -3,12 +3,11 @@ import Chart from "./Chart"
 import db from "../db/init"
 // import { CountDown } from "./countdown/CountDown"
 import { Image, View, Text, StyleSheet } from "react-native"
-import Navbar from "./navbar"
-
+import { SafeAreaView } from "react-native-safe-area-context"
 
 
 const createChartData = ({ influencer, normal, competitor }) => {
-  console.log('comp score', competitor)
+  console.log("comp score", competitor)
   const data = [
     {
       key: 3,
@@ -26,8 +25,8 @@ const createChartData = ({ influencer, normal, competitor }) => {
       svg: { fill: "#f4f4f4" }
     }
   ]
-  console.log('chart data', data)
-  return data;
+  console.log("chart data", data)
+  return data
 }
 
 const styles = StyleSheet.create({
@@ -94,11 +93,12 @@ const isFinished = () => {
   console.log("Finished!")
 }
 
-
 const Results = () => {
+
 
   const [scores, setScore] = useState(null);
   const [roomData, setRoomData] = useState(null);
+
 
   useEffect(() => {
     const getScore = async () => {
@@ -131,20 +131,37 @@ const Results = () => {
             <View>
               <Image source={{ uri: roomData.pictureA }} style={{ width: 150, height: 200 }} />
               <Text>Option A</Text>
-              <Chart data={createChartData({ influencer: scores.numInfluencersA, normal: scores.numNormalA, competitor: scores.scoreB })} />
+
+              <Chart
+                data={createChartData({
+                  influencer: scores.numInfluencersA,
+                  normal: scores.numNormalA,
+                  competitor: scores.scoreB
+                })}
+              />
             </View>
           </View>
           <View style={styles.item}>
             <View>
               <Image source={{ uri: roomData.pictureA }} style={{ width: 150, height: 200 }} />
               <Text>Option B</Text>
-              <Chart data={createChartData({ influencer: scores.numInfluencersB, normal: scores.numNormalB, competitor: scores.scoreA })} />
+
+              <Chart
+                data={createChartData({
+                  influencer: scores.numInfluencersB,
+                  normal: scores.numNormalB,
+                  competitor: scores.scoreA
+                })}
+              />
+
             </View>
           </View>
         </View>
       </View>
     </View>
-  ) : <Text>Loading...</Text>
+  ) : (
+    <Text>Loading...</Text>
+  )
 }
 
 export default Results
