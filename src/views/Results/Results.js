@@ -91,38 +91,49 @@ const Results = () => {
     <SafeAreaView>
       <View>
       <View style={{ padding: 25 }}>
-        <Text style={{ fontSize: 23, fontWeight: "bold" }}>
+        <Text style={{ fontSize: 23, fontWeight: "bold", paddingBottom: 10 }}>
           Which cardigan should I wear for a big presentation today?
         </Text>
+        <View style={{flexDirection:"row"}}>
+          <View style={{flex:1}}>
+          <Image source={a_src} style={{ width: 150, height: 200 }} />
+          <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "center", paddingTop: 10 }}>Option A</Text>
+            <PieChart
+                style={{ height: 200 }}
+                valueAccessor={({ item }) => item.amount}
+                data={data1}
+                spacing={0}
+                outerRadius={'95%'}
+            >
+              <Labels />
+            </PieChart>
+          </View>
+          <View style={{flex:1}}>
+          <Image source={b_src} style={{ width: 150, height: 200 }} />
+          <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "center", paddingTop: 10}}>Option B</Text>
+            <PieChart
+                style={{ height: 200 }}
+                valueAccessor={({ item }) => item.amount}
+                data={data2}
+                spacing={0}
+                outerRadius={'95%'}
+            >
+              <Labels />
+            </PieChart>
+          </View>
       </View>
-      <Grid>
+      </View>
+      <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "center" }}>COMPLETED!</Text>
+      {/*<Grid>
         <Col style={{ alignItems: 'center'}}>
           <Image source={a_src} style={{ width: 150, height: 200 }} />
           <Text style={{ fontSize: 20, fontWeight: "bold" }}>Option A</Text>
-          <PieChart
-              style={{ height: 200 }}
-              valueAccessor={({ item }) => item.amount}
-              data={data1}
-              spacing={0}
-              outerRadius={'95%'}
-          >
-            <Labels />
-          </PieChart>
         </Col>
         <Col style={{ alignItems: 'center'}}>
           <Image source={b_src} style={{ width: 150, height: 200 }} />
           <Text style={{ fontSize: 20, fontWeight: "bold" }}>Option B</Text>
-          <PieChart
-              style={{ height: 200 }}
-              valueAccessor={({ item }) => item.amount}
-              data={data2}
-              spacing={0}
-              outerRadius={'95%'}
-          >
-            <Labels />
-          </PieChart>
         </Col>
-      </Grid>
+      </Grid>*/}
       </View>
     </SafeAreaView>
   )
