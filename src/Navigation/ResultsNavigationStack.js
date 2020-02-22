@@ -7,7 +7,12 @@ const Stack = createStackNavigator()
 
 const ResultsNavigationStack = () => {
   return (
-    <Stack.Navigator initialRouteName={screens.POSTS_PAGE}>
+    <Stack.Navigator
+      initialRouteName={screens.POSTS_PAGE}
+      screenOptions={{
+        headerShown: false
+      }}
+    >
       <Stack.Screen
         component={MyPostsPage}
         name={screens.POSTS_PAGE}

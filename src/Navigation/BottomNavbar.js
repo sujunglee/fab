@@ -4,7 +4,7 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import { screens } from "./constants"
 import { Post, Vote } from "../views"
 import ResultsNavigationStack from "./ResultsNavigationStack"
-import MyPostsIcon from "./icons/MyPosts"
+import MyPosts from "./icons/MyPosts"
 import PostCamera from "./icons/PostCamera"
 import VoteIcon from "./icons/VoteIcon"
 const Tab = createMaterialBottomTabNavigator()
@@ -12,18 +12,17 @@ const Tab = createMaterialBottomTabNavigator()
 const BottomNavbar = () => {
   return (
     <Tab.Navigator
-      barStyle={{ backgroundColor: "white" }}
+      barStyle={{ backgroundColor: "#323232" }}
       activeColor="#3e2465"
-      inactiveColor="#DBD9E1"
+      inactiveColor="#ffffff"
       initialRouteName={screens.POSTS_PAGE}
-      inactiveColor="grey"
-      activeColor="purple"
+      activeColor="#DD8300"
     >
       <Tab.Screen
         name={screens.VOTE}
         component={Vote}
         options={{
-          title: "Vote",
+          tabBarLabel: "Vote",
           tabBarIcon: ({ color, size }) => (
             <VoteIcon size={size} color={color} />
           )
@@ -33,7 +32,7 @@ const BottomNavbar = () => {
         name={screens.POST}
         component={Post}
         options={{
-          title: "Post",
+          tabBarLabel: "Post",
           tabBarIcon: ({ color, size }) => (
             <PostCamera size={size} color={color} />
           )
@@ -44,9 +43,7 @@ const BottomNavbar = () => {
         component={ResultsNavigationStack}
         options={{
           title: "My Posts",
-          tabBarIcon: ({ color, size }) => (
-            <MyPostsIcon size={size} color={color} />
-          )
+          tabBarIcon: ({ color, size }) => <MyPosts size={size} color={color} />
         }}
       />
     </Tab.Navigator>
