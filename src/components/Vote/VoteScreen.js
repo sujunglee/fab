@@ -4,8 +4,10 @@ import { VoteButton, SkipButton } from "./VoteButton"
 import { SafeAreaView } from "react-native-safe-area-context"
 import getRoomData from "../../db/getRoomData"
 import { StyledText } from "../StyledText"
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-const VoteScreen = ({ roomID }) => {
+const VoteScreen = ({navigation}) => {
     const [roomData, setRoomData] = useState(null);
 
     useEffect(() => {
@@ -15,6 +17,8 @@ const VoteScreen = ({ roomID }) => {
         }
         getRoom()
     }, [])
+
+    const Stack = createStackNavigator();
 
     return roomData ? (
         <SafeAreaView style={{ flex: 1 }}>
@@ -40,12 +44,12 @@ const VoteScreen = ({ roomID }) => {
                     <View style={{ alignItems: "center", flex: 1 }}>
                         <Image source={{ uri: roomData.pictureA }} style={{ width: 150, height: 200 }} />
                         <StyledText type="bold" size={20} style={{ paddingTop: 10 }}>Option A</StyledText>
-                        <VoteButton content="A" onPress={() => alert("hey")} />
+                        <VoteButton content="A" onPress={() => navigation.navigate('Results', {name: 'Jane'})} />
                     </View>
                     <View style={{ alignItems: "center", flex: 1 }}>
                         <Image source={{ uri: roomData.pictureB }} style={{ width: 150, height: 200 }} />
                         <StyledText type="bold" size={20} style={{ paddingTop: 10 }}>Option B</StyledText>
-                        <VoteButton content="B" onPress={() => alert("hey")} />
+                        <VoteButton content="B" onPress={() => navigation.navigate('Results', {name: 'Jane'})} />
                     </View>
                 </View>
                 <SkipButton />
