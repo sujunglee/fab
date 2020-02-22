@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { View, Text } from "react-native"
-import { VoteButton, SkipButton } from "../../components/VoteButton"
+import { VoteButton, SkipButton } from "../../components/Vote/VoteButton"
 import VoteScreen from "../../components/Vote/VoteScreen"
 import { SafeAreaView } from "react-native-safe-area-context"
 import getRoomData from "../../db/getRoomData"

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { View, Text, Image } from "react-native"
-import { VoteButton, SkipButton } from "../VoteButton"
+import { VoteButton, SkipButton } from "./VoteButton"
 import { SafeAreaView } from "react-native-safe-area-context"
 import getRoomData from "../../db/getRoomData"
 import { StyledText } from "../StyledText"
