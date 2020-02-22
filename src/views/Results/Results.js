@@ -77,7 +77,9 @@ const Results = () => {
         </View>
         <View style={{ flexDirection: "row"}}>
           <View style={{ flex: 1 }}>
-            <Image source={{ uri: roomData.pictureA }} style={{ width: 150, height: 200 }} />
+            <View style={{ justifyContent: 'center', alignItems: 'center'}}>
+              <Image source={{ uri: roomData.pictureA }} style={{ width: 150, height: 200 }} />
+            </View>
             <View style={{ justifyContent: 'center', alignItems: 'center'}}>
               <StyledText type="bold" size={20} style={{ paddingTop: 10 }}>Option A</StyledText>
             </View>
@@ -96,7 +98,9 @@ const Results = () => {
             </PieChart>
           </View>
           <View style={{ flex: 1 }}>
-            <Image source={{ uri: roomData.pictureB }} style={{ width: 150, height: 200 }} />
+            <View style={{ justifyContent: 'center', alignItems: 'center'}}>
+              <Image source={{ uri: roomData.pictureB }} style={{ width: 150, height: 200 }} />
+            </View>
             <View style={{ justifyContent: 'center', alignItems: 'center'}}>
               <StyledText type="bold" size={20} style={{ paddingTop: 10 }}>Option B</StyledText>
             </View>
