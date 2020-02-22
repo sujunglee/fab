@@ -16,7 +16,6 @@ const BottomNavbar = () => {
       activeColor="#3e2465"
       inactiveColor="#DBD9E1"
       initialRouteName={screens.POSTS_PAGE}
-      shifting
       inactiveColor="grey"
       activeColor="purple"
     >
@@ -44,7 +43,7 @@ const BottomNavbar = () => {
         name={screens.RESULTS}
         component={ResultsNavigationStack}
         options={{
-          // title: "Results",
+          title: "My Posts",
           tabBarIcon: ({ color, size }) => (
             <MyPostsIcon size={size} color={color} />
           )
