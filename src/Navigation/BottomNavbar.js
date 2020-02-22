@@ -1,35 +1,25 @@
 import React from "react"
-import { ImageBackground } from "react-native"
+import { ImageBackground, processColor } from "react-native"
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs"
+
 import { screens } from "./constants"
 import { Results, Home, Post, Vote } from "../views"
+import ResultsNavigationStack from "./ResultsNavigationStack"
 import MyPostsIcon from "./icons/MyPosts"
 import PostCamera from "./icons/PostCamera"
 import VoteIcon from "./icons/VoteIcon"
-// import TestIcon from "./icons/test.svg"
 const Tab = createMaterialBottomTabNavigator()
 
 const BottomNavbar = () => {
   return (
     <Tab.Navigator
-      //   screenOptions={({ route }) => ({
-      //     tabBarIcon: ({ focused, color, size }) => {
-      //       console.log(route)
-      //       if (route.name === screens.RESULTS) {
-      //         console.log("results")
-      //         console.log(size)
-      //         return <MyPostsIcon size={size} />
-      //       }
-      //     }
-      //   })}
       barStyle={{ backgroundColor: "white" }}
       activeColor="#3e2465"
       inactiveColor="#DBD9E1"
       initialRouteName={screens.POST}
       shifting
-      //   tabBarOptions={{
-      //     inactiveTintColor: "gray"
-      //   }}
+      inactiveColor="grey"
+      activeColor="purple"
     >
       <Tab.Screen
         name={screens.VOTE}
@@ -53,7 +43,7 @@ const BottomNavbar = () => {
       />
       <Tab.Screen
         name={screens.RESULTS}
-        component={Results}
+        component={ResultsNavigationStack}
         options={{
           title: "Results",
           tabBarIcon: ({ color, size }) => (
