@@ -1,7 +1,9 @@
 import React, { useEffect } from "react"
 import { View, Text } from "react-native"
 import { VoteButton, SkipButton } from "../../components/VoteButton"
+import VoteScreen from "../../components/Vote/VoteScreen"
 import { SafeAreaView } from "react-native-safe-area-context"
+import getRoomData from "../../db/getRoomData"
 
 const Vote = () => {
   useEffect(() => {
@@ -10,29 +12,7 @@ const Vote = () => {
     */
   })
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100%"
-        }}
-      >
-        <Text>This is the Vote screen</Text>
-        <View
-          style={{
-            flexDirection: "row",
-            width: "100%",
-            justifyContent: "space-between",
-            padding: 48
-          }}
-        >
-          <VoteButton content="A" onPress={() => alert("hey")} />
-          <VoteButton content="B" onPress={() => alert("hey")} />
-        </View>
-        <SkipButton />
-      </View>
-    </SafeAreaView>
+    <VoteScreen roomID="room1" />
   )
 }
 

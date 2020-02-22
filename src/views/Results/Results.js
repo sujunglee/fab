@@ -110,7 +110,7 @@ const Results = () => {
             </View>
           </View>
         </View>
-        <CountDown isFinished={() => console.log("Finished!")} />
+        {/* <CountDown isFinished={() => console.log("Finished!")} /> */}
         {/*<Grid>
         <Col style={{ alignItems: 'center'}}>
           <Image source={a_src} style={{ width: 150, height: 200 }} />
