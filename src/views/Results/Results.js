@@ -75,8 +75,8 @@ const Results = () => {
             {roomData.title}
           </StyledText>
         </View>
-        <View style={{ flexDirection: "row" }}>
-          <View style={{ flex: 1 }}>
+        <View style={{ flexDirection: "row"}}>
+          <View style={{ flex: 1, alignItems: 'center', justifyItems: 'center' }}>
             <Image source={{ uri: roomData.pictureA }} style={{ width: 150, height: 200 }} />
             <StyledText type="bold" size={20} style={{ paddingTop: 10 }}>Option A</StyledText>
             <PieChart
@@ -93,7 +93,7 @@ const Results = () => {
               <Labels />
             </PieChart>
           </View>
-          <View style={{ flex: 1 }}>
+          <View style={{ flex: 1, alignItems: 'center', justifyItems: 'center' }}>
             <Image source={{ uri: roomData.pictureB }} style={{ width: 150, height: 200 }} />
             <StyledText type="bold" size={20} style={{ paddingTop: 10 }}>Option B</StyledText>
             <PieChart
