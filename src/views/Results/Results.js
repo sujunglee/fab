@@ -9,6 +9,7 @@ import { PieChart } from "react-native-svg-charts"
 import { Col, Row, Grid } from "react-native-easy-grid";
 import Labels from "../../components/Labels";
 import CountDown from "../../components/countdown/CountDown";
+import { StyledText } from "../../components/StyledText"
 
 const createChartData = ({ influencer, normal, competitor }) => {
   const data = [
@@ -69,45 +70,45 @@ const Results = () => {
   return (scores && roomData) ? (
     <SafeAreaView>
       <View>
-        <View style={{ padding: 25 }}>
-          <Text style={{ fontSize: 23, fontWeight: "bold", paddingBottom: 10 }}>
+        <View style={{ padding: 25, height: 150 }}>
+          <StyledText type="bold" size={23}>
             {roomData.title}
-          </Text>
-          <View style={{ flexDirection: "row" }}>
-            <View style={{ flex: 1 }}>
-              <Image source={{ uri: roomData.pictureA }} style={{ width: 150, height: 200 }} />
-              <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "center", paddingTop: 10 }}>Option A</Text>
-              <PieChart
-                style={{ height: 200 }}
-                valueAccessor={({ item }) => item.amount}
-                data={createChartData({
-                  influencer: scores.numInfluencersA,
-                  normal: scores.numNormalA,
-                  competitor: scores.scoreB
-                })}
-                spacing={0}
-                outerRadius={'95%'}
-              >
-                <Labels />
-              </PieChart>
-            </View>
-            <View style={{ flex: 1 }}>
-              <Image source={{ uri: roomData.pictureB }} style={{ width: 150, height: 200 }} />
-              <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "center", paddingTop: 10 }}>Option B</Text>
-              <PieChart
-                style={{ height: 200 }}
-                valueAccessor={({ item }) => item.amount}
-                data={createChartData({
-                  influencer: scores.numInfluencersB,
-                  normal: scores.numNormalB,
-                  competitor: scores.scoreA
-                })}
-                spacing={0}
-                outerRadius={'95%'}
-              >
-                <Labels />
-              </PieChart>
-            </View>
+          </StyledText>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <View style={{ flex: 1 }}>
+            <Image source={{ uri: roomData.pictureA }} style={{ width: 150, height: 200 }} />
+            <StyledText type="bold" size={20} style={{ paddingTop: 10 }}>Option A</StyledText>
+            <PieChart
+              style={{ height: 200 }}
+              valueAccessor={({ item }) => item.amount}
+              data={createChartData({
+                influencer: scores.numInfluencersA,
+                normal: scores.numNormalA,
+                competitor: scores.scoreB
+              })}
+              spacing={0}
+              outerRadius={'95%'}
+            >
+              <Labels />
+            </PieChart>
+          </View>
+          <View style={{ flex: 1 }}>
+            <Image source={{ uri: roomData.pictureB }} style={{ width: 150, height: 200 }} />
+            <StyledText type="bold" size={20} style={{ paddingTop: 10 }}>Option B</StyledText>
+            <PieChart
+              style={{ height: 200 }}
+              valueAccessor={({ item }) => item.amount}
+              data={createChartData({
+                influencer: scores.numInfluencersB,
+                normal: scores.numNormalB,
+                competitor: scores.scoreA
+              })}
+              spacing={0}
+              outerRadius={'95%'}
+            >
+              <Labels />
+            </PieChart>
           </View>
         </View>
         <CountDown isFinished={() => console.log("Finished!")} />
