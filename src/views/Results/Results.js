@@ -1,50 +1,14 @@
 import React, { useEffect, useState } from "react"
 import Chart from "../../components/Chart"
 import db from "../../db/init"
+import getVoteData from "../../db/getVoteData"
+import getRoomData from "../../db/getRoomData"
 import { Image, View, Text, StyleSheet } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { PieChart } from "react-native-svg-charts"
 import { Col, Row, Grid } from "react-native-easy-grid";
 import Labels from "../../components/Labels";
 import CountDown from "../../components/countdown/CountDown";
-
-const getVoteData = async () => {
-  let snapshot = await db.ref("rooms/active/room1").once("value")
-  console.log("SNAPSHOT: ", snapshot.val())
-  let numInfluencersA = Object.keys(snapshot.val().optionA.voters_influencer)
-    .length
-  let numNormalA = Object.keys(snapshot.val().optionA.voters_normal).length
-  let numInfluencersB = Object.keys(snapshot.val().optionB.voters_influencer)
-    .length
-  let numNormalB = Object.keys(snapshot.val().optionB.voters_normal).length
-  let scoreA = numNormalA + numInfluencersA
-  let scoreB = numNormalB + numInfluencersB
-  let results = {
-    numInfluencersA: numInfluencersA * 2,
-    numNormalA: numNormalA,
-    numInfluencersB: numInfluencersB * 2,
-    numNormalB: numNormalB,
-    scoreA: scoreA,
-    scoreB: scoreB
-  }
-  return results
-}
-
-const getRoomData = async () => {
-  let snapshot = await db.ref("rooms/active/room1").once("value")
-  console.log("SNAPSHOT: ", snapshot.val())
-  let title = snapshot.val().meta_data.title;
-  let timeCreated = snapshot.val().meta_data.time_created;
-  let pictureA = snapshot.val().optionA.picture;
-  let pictureB = snapshot.val().optionB.picture;
-  let results = {
-    title: title,
-    timeCreated: timeCreated,
-    pictureA: pictureA,
-    pictureB: pictureB
-  }
-  return results
-}
 
 const createChartData = ({ influencer, normal, competitor }) => {
   const data = [
@@ -88,7 +52,7 @@ const Results = () => {
 
   useEffect(() => {
     const getScore = async () => {
-      const v = await getVoteData()
+      const v = await getVoteData({ roomID: "room1" })
       setScore(v)
     }
     getScore()
@@ -96,7 +60,7 @@ const Results = () => {
 
   useEffect(() => {
     const getRoom = async () => {
-      const data = await getRoomData()
+      const data = await getRoomData({ roomID: "room1" })
       setRoomData(data)
     }
     getRoom()
