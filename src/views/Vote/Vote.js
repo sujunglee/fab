@@ -13,7 +13,7 @@ keysSorted = Object.keys(list).sort(function(a,b){return list[a]-list[b]})
 console.log(keysSorted);     // bar,me,you,foo
 */
   //return a list of active rooms with all the data
-  return "hi"
+  return snapshot.val()
 
 }
 
