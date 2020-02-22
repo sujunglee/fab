@@ -1,12 +1,13 @@
 import React from "react"
 import Chart from "../../components/Chart"
 import db from "../../db/init"
-// import { CountDown } from "./countdown/CountDown"
 import { Image, View, Text, StyleSheet } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { PieChart } from "react-native-svg-charts"
 import { Col, Row, Grid } from "react-native-easy-grid";
 import Labels from "../../components/Labels";
+import CountDown from "../../components/countdown/CountDown";
+
 
 const data1 = [
   {
@@ -85,6 +86,8 @@ const createGraphs = async () => {
 }
 
 const Results = () => {
+
+
   const a_src = require("../../assets/image_A.jpg")
   const b_src = require("../../assets/image_B.jpg")
   return (
@@ -123,8 +126,8 @@ const Results = () => {
           </View>
       </View>
       </View>
-      <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "center" }}>COMPLETED!</Text>
-      {/*<Grid>
+      <CountDown isFinished={()=>console.log("Finished!")} />
+        {/*<Grid>
         <Col style={{ alignItems: 'center'}}>
           <Image source={a_src} style={{ width: 150, height: 200 }} />
           <Text style={{ fontSize: 20, fontWeight: "bold" }}>Option A</Text>

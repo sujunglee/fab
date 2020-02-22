@@ -7,12 +7,14 @@ import PropTypes from 'prop-types';
 /**
  * Displays the countdown clock of a outfit
  *
- * @param startTime[string] - formatted as: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss]Z
+ * ToDo: Load startTime directly from Db
  * @param isFinished() - Callback when the room is done
  * @author jideanene2020@u.northwestern.edu
  */
 const CountDown = ({startTime, isFinished}) => {
-    const outfitStartTime = useRef(moment(startTime));
+    const DUMMY_TIME = moment().add({'seconds': 30}).toISOString();
+
+    const outfitStartTime = useRef(moment(DUMMY_TIME));
     const [hasEnded, setHasEnded] = useState(false);
     const [timeLeft, setTimeLeft] = useState(outfitStartTime.current.diff(moment(), 'seconds'));
 
@@ -40,7 +42,7 @@ const CountDown = ({startTime, isFinished}) => {
                     } else {
                         setTimeLeft(outfitStartTime.current.diff(moment(), 'seconds'));
                     }
-                }, 1000);
+                }, 500);
                 return () => clearInterval(interval);
             }
         }, []
@@ -59,6 +61,5 @@ const CountDown = ({startTime, isFinished}) => {
 export default CountDown;
 
 CountDown.propTypes = {
-    startTime: PropTypes.string.isRequired,
     isFinished: PropTypes.func.isRequired,
 };
