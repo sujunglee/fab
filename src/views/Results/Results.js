@@ -2,26 +2,11 @@ import React from "react"
 import Chart from "../../components/Chart"
 import db from "../../db/init"
 // import { CountDown } from "./countdown/CountDown"
-import {
-  Image,
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  ScrollView
-} from "react-native"
+import { Image, View, Text, StyleSheet } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { PieChart } from "react-native-svg-charts"
-import { Col, Row, Grid } from "react-native-easy-grid"
-
-var { height, width } = Dimensions.get("window")
-console.log(
-  "Dimensions of current window: ",
-  height,
-  " height and ",
-  width,
-  "width"
-)
+import { Col, Row, Grid } from "react-native-easy-grid";
+import Labels from "../../components/Labels";
 
 const data1 = [
   {
@@ -95,10 +80,6 @@ const getVoteData = async () => {
   // return results
 }
 
-const isFinished = () => {
-  console.log("Finished!")
-}
-
 const createGraphs = async () => {
   let scores = await getVoteData()
 }
@@ -107,43 +88,54 @@ const Results = () => {
   const a_src = require("../../assets/image_A.jpg")
   const b_src = require("../../assets/image_B.jpg")
   return (
-    <ScrollView>
-      <SafeAreaView>
-        <View style={{ padding: 25 }}>
-          <Text style={{ fontSize: 20, fontFamily: "source-sans-pro-bold" }}>
-            Which cardigan should I wear for a big presentation today?
-          </Text>
-        </View>
-        <Grid>
-          <Col style={{ alignItems: "center" }}>
-            <Image source={a_src} style={{ width: 150, height: 200 }} />
-            <Text style={{ fontFamily: "source-sans-pro-regular" }}>
-              Option A
-            </Text>
+    <SafeAreaView>
+      <View>
+      <View style={{ padding: 25 }}>
+        <Text style={{ fontSize: 23, fontWeight: "bold", paddingBottom: 10 }}>
+          Which cardigan should I wear for a big presentation today?
+        </Text>
+        <View style={{flexDirection:"row"}}>
+          <View style={{flex:1}}>
+          <Image source={a_src} style={{ width: 150, height: 200 }} />
+          <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "center", paddingTop: 10 }}>Option A</Text>
             <PieChart
-              style={{ height: 200 }}
-              valueAccessor={({ item }) => item.amount}
-              data={data1}
-              spacing={0}
-              outerRadius={"95%"}
-            ></PieChart>
-          </Col>
-          <Col style={{ alignItems: "center" }}>
-            <Image source={b_src} style={{ width: 150, height: 200 }} />
-            <Text style={{ fontFamily: "source-sans-pro-regular" }}>
-              Option B
-            </Text>
+                style={{ height: 200 }}
+                valueAccessor={({ item }) => item.amount}
+                data={data1}
+                spacing={0}
+                outerRadius={'95%'}
+            >
+              <Labels />
+            </PieChart>
+          </View>
+          <View style={{flex:1}}>
+          <Image source={b_src} style={{ width: 150, height: 200 }} />
+          <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "center", paddingTop: 10}}>Option B</Text>
             <PieChart
-              style={{ height: 200 }}
-              valueAccessor={({ item }) => item.amount}
-              data={data2}
-              spacing={0}
-              outerRadius={"95%"}
-            ></PieChart>
-          </Col>
-        </Grid>
-      </SafeAreaView>
-    </ScrollView>
+                style={{ height: 200 }}
+                valueAccessor={({ item }) => item.amount}
+                data={data2}
+                spacing={0}
+                outerRadius={'95%'}
+            >
+              <Labels />
+            </PieChart>
+          </View>
+      </View>
+      </View>
+      <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "center" }}>COMPLETED!</Text>
+      {/*<Grid>
+        <Col style={{ alignItems: 'center'}}>
+          <Image source={a_src} style={{ width: 150, height: 200 }} />
+          <Text style={{ fontSize: 20, fontWeight: "bold" }}>Option A</Text>
+        </Col>
+        <Col style={{ alignItems: 'center'}}>
+          <Image source={b_src} style={{ width: 150, height: 200 }} />
+          <Text style={{ fontSize: 20, fontWeight: "bold" }}>Option B</Text>
+        </Col>
+      </Grid>*/}
+      </View>
+    </SafeAreaView>
   )
 }
 
