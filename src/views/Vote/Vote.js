@@ -18,7 +18,7 @@ console.log(keysSorted);     // bar,me,you,foo
 }
 
 
-const Vote = () => {
+const Vote = ({navigation}) => {
   const [roomlist, setList] = useState(null);
   useEffect(() => {
     const getRooms = async () => {
@@ -32,7 +32,7 @@ const Vote = () => {
   // if not then go through creating VoteScreens passing down the roomID
   //once done prob have "voted on all" or something screen
   return (
-    <VoteScreen roomID="room1" />
+    <VoteScreen navigation={navigation}/>
   )
 }
 
