@@ -50,7 +50,7 @@ const VoteScreen = ({ navigation, roomID, userID, badge }) => {
                     <View style={{ alignItems: "center", flex: 1 }}>
                         <Image source={{ uri: roomData.pictureA }} style={{ width: 150, height: 200 }} />
                         <StyledText type="bold" size={20} style={{ paddingTop: 10 }}>Option A</StyledText>
-                        <VoteButton content="A" onPress={enterVote({
+                        <VoteButton content="A" onPress={() => enterVote({
                             navigation: navigation,
                             selection: 'optionA',
                             roomID: roomID,
@@ -61,7 +61,7 @@ const VoteScreen = ({ navigation, roomID, userID, badge }) => {
                     <View style={{ alignItems: "center", flex: 1 }}>
                         <Image source={{ uri: roomData.pictureB }} style={{ width: 150, height: 200 }} />
                         <StyledText type="bold" size={20} style={{ paddingTop: 10 }}>Option B</StyledText>
-                        <VoteButton content="B" onPress={enterVote({
+                        <VoteButton content="B" onPress={() => enterVote({
                             navigation: navigation,
                             selection: 'optionB',
                             roomID: roomID,

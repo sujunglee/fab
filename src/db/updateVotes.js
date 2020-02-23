@@ -13,7 +13,7 @@ const addVote = async ({roomID, selection, userID, badge}) =>{
 const updateVotes = async ({roomID, selection, userID, badge}) => {
     const voted = await addVote({roomID:roomID, selection:selection, userID: userID, badge:badge})
     const snapshot = await db.ref(`rooms/active/${roomID}`).once("value")
-    console.log("SNAPSHOT: ", snapshot.val())
+    console.log("!!!SNAPSHOT: ", snapshot.val())
     const numInfluencersA = Object.keys(snapshot.val().optionA.voters_influencer)
         .length
     const numNormalA = Object.keys(snapshot.val().optionA.voters_normal).length
