@@ -75,10 +75,14 @@ const Results = () => {
             {roomData.title}
           </StyledText>
         </View>
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ flexDirection: "row"}}>
           <View style={{ flex: 1 }}>
-            <Image source={{ uri: roomData.pictureA }} style={{ width: 150, height: 200 }} />
-            <StyledText type="bold" size={20} style={{ paddingTop: 10 }}>Option A</StyledText>
+            <View style={{ justifyContent: 'center', alignItems: 'center'}}>
+              <Image source={{ uri: roomData.pictureA }} style={{ width: 150, height: 200 }} />
+            </View>
+            <View style={{ justifyContent: 'center', alignItems: 'center'}}>
+              <StyledText type="bold" size={20} style={{ paddingTop: 10 }}>Option A</StyledText>
+            </View>
             <PieChart
               style={{ height: 200 }}
               valueAccessor={({ item }) => item.amount}
@@ -94,8 +98,12 @@ const Results = () => {
             </PieChart>
           </View>
           <View style={{ flex: 1 }}>
-            <Image source={{ uri: roomData.pictureB }} style={{ width: 150, height: 200 }} />
-            <StyledText type="bold" size={20} style={{ paddingTop: 10 }}>Option B</StyledText>
+            <View style={{ justifyContent: 'center', alignItems: 'center'}}>
+              <Image source={{ uri: roomData.pictureB }} style={{ width: 150, height: 200 }} />
+            </View>
+            <View style={{ justifyContent: 'center', alignItems: 'center'}}>
+              <StyledText type="bold" size={20} style={{ paddingTop: 10 }}>Option B</StyledText>
+            </View>
             <PieChart
               style={{ height: 200 }}
               valueAccessor={({ item }) => item.amount}

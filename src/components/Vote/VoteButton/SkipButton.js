@@ -1,7 +1,7 @@
 import React from "react"
 import { TouchableOpacity, StyleSheet } from "react-native"
-import { colors } from "../../constants/styles"
-import { StyledText } from "../StyledText"
+import { colors } from "../../../constants/styles"
+import { StyledText } from "../../StyledText"
 
 const SkipButton = ({ onPress }) => {
   return (
