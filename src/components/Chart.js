@@ -25,8 +25,6 @@ const Labels = ({ slices, height, width }) => {
 }
 
 const Chart = ({ data }) => {
-  console.log("CHART DATA: ", data)
-
   return (
     <View>
     <PieChart
