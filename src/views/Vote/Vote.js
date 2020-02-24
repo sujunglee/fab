@@ -20,16 +20,14 @@ const getActiveList = async () => {
   let activeRooms = [];
 
   for (var roomID of Object.keys(snapshot.val())) {
-    console.log("ROOM ID:", roomID);
     getTotalNumVoters(snapshot.val()[roomID])
     const currRoom = {numVotes: getTotalNumVoters(snapshot.val()[roomID]), id: roomID, room: snapshot.val()[roomID]}
-    console.log("CURRENT ROOM: ", currRoom);
-
+    activeRooms.push(currRoom);
   }
 
+  activeRooms.sort((a, b) => (a.numVotes > b.numVotes) ?  1 : -1);
 
-
-  return snapshot.val()
+  return activeRooms
 
 }
 
