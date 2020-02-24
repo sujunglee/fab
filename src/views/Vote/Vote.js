@@ -7,17 +7,27 @@ import { getUserBadge } from "../../db/userBadge"
 import { StyledText } from "../../components/StyledText"
 
 const getTotalNumVoters = (room) => {
-  console.log("OPTION A:", room.optionA);
-  console.log("OPTION B:", room.optionB);
+  const optAInfluencers = Object.keys(room.optionA.voters_influencer).length;
+  const optANormal = Object.keys(room.optionA.voters_normal).length;
+  const optBInfluencers = Object.keys(room.optionB.voters_influencer).length;
+  const optBNormal = Object.keys(room.optionB.voters_normal).length;
+
+  return optAInfluencers + optANormal + optBInfluencers + optBNormal;
 }
 
 const getActiveList = async () => {
   const snapshot = await db.ref("rooms/active/").once("value")
+  let activeRooms = [];
 
   for (var roomID of Object.keys(snapshot.val())) {
     console.log("ROOM ID:", roomID);
-    getTotalNumVoters(snapshot.val()[roomID]);
+    getTotalNumVoters(snapshot.val()[roomID])
+    const currRoom = {numVotes: getTotalNumVoters(snapshot.val()[roomID]), id: roomID, room: snapshot.val()[roomID]}
+    console.log("CURRENT ROOM: ", currRoom);
+
   }
+
+
 
   return snapshot.val()
 
