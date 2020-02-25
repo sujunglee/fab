@@ -5,6 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import db from "../../db/init"
 import { getUserBadge } from "../../db/userBadge"
 import { StyledText } from "../../components/StyledText"
+import { colors } from "../../constants/styles"
 
 const getTotalNumVoters = room => {
   const optAInfluencers = Object.keys(room.optionA.voters_influencer).length
@@ -105,15 +106,42 @@ const Vote = ({ navigation }) => {
   const roomID = "room1"
   console.log(roomID)
 
-  return badge && roomlist ? (
+  if (!roomlist || !badge) {
+    return <StyledText>Loading...</StyledText>
+  }
+
+  if (currentRoom >= roomlist.length) {
+    return (
+      <SafeAreaView
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          margin: 16
+        }}
+      >
+        <View
+          style={{ backgroundColor: "#d9eafa", padding: 32, borderRadius: 20 }}
+        >
+          <StyledText
+            type="semibold"
+            size={32}
+            style={{ color: colors.MAIN_BLUE }}
+          >
+            Looks like there's no more posts to vote on!
+          </StyledText>
+        </View>
+      </SafeAreaView>
+    )
+  }
+
+  return (
     <VoteScreen
       roomData={roomlist[currentRoom]}
       userID={userID}
       badge={badge}
       handleNextRoom={handleNextRoom}
     />
-  ) : (
-    <StyledText>Loading...</StyledText>
   )
 }
 
