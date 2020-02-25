@@ -6,6 +6,8 @@ import { StyledText } from "../StyledText"
 import { useNavigation } from "@react-navigation/native"
 import updateVotes from "../../db/updateVotes"
 import { PieChart } from "react-native-svg-charts"
+import Labels from "../../components/Labels";
+
 
 const createChartData = ({ influencer, normal, competitor, totalNumVoters}) => {
   console.log("COMPETITOR: ", competitor)
@@ -117,6 +119,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                   spacing={0}
                   outerRadius={'95%'}
                 >
+                  <Labels />
                 </PieChart>
               </View>
               <View style={{ flex: 1 }}>
@@ -133,6 +136,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                   outerRadius={'95%'}
                   innerRadius={'45%'}
                 >
+                  <Labels />
                 </PieChart>
               </View>
             </View>
