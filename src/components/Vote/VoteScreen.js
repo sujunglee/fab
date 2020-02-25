@@ -5,6 +5,33 @@ import { SafeAreaView, useSafeArea } from "react-native-safe-area-context"
 import { StyledText } from "../StyledText"
 import { useNavigation } from "@react-navigation/native"
 import updateVotes from "../../db/updateVotes"
+import { PieChart } from "react-native-svg-charts"
+import Labels from "../../components/Labels";
+
+// TODO: Reorganize these functions in a separate helper file
+const createChartData = ({ influencer, normal, competitor, totalNumVoters}) => {
+  const data = [
+    {
+      key: 3,
+      amount: normal,
+      svg: { fill: "#1563af" },
+      totalNumVoters: totalNumVoters
+    },
+    {
+      key: 2,
+      amount: influencer,
+      svg: { fill: "#dd8300" },
+      totalNumVoters: totalNumVoters
+    },
+    {
+      key: 1,
+      amount: competitor,
+      svg: { fill: "#f4f4f4" },
+      totalNumVoters: totalNumVoters
+    }
+  ]
+  return data
+}
 
 const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
   const [results, setResults] = useState(null)
@@ -17,6 +44,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
       badge: badge
     })
     setResults(results)
+    console.log("THE RESULTS: ", results);
 
     /*
         Janky settimeout to show results for 1.5 seconds
@@ -75,7 +103,43 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
             </View>
           </View>
           {results ? (
-            <StyledText type="bold">Results go here </StyledText>
+
+            <View style={{ flexDirection: "row"}}>
+              <View style={{ flex: 1 }}>
+                <PieChart
+                  style={{ height: 200 }}
+                  valueAccessor={({ item }) => item.amount}
+                  data={createChartData({
+                    influencer: results.numInfluencersA,
+                    normal: results.numNormalA,
+                    competitor: results.scoreB,
+                    totalNumVoters: results.numInfluencersA + results.numNormalA + results.scoreB
+                  })}
+                  spacing={0}
+                  outerRadius={'95%'}
+                >
+                  <Labels />
+                </PieChart>
+              </View>
+              <View style={{ flex: 1 }}>
+              {/*TODO: Factor this out into a clean, separate Chart component*/}
+                <PieChart
+                  style={{ height: 200 }}
+                  valueAccessor={({ item }) => item.amount}
+                  data={createChartData({
+                    influencer: results.numInfluencersB,
+                    normal: results.numNormalB,
+                    competitor: results.scoreA,
+                    totalNumVoters: results.numInfluencersA + results.numNormalA + results.scoreB
+                  })}
+                  spacing={0}
+                  outerRadius={'95%'}
+                  innerRadius={'45%'}
+                >
+                  <Labels />
+                </PieChart>
+              </View>
+            </View>
           ) : (
             <View style={{ alignItems: "center", flexDirection: "column" }}>
               <View

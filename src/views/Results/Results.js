@@ -11,8 +11,7 @@ import Labels from "../../components/Labels";
 import CountDown from "../../components/countdown/CountDown";
 import { StyledText } from "../../components/StyledText"
 
-const createChartData = ({ influencer, normal, competitor, totalNumVoters}) => {
-  console.log("COMPETITOR: ", competitor)
+export const createChartData = ({ influencer, normal, competitor, totalNumVoters}) => {
   const data = [
     {
       key: 3,
