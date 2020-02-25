@@ -4,6 +4,8 @@ import { Text } from "react-native-svg"
 const Labels = ({ slices, height, width }) => {
   return slices.map((slice, index) => {
       const { labelCentroid, pieCentroid, data } = slice;
+
+      console.log("THE DATA FOR THIS SLICE: ", data)
       return (
           <Text
               key={index}

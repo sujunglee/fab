@@ -11,22 +11,25 @@ import Labels from "../../components/Labels";
 import CountDown from "../../components/countdown/CountDown";
 import { StyledText } from "../../components/StyledText"
 
-const createChartData = ({ influencer, normal, competitor }) => {
+const createChartData = ({ influencer, normal, competitor, totalNumVoters}) => {
   const data = [
     {
       key: 3,
       amount: normal,
-      svg: { fill: "#1563af" }
+      svg: { fill: "#1563af" },
+      totalNumVoters: totalNumVoters
     },
     {
       key: 2,
       amount: influencer,
-      svg: { fill: "#dd8300" }
+      svg: { fill: "#dd8300" },
+      totalNumVoters: totalNumVoters
     },
     {
       key: 1,
       amount: competitor,
-      svg: { fill: "#f4f4f4" }
+      svg: { fill: "#f4f4f4" },
+      totalNumVoters: totalNumVoters
     }
   ]
   return data
@@ -88,7 +91,8 @@ const Results = () => {
               data={createChartData({
                 influencer: scores.numInfluencersA,
                 normal: scores.numNormalA,
-                competitor: scores.scoreB
+                competitor: scores.scoreB,
+                totalNumVoters: scores.numNormalA + scores.numInfluencersA
               })}
               spacing={0}
               outerRadius={'95%'}
@@ -109,7 +113,8 @@ const Results = () => {
               data={createChartData({
                 influencer: scores.numInfluencersB,
                 normal: scores.numNormalB,
-                competitor: scores.scoreA
+                competitor: scores.scoreA,
+                totalNumVoters: scores.numInfluencersB + scores.numNormalB
               })}
               spacing={0}
               outerRadius={'95%'}
