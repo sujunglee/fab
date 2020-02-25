@@ -12,6 +12,7 @@ import CountDown from "../../components/countdown/CountDown";
 import { StyledText } from "../../components/StyledText"
 
 const createChartData = ({ influencer, normal, competitor, totalNumVoters}) => {
+  console.log("COMPETITOR: ", competitor)
   const data = [
     {
       key: 3,
@@ -92,7 +93,7 @@ const Results = () => {
                 influencer: scores.numInfluencersA,
                 normal: scores.numNormalA,
                 competitor: scores.scoreB,
-                totalNumVoters: scores.numNormalA + scores.numInfluencersA
+                totalNumVoters: scores.scoreA + scores.scoreB
               })}
               spacing={0}
               outerRadius={'95%'}
@@ -114,7 +115,7 @@ const Results = () => {
                 influencer: scores.numInfluencersB,
                 normal: scores.numNormalB,
                 competitor: scores.scoreA,
-                totalNumVoters: scores.numInfluencersB + scores.numNormalB
+                totalNumVoters: scores.scoreA + scores.scoreB
               })}
               spacing={0}
               outerRadius={'95%'}
