@@ -58,8 +58,8 @@ const Vote = ({ navigation }) => {
 
   const roomID = "room1"
   return badge ? ( <VoteScreen navigation = { navigation } userID = { userID } badge = { badge } roomID = { roomID }/>
-  ) : ( <
-    StyledText > Loading... < /StyledText>
+  ) : ( 
+    <StyledText>Loading...</StyledText>
   )
 }
 
