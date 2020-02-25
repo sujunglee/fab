@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Fab_V1.0",
+    "name": "Fab_V2.0",
     "slug": "fab",
     "privacy": "public",
     "sdkVersion": "36.0.0",
@@ -36,6 +36,6 @@
         "svg"
       ]
     },
-    "description": ""
+    "description": "User testing voting functionality with loading screen!"
   }
 }

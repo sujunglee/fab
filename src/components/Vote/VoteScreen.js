@@ -23,19 +23,22 @@ const createChartData = ({
       key: 3,
       amount: normal,
       svg: { fill: "#1563af" },
-      totalNumVoters: totalNumVoters
+      totalNumVoters: totalNumVoters,
+      middleNum: influencer + normal
     },
     {
       key: 2,
       amount: influencer,
       svg: { fill: "#dd8300" },
-      totalNumVoters: totalNumVoters
+      totalNumVoters: totalNumVoters,
+      middleNum: influencer + normal
     },
     {
       key: 1,
       amount: competitor,
       svg: { fill: "#f4f4f4" },
-      totalNumVoters: totalNumVoters
+      totalNumVoters: totalNumVoters,
+      middleNum: influencer + normal
     }
   ]
   return data
@@ -169,6 +172,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                     influencer: voteState.voteResults.numInfluencersA,
                     normal: voteState.voteResults.numNormalA,
                     competitor: voteState.voteResults.scoreB,
+                    middleNum: voteState.voteResults.numNormal + voteState.voteResults.numInfluencers,
                     totalNumVoters:
                       voteState.voteResults.numInfluencersA +
                       voteState.voteResults.numNormalA +
@@ -177,7 +181,9 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                   spacing={0}
                   outerRadius={"95%"}
                 >
-                  <Labels />
+                  <Text style={{ position: 'absolute', fontSize: 20, textAlign: 'center'}}>
+                    {(voteState.voteResults.numNormalA + voteState.voteResults.numInfluencersA)/(voteState.voteResults.scoreA+ voteState.voteResults.scoreB)}
+                  </Text>
                 </PieChart>
               </View>
               <View style={{ flex: 1 }}>
@@ -189,6 +195,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                     influencer: voteState.voteResults.numInfluencersB,
                     normal: voteState.voteResults.numNormalB,
                     competitor: voteState.voteResults.scoreA,
+                    middleNum: voteState.voteResults.numNormal + voteState.voteResults.numInfluencers,
                     totalNumVoters:
                       voteState.voteResults.numInfluencersA +
                       voteState.voteResults.numNormalA +
@@ -198,7 +205,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                   outerRadius={"95%"}
                   innerRadius={"45%"}
                 >
-                  <Labels />
+                  {/*<Labels />*/}
                 </PieChart>
               </View>
             </View>
