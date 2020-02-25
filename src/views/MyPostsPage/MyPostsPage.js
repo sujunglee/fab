@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { View, Text, SafeAreaView, ScrollView, Button } from "react-native"
 import { screens } from "../../Navigation/constants"
 import { PostPreview } from "../../components/PostPreview"
