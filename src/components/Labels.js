@@ -4,7 +4,8 @@ import { Text } from "react-native-svg"
 const Labels = ({ slices, height, width }) => {
   return slices.map((slice, index) => {
       const { labelCentroid, pieCentroid, data } = slice;
-      const percentage = Math.round((data.amount / data.totalNumVoters)*100);
+      const percentage = (data.amount / data.totalNumVoters).toFixed(1)*100;
+
       let labelStroke;
       data.svg.fill == "#f4f4f4" ? labelStroke = "#f4f4f4" : labelStroke = "black"
 

@@ -93,7 +93,7 @@ const Results = () => {
                 influencer: scores.numInfluencersA,
                 normal: scores.numNormalA,
                 competitor: scores.scoreB,
-                totalNumVoters: scores.scoreA + scores.scoreB
+                totalNumVoters: scores.numInfluencersA + scores.numNormalA + scores.scoreB
               })}
               spacing={0}
               outerRadius={'95%'}
@@ -115,7 +115,7 @@ const Results = () => {
                 influencer: scores.numInfluencersB,
                 normal: scores.numNormalB,
                 competitor: scores.scoreA,
-                totalNumVoters: scores.scoreA + scores.scoreB
+                totalNumVoters: scores.numInfluencersA + scores.numNormalA + scores.scoreB
               })}
               spacing={0}
               outerRadius={'95%'}
