@@ -3,9 +3,13 @@ import { TouchableOpacity, StyleSheet } from "react-native"
 import { colors } from "../../../constants/styles"
 import { StyledText } from "../../StyledText"
 
-const SkipButton = ({ onPress }) => {
+const SkipButton = ({ onPress, style, ...rest }) => {
   return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
+    <TouchableOpacity
+      style={{ ...styles.button, ...style }}
+      onPress={onPress}
+      {...rest}
+    >
       <StyledText size={16} style={{ color: colors.MAIN_BLUE }}>
         SKIP
       </StyledText>
