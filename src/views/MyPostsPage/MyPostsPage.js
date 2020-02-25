@@ -1,24 +1,23 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { View, Text, SafeAreaView, ScrollView, Button } from "react-native"
 import { screens } from "../../Navigation/constants"
 import { PostPreview } from "../../components/PostPreview"
 import { useNavigation } from "@react-navigation/native"
-import getUserInfo from "../db/getUserInfo"
-
-
-
+import getUserInfo from "../../db/getUserInfo"
+import { StyledText } from "../../components/StyledText"
 
 const MyPostsPage = () => {
   // const navigation = useNavigation()
-  const userID = "jbrain98";
-  const [userInfo, setUserInfo] = useState(null);
+  const userID = "jbrain98"
+  const [userInfo, setUserInfo] = useState(null)
 
   useEffect(() => {
     const getInfo = async () => {
-      const info = await getUserInfo({userID: userID });
-      setUserInfo(info);
+      const info = await getUserInfo({ userID: userID })
+      console.log(info)
+      setUserInfo(info)
     }
-    getInfo();
+    getInfo()
   }, [])
 
   const defaultTestProps = {
@@ -27,19 +26,20 @@ const MyPostsPage = () => {
     day: "Monday",
     time: "2:12"
   }
-  return (
+  return userInfo ? (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ backgroundColor: "#D6D6D6", flex: 1 }}>
         <ScrollView>
-          <PostPreview {...defaultTestProps} />
-          <PostPreview {...defaultTestProps} />
-          <PostPreview {...defaultTestProps} />
-          <PostPreview {...defaultTestProps} />
-          <PostPreview {...defaultTestProps} />
-          <PostPreview {...defaultTestProps} />
+          {Object.keys(userInfo.rooms).map(roomID => (
+            <PostPreview roomID={roomID} userInfo={userInfo} key={roomID} />
+          ))}
         </ScrollView>
       </View>
     </SafeAreaView>
+  ) : (
+    <View style={{ alignItems: "center", justifyContent: "center" }}>
+      <StyledText> Loading...</StyledText>
+    </View>
   )
 }
 

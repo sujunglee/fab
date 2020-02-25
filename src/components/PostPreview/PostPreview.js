@@ -1,27 +1,53 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { View, TouchableHighlight, Text, StyleSheet, Image } from "react-native"
+import moment from "moment"
 import { screens } from "../../Navigation/constants"
+import getRoomData from "../../db/getRoomData"
 import { useNavigation } from "@react-navigation/native"
+import { StyledText } from "../StyledText"
 
-const PostPreview = ({ image, title, day, time }) => {
+const PostPreview = ({ roomID, userInfo }) => {
   const navigation = useNavigation()
-  return (
+
+  const [postData, setPostData] = useState({})
+
+  useEffect(() => {
+    const getPostData = async () => {
+      const data = await getRoomData({ roomID })
+      const createdAt = moment(data.timeCreated).format("dddd h:hh A")
+      setPostData({
+        ...data,
+        createdAt: createdAt
+      })
+    }
+
+    getPostData()
+  }, [])
+
+  return postData ? (
     <TouchableHighlight
-      onPress={() => navigation.navigate(screens.RESULTS)}
+      onPress={() =>
+        navigation.navigate(screens.RESULTS, {
+          roomID: roomID,
+          roomData: postData
+        })
+      }
       style={styles.container}
       underlayColor="#F4F4F4"
     >
       <View style={styles.innerContainer}>
-        <Image source={image} style={styles.image} />
+        <Image source={{ uri: postData.pictureA }} style={styles.image} />
         <View style={styles.textWrapper}>
           <View style={{ flexDirection: "row" }}>
-            <Text style={styles.timeText}>{day}</Text>
-            <Text style={styles.timeText}>{time}</Text>
+            <Text style={styles.timeText}>{postData.createdAt}</Text>
+            {/* <Text style={styles.timeText}>{time}</Text> */}
           </View>
-          <Text style={styles.text}> {title} </Text>
+          <Text style={styles.text}> {postData.title} </Text>
         </View>
       </View>
     </TouchableHighlight>
+  ) : (
+    <StyledText>Loading...</StyledText>
   )
 }
 
