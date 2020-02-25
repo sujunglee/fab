@@ -3,7 +3,7 @@ import { View, Text, SafeAreaView, ScrollView, Button } from "react-native"
 import { screens } from "../../Navigation/constants"
 import { PostPreview } from "../../components/PostPreview"
 import { useNavigation } from "@react-navigation/native"
-import getUserInfo from "../db/getUserInfo"
+import getUserInfo from "../../db/getUserInfo"
 
 
 
