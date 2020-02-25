@@ -6,23 +6,35 @@ import db from "../../db/init"
 import { getUserBadge } from "../../db/userBadge"
 import { StyledText } from "../../components/StyledText"
 
-const getActiveList = async () => {
-  const snapshot = await db.ref("rooms/active/").once("value")
-  /*
-  var list = {"you": 100, "me": 75, "foo": 116, "bar": 15};
-keysSorted = Object.keys(list).sort(function(a,b){return list[a]-list[b]})
-console.log(keysSorted);     // bar,me,you,foo
-*/
-  //return a list of active rooms with all the data
-  return snapshot.val()
+const getTotalNumVoters = (room) => {
+  const optAInfluencers = Object.keys(room.optionA.voters_influencer).length;
+  const optANormal = Object.keys(room.optionA.voters_normal).length;
+  const optBInfluencers = Object.keys(room.optionB.voters_influencer).length;
+  const optBNormal = Object.keys(room.optionB.voters_normal).length;
 
+  return optAInfluencers + optANormal + optBInfluencers + optBNormal;
 }
 
+const getActiveList = async () => {
+  const snapshot = await db.ref("rooms/active/").once("value")
+  let activeRooms = [];
+
+  for (var roomID of Object.keys(snapshot.val())) {
+    getTotalNumVoters(snapshot.val()[roomID])
+    const currRoom = {numVotes: getTotalNumVoters(snapshot.val()[roomID]), id: roomID, room: snapshot.val()[roomID]}
+    activeRooms.push(currRoom);
+  }
+
+  activeRooms.sort((a, b) => (a.numVotes > b.numVotes) ?  1 : -1);
+
+  return activeRooms
+
+}
 
 const Vote = ({ navigation }) => {
   const userID = "jbrain98";
   const [roomlist, setList] = useState(null);
-  const [badge, setBadge] = useState(null)
+  const [badge, setBadge] = useState(null);
   useEffect(() => {
     const getRooms = async () => {
       const activeLst = await getActiveList()
@@ -39,16 +51,16 @@ const Vote = ({ navigation }) => {
     getBadge()
   }, [])
 
+
   /// for each room on roomlist, check if user is already on the voted list or is the owner of the post,
   // if not then go through creating VoteScreens passing down the roomID
   //once done prob have "voted on all" or something screen
 
   const roomID = "room1"
-  return badge ? (
-    <VoteScreen navigation={navigation} userID={userID} badge={badge} roomID={roomID} />
-  ) : (
-      <StyledText>Loading...</StyledText>
-    )
+  return badge ? ( <VoteScreen navigation = { navigation } userID = { userID } badge = { badge } roomID = { roomID }/>
+  ) : ( 
+    <StyledText>Loading...</StyledText>
+  )
 }
 
 export default Vote

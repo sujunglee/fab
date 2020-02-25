@@ -29,7 +29,6 @@ const createChartData = ({ influencer, normal, competitor }) => {
       svg: { fill: "#f4f4f4" }
     }
   ]
-  console.log("chart data", data)
   return data
 }
 
