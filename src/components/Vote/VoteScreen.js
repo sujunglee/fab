@@ -1,13 +1,15 @@
 import React, { useState } from "react"
-import { View, Text, Image } from "react-native"
+import { View, Text, Image, ScrollView, Modal } from "react-native"
 import { VoteButton, SkipButton } from "./VoteButton"
 import { SafeAreaView, useSafeArea } from "react-native-safe-area-context"
+import ImageViewer from "react-native-image-zoom-viewer"
 import { StyledText } from "../StyledText"
 import { useNavigation } from "@react-navigation/native"
 import updateVotes from "../../db/updateVotes"
 import { colors } from "../../constants/styles"
 import { PieChart } from "react-native-svg-charts"
 import Labels from "../../components/Labels"
+import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 
 // TODO: Reorganize these functions in a separate helper file
 const createChartData = ({
@@ -41,6 +43,7 @@ const createChartData = ({
 
 const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
   const [voteState, setVoteState] = useState({})
+  const [isImageOpen, setIsImageOpen] = useState(false)
   const handlePress = async selection => {
     const roomID = roomData.id
     const voteResults = await updateVotes({
@@ -75,6 +78,20 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
           width: "100%"
         }}
       >
+        {isImageOpen.state && (
+          <Modal visible={isImageOpen.state}>
+            <ImageViewer
+              enableImageZoom
+              enableSwipeDown
+              onSwipeDown={() => setIsImageOpen({ state: false })}
+              imageUrls={[
+                {
+                  url: isImageOpen.url
+                }
+              ]}
+            />
+          </Modal>
+        )}
         <View style={{ padding: 25, maxHeight: 150 }}>
           <StyledText type="bold" size={23}>
             {roomData.room.meta_data.title}
@@ -89,21 +106,39 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
             <View
               style={{ alignItems: "center", flex: 1, marginHorizontal: 4 }}
             >
-              <Image
-                source={{ uri: roomData.room.optionA.picture }}
-                style={{ width: 200, height: 300 }}
-                resizeMode="contain"
-              />
+              <TouchableWithoutFeedback
+                onPress={() =>
+                  setIsImageOpen({
+                    state: true,
+                    url: roomData.room.optionA.picture
+                  })
+                }
+              >
+                <Image
+                  source={{ uri: roomData.room.optionA.picture }}
+                  style={{ width: 200, height: 300 }}
+                  resizeMode="contain"
+                />
+              </TouchableWithoutFeedback>
               {voteState.selectedOption === "A" && <YourVote />}
             </View>
             <View
               style={{ alignItems: "center", flex: 1, marginHorizontal: 4 }}
             >
-              <Image
-                source={{ uri: roomData.room.optionB.picture }}
-                style={{ width: 200, height: 300 }}
-                resizeMode="contain"
-              />
+              <TouchableWithoutFeedback
+                onPress={() =>
+                  setIsImageOpen({
+                    state: true,
+                    url: roomData.room.optionB.picture
+                  })
+                }
+              >
+                <Image
+                  source={{ uri: roomData.room.optionB.picture }}
+                  style={{ width: 200, height: 300, position: "relative" }}
+                  resizeMode="contain"
+                />
+              </TouchableWithoutFeedback>
               {voteState.selectedOption === "B" && <YourVote />}
             </View>
           </View>

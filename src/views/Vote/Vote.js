@@ -106,10 +106,16 @@ const Vote = ({ navigation }) => {
   const roomID = "room1"
   console.log(roomID)
 
+  /*
+  currently loading
+  */
   if (!roomlist || !badge) {
     return <StyledText>Loading...</StyledText>
   }
 
+  /*
+  no more rooms 
+  */
   if (currentRoom >= roomlist.length) {
     return (
       <SafeAreaView
