@@ -20,7 +20,7 @@ const Labels = ({ slices, height, width }) => {
               alignmentBaseline={'middle'}
               fontSize={20}
               stroke={labelStroke}
-              strokeWidth={0.2}
+              strokeWidth={0.6}
           >
               {percentage}%
           </Text>
