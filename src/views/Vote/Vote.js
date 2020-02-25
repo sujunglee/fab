@@ -43,7 +43,6 @@ const Vote = ({ navigation }) => {
   useEffect(() => {
     const getRooms = async () => {
       const activeList = await getActiveList()
-      // console.log(activeList)
       setRoomList(activeList)
     }
     getRooms()
@@ -111,23 +110,9 @@ const Vote = ({ navigation }) => {
       roomData={roomlist[currentRoom]}
       userID={userID}
       badge={badge}
-      // roomID={room.id}
       handleNextRoom={handleNextRoom}
     />
   ) : (
-    // roomlist.map((room, i) => {
-    //   console.log(currentRoom)
-    //   return (
-    //     i === currentRoom && (
-    //       <VoteScreen
-    //         userID={userID}
-    //         badge={badge}
-    //         roomID={room.id}
-    //         handleNextRoom={handleNextRoom}
-    //       />
-    //     )
-    //   )
-    // })
     <StyledText>Loading...</StyledText>
   )
 }

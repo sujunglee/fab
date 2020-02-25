@@ -7,7 +7,6 @@ import { useNavigation } from "@react-navigation/native"
 import updateVotes from "../../db/updateVotes"
 
 const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
-  const navigation = useNavigation()
   const [results, setResults] = useState(null)
   const handlePress = async selection => {
     const roomID = roomData.id
@@ -29,7 +28,6 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
       setResults(null)
     }, delay)
   }
-  //const Stack = createStackNavigator();
 
   return roomData ? (
     <SafeAreaView style={{ flex: 1 }}>
@@ -49,9 +47,6 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
           <View
             style={{
               flexDirection: "row"
-              //   width: "100%",
-              //   justifyContent: "space-between"
-              //   padding: 48
             }}
           >
             <View
