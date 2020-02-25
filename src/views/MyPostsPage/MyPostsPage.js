@@ -3,17 +3,23 @@ import { View, Text, SafeAreaView, ScrollView, Button } from "react-native"
 import { screens } from "../../Navigation/constants"
 import { PostPreview } from "../../components/PostPreview"
 import { useNavigation } from "@react-navigation/native"
+import getUserInfo from "../db/getUserInfo"
+
+
+
 
 const MyPostsPage = () => {
   // const navigation = useNavigation()
+  const userID = "jbrain98";
+  const [userInfo, setUserInfo] = useState(null);
 
   useEffect(() => {
-    /*
-
-      Fetch users Posts and stats here
-
-      */
-  })
+    const getInfo = async () => {
+      const info = await getUserInfo({userID: userID });
+      setUserInfo(info);
+    }
+    getInfo();
+  }, [])
 
   const defaultTestProps = {
     title: "Which cardigan should I wear for a big presentation today?",
