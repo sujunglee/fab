@@ -8,9 +8,8 @@ import updateVotes from "../../db/updateVotes"
 import { PieChart } from "react-native-svg-charts"
 import Labels from "../../components/Labels";
 
-
+// TODO: Reorganize these functions in a separate helper file
 const createChartData = ({ influencer, normal, competitor, totalNumVoters}) => {
-  console.log("COMPETITOR: ", competitor)
   const data = [
     {
       key: 3,
@@ -123,6 +122,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                 </PieChart>
               </View>
               <View style={{ flex: 1 }}>
+              {/*TODO: Factor this out into a clean, separate Chart component*/}
                 <PieChart
                   style={{ height: 200 }}
                   valueAccessor={({ item }) => item.amount}
