@@ -5,28 +5,33 @@ import { SafeAreaView, useSafeArea } from "react-native-safe-area-context"
 import { StyledText } from "../StyledText"
 import { useNavigation } from "@react-navigation/native"
 import updateVotes from "../../db/updateVotes"
+import { colors } from "../../constants/styles"
 
 const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
-  const [results, setResults] = useState(null)
+  const [voteState, setVoteState] = useState({})
   const handlePress = async selection => {
     const roomID = roomData.id
-    const results = await updateVotes({
+    const voteResults = await updateVotes({
       roomID: roomID,
       selection: selection,
       userID: userID,
       badge: badge
     })
-    setResults(results)
+    setVoteState({
+      ...voteState,
+      selectedOption: selection,
+      voteResults
+    })
 
     /*
         Janky settimeout to show results for 1.5 seconds
     */
 
-    const delay = 1500
-    setTimeout(() => {
-      handleNextRoom()
-      setResults(null)
-    }, delay)
+    // const delay = 1500
+    // setTimeout(() => {
+    //   handleNextRoom()
+    //   setVoteState({})
+    // }, delay)
   }
 
   return roomData ? (
@@ -57,9 +62,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                 style={{ width: 200, height: 300 }}
                 resizeMode="contain"
               />
-              <StyledText type="bold" size={20} style={{ paddingTop: 10 }}>
-                Option A
-              </StyledText>
+              {voteState.selectedOption === "A" && <YourVote />}
             </View>
             <View
               style={{ alignItems: "center", flex: 1, marginHorizontal: 4 }}
@@ -69,12 +72,10 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                 style={{ width: 200, height: 300 }}
                 resizeMode="contain"
               />
-              <StyledText type="bold" size={20} style={{ paddingTop: 10 }}>
-                Option B
-              </StyledText>
+              {voteState.selectedOption === "B" && <YourVote />}
             </View>
           </View>
-          {results ? (
+          {voteState.voteResults ? (
             <StyledText type="bold">Results go here </StyledText>
           ) : (
             <View style={{ alignItems: "center", flexDirection: "column" }}>
@@ -83,12 +84,22 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                   display: "flex",
                   flexDirection: "row",
                   width: "100%",
-                  marginTop: 8,
-                  justifyContent: "space-evenly"
+                  paddingHorizontal: 42,
+                  justifyContent: "space-between"
                 }}
               >
-                <VoteButton content="A" onPress={() => handlePress("A")} />
-                <VoteButton content="B" onPress={() => handlePress("B")} />
+                <View style={{ alignItems: "center" }}>
+                  <StyledText type="bold" size={20} style={{ paddingTop: 10 }}>
+                    Option A
+                  </StyledText>
+                  <VoteButton content="A" onPress={() => handlePress("A")} />
+                </View>
+                <View style={{ alignItems: "center" }}>
+                  <StyledText type="bold" size={20} style={{ paddingTop: 10 }}>
+                    Option B
+                  </StyledText>
+                  <VoteButton content="B" onPress={() => handlePress("B")} />
+                </View>
               </View>
               <SkipButton onPress={handleNextRoom} style={{ marginTop: 8 }} />
             </View>
@@ -100,4 +111,19 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
     <Text>Loading...</Text>
   )
 }
+
+const YourVote = () => (
+  <View
+    style={{
+      backgroundColor: "#fce3bd",
+      width: "100%",
+      alignItems: "center",
+      paddingVertical: 8
+    }}
+  >
+    <StyledText style={{ color: colors.MAIN_ORANGE }} type="bold">
+      YOUR VOTE
+    </StyledText>
+  </View>
+)
 export default VoteScreen
