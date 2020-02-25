@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { View, Text, Image, ScrollView, Modal } from "react-native"
 import { VoteButton, SkipButton } from "./VoteButton"
 import { SafeAreaView, useSafeArea } from "react-native-safe-area-context"
@@ -44,6 +44,10 @@ const createChartData = ({
 const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
   const [voteState, setVoteState] = useState({})
   const [isImageOpen, setIsImageOpen] = useState(false)
+  const [areImagesLoaded, setAreImagesLoaded] = useState({
+    A: false,
+    B: false
+  })
   const handlePress = async selection => {
     const roomID = roomData.id
     const voteResults = await updateVotes({
@@ -66,7 +70,13 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
     setTimeout(() => {
       handleNextRoom()
       setVoteState({})
+      setAreImagesLoaded({ A: false, B: false })
     }, delay)
+  }
+
+  const handleSkip = () => {
+    setAreImagesLoaded({ A: false, B: false })
+    handleNextRoom()
   }
 
   return roomData ? (
@@ -97,6 +107,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
             {roomData.room.meta_data.title}
           </StyledText>
         </View>
+
         <View style={{ width: "100%" }}>
           <View
             style={{
@@ -117,6 +128,9 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                 <Image
                   source={{ uri: roomData.room.optionA.picture }}
                   style={{ width: 200, height: 300 }}
+                  onLoad={() =>
+                    setAreImagesLoaded({ ...areImagesLoaded, A: true })
+                  }
                   resizeMode="contain"
                 />
               </TouchableWithoutFeedback>
@@ -136,6 +150,9 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                 <Image
                   source={{ uri: roomData.room.optionB.picture }}
                   style={{ width: 200, height: 300, position: "relative" }}
+                  onLoad={() =>
+                    setAreImagesLoaded({ ...areImagesLoaded, B: true })
+                  }
                   resizeMode="contain"
                 />
               </TouchableWithoutFeedback>
@@ -185,7 +202,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                 </PieChart>
               </View>
             </View>
-          ) : (
+          ) : areImagesLoaded.A && areImagesLoaded.B ? (
             <View style={{ alignItems: "center", flexDirection: "column" }}>
               <View
                 style={{
@@ -209,7 +226,11 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                   <VoteButton content="B" onPress={() => handlePress("B")} />
                 </View>
               </View>
-              <SkipButton onPress={handleNextRoom} style={{ marginTop: 16 }} />
+              <SkipButton onPress={handleSkip} style={{ marginTop: 16 }} />
+            </View>
+          ) : (
+            <View style={{ alignItems: "center", width: "100%" }}>
+              <StyledText type="bold">Loading...</StyledText>
             </View>
           )}
         </View>

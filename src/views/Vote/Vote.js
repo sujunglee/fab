@@ -134,7 +134,7 @@ const Vote = ({ navigation }) => {
             size={32}
             style={{ color: colors.MAIN_BLUE }}
           >
-            Looks like there's no more posts to vote on!
+            There's no more posts to vote on!
           </StyledText>
         </View>
       </SafeAreaView>
