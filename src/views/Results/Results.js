@@ -3,7 +3,7 @@ import Chart from "../../components/Chart"
 import db from "../../db/init"
 import getVoteData from "../../db/getVoteData"
 import getRoomData from "../../db/getRoomData"
-import { Image, View, Text, StyleSheet } from "react-native"
+import { Image, View, Text, StyleSheet, Dimensions } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { PieChart } from "react-native-svg-charts"
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -11,22 +11,26 @@ import Labels from "../../components/Labels";
 import CountDown from "../../components/countdown/CountDown";
 import { StyledText } from "../../components/StyledText"
 
-const createChartData = ({ influencer, normal, competitor }) => {
+const createChartData = ({ influencer, normal, competitor, totalNumVoters}) => {
+  console.log("COMPETITOR: ", competitor)
   const data = [
     {
       key: 3,
       amount: normal,
-      svg: { fill: "#1563af" }
+      svg: { fill: "#1563af" },
+      totalNumVoters: totalNumVoters
     },
     {
       key: 2,
       amount: influencer,
-      svg: { fill: "#dd8300" }
+      svg: { fill: "#dd8300" },
+      totalNumVoters: totalNumVoters
     },
     {
       key: 1,
       amount: competitor,
-      svg: { fill: "#f4f4f4" }
+      svg: { fill: "#f4f4f4" },
+      totalNumVoters: totalNumVoters
     }
   ]
   return data
@@ -66,6 +70,8 @@ const Results = () => {
     getRoom()
   }, [])
 
+  const deviceWidth = Dimensions.get('window').width
+
   return (scores && roomData) ? (
     <SafeAreaView>
       <View>
@@ -88,7 +94,8 @@ const Results = () => {
               data={createChartData({
                 influencer: scores.numInfluencersA,
                 normal: scores.numNormalA,
-                competitor: scores.scoreB
+                competitor: scores.scoreB,
+                totalNumVoters: scores.numInfluencersA + scores.numNormalA + scores.scoreB
               })}
               spacing={0}
               outerRadius={'95%'}
@@ -109,26 +116,18 @@ const Results = () => {
               data={createChartData({
                 influencer: scores.numInfluencersB,
                 normal: scores.numNormalB,
-                competitor: scores.scoreA
+                competitor: scores.scoreA,
+                totalNumVoters: scores.numInfluencersA + scores.numNormalA + scores.scoreB
               })}
               spacing={0}
               outerRadius={'95%'}
+              innerRadius={'45%'}
             >
               <Labels />
             </PieChart>
           </View>
         </View>
         <CountDown isFinished={() => console.log("Finished!")} />
-        {/*<Grid>
-        <Col style={{ alignItems: 'center'}}>
-          <Image source={a_src} style={{ width: 150, height: 200 }} />
-          <Text style={{ fontSize: 20, fontWeight: "bold" }}>Option A</Text>
-        </Col>
-        <Col style={{ alignItems: 'center'}}>
-          <Image source={b_src} style={{ width: 150, height: 200 }} />
-          <Text style={{ fontSize: 20, fontWeight: "bold" }}>Option B</Text>
-        </Col>
-      </Grid>*/}
       </View>
     </SafeAreaView>
   ) : (
