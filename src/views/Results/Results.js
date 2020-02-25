@@ -3,7 +3,7 @@ import Chart from "../../components/Chart"
 import db from "../../db/init"
 import getVoteData from "../../db/getVoteData"
 import getRoomData from "../../db/getRoomData"
-import { Image, View, Text, StyleSheet } from "react-native"
+import { Image, View, Text, StyleSheet, Dimensions } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { PieChart } from "react-native-svg-charts"
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -70,6 +70,8 @@ const Results = () => {
     getRoom()
   }, [])
 
+  const deviceWidth = Dimensions.get('window').width
+
   return (scores && roomData) ? (
     <SafeAreaView>
       <View>
@@ -119,22 +121,13 @@ const Results = () => {
               })}
               spacing={0}
               outerRadius={'95%'}
+              innerRadius={'45%'}
             >
               <Labels />
             </PieChart>
           </View>
         </View>
         <CountDown isFinished={() => console.log("Finished!")} />
-        {/*<Grid>
-        <Col style={{ alignItems: 'center'}}>
-          <Image source={a_src} style={{ width: 150, height: 200 }} />
-          <Text style={{ fontSize: 20, fontWeight: "bold" }}>Option A</Text>
-        </Col>
-        <Col style={{ alignItems: 'center'}}>
-          <Image source={b_src} style={{ width: 150, height: 200 }} />
-          <Text style={{ fontSize: 20, fontWeight: "bold" }}>Option B</Text>
-        </Col>
-      </Grid>*/}
       </View>
     </SafeAreaView>
   ) : (

@@ -9,7 +9,6 @@ const Labels = ({ slices, height, width }) => {
       let labelStroke;
       data.svg.fill == "#f4f4f4" ? labelStroke = "#f4f4f4" : labelStroke = "black"
 
-      console.log("THE DATA FOR THIS SLICE: ", data)
       return (
           <Text
               key={index}
