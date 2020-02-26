@@ -34,7 +34,7 @@ const createChartData = ({
     {
       key: 1,
       amount: competitor,
-      svg: { fill: "#f4f4f4" },
+      svg: { fill: "#D3D3D3" },
       totalNumVoters: totalNumVoters
     }
   ]
