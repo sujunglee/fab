@@ -76,6 +76,7 @@ const Results = ({ route }) => {
             <View style={{ justifyContent: "center", alignItems: "center" }}>
               <Image
                 source={{ uri: roomData.pictureA }}
+
                 style={{ width: 140, height: 200 }}
               />
             </View>
@@ -104,6 +105,7 @@ const Results = ({ route }) => {
             <View style={{ justifyContent: "center", alignItems: "center" }}>
               <Image
                 source={{ uri: roomData.pictureB }}
+
                 style={{ width: 140, height: 200, }}
               />
             </View>

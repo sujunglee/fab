@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useContext } from "react"
 import { View, Text, Image, ScrollView, Modal, Dimensions } from "react-native"
 import { VoteButton, SkipButton } from "./VoteButton"
 import { SafeAreaView, useSafeArea } from "react-native-safe-area-context"
@@ -6,10 +6,12 @@ import ImageViewer from "react-native-image-zoom-viewer"
 import { StyledText } from "../StyledText"
 import { useNavigation } from "@react-navigation/native"
 import updateVotes from "../../db/updateVotes"
-import { colors } from "../../constants/styles"
+import {colors, fontSize, sizes} from "../../constants/styles"
 import { PieChart } from "react-native-svg-charts"
 import Labels from "../../components/Labels"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
+import {AppContext} from "../../context/AppContext";
+
 
 // TODO: Reorganize these functions in a separate helper file
 const createChartData = ({
@@ -42,6 +44,7 @@ const createChartData = ({
 }
 
 const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
+
   const [voteState, setVoteState] = useState({})
   const [isImageOpen, setIsImageOpen] = useState(false)
   const deviceWidth = Dimensions.get('window').width
@@ -80,7 +83,6 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
     handleNextRoom()
   }
 
-
   return roomData ? (
     <SafeAreaView style={{ flex: 1 }}>
       <View
@@ -105,7 +107,8 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
           </Modal>
         )}
         <View style={{ maxHeight: 150 }}>
-          <StyledText type="bold" size={22}>
+          <StyledText type="bold" size={22} style={{color:colors.text.primary.main}}>
+
             {roomData.room.meta_data.title}
           </StyledText>
         </View>
@@ -189,7 +192,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                         color: "#dd8300"
                     }}
                 >
-                {(voteState.voteResults.scoreB / (voteState.voteResults.scoreA + voteState.voteResults.scoreB)).toFixed(2)*100}%
+                {((voteState.voteResults.scoreB / (voteState.voteResults.scoreA + voteState.voteResults.scoreB))*100).toFixed()}%
                 </Text>
               </View>
               <View style={{ alignItems: "center", textAlign: "center", justifyContent: "center", flex: 1 }}>
@@ -219,7 +222,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                         color: "#1563af"
                     }}
                 >
-                    {(voteState.voteResults.scoreA / (voteState.voteResults.scoreA + voteState.voteResults.scoreB)).toFixed(2)*100}%
+                    {((voteState.voteResults.scoreA / (voteState.voteResults.scoreA + voteState.voteResults.scoreB))*100).toFixed()}%
                 </Text>
               </View>
             </View>
@@ -235,13 +238,16 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                 }}
               >
                 <View style={{ alignItems: "center" }}>
-                  <StyledText type="bold" size={20} style={{ paddingTop: 5 }}>
+
+                  <StyledText size={20} style={{ paddingTop: 5, color: colors.text.secondary.main}}>
+
                     Option A
                   </StyledText>
                   <VoteButton content="A" onPress={() => handlePress("A")} />
                 </View>
                 <View style={{ alignItems: "center" }}>
-                  <StyledText type="bold" size={20} style={{ paddingTop: 5 }}>
+
+                  <StyledText  size={20} style={{ paddingTop: 5, color: colors.text.secondary.main }}>
                     Option B
                   </StyledText>
                   <VoteButton content="B" onPress={() => handlePress("B")} />
@@ -265,7 +271,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
 const YourVote = () => (
   <View
     style={{
-      backgroundColor: "#fce3bd",
+      backgroundColor: colors.secondary.main,
       width: "100%",
       alignItems: "center",
       paddingVertical: 8,
@@ -274,7 +280,8 @@ const YourVote = () => (
       top: -60
     }}
   >
-    <StyledText style={{ position: "relative", top: -8, color: colors.MAIN_ORANGE }} type="bold">
+
+    <StyledText size={sizes.medium.fontSize} type={'regular'} style={{ position: "relative", top: -8, color:colors.general.white}} >
       YOUR VOTE
     </StyledText>
   </View>

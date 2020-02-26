@@ -3,6 +3,7 @@ import * as Font from "expo-font"
 import { StyleSheet, Text, View, ScrollView } from "react-native"
 import { SafeAreaProvider } from "react-native-safe-area-context"
 import { Navigation } from "./src/Navigation/"
+import {AppContextProvider} from "./src/context/AppContext";
 
 const styles = StyleSheet.create({
   container: {
@@ -28,14 +29,17 @@ const App = () => {
     }
 
     load()
-  }, [])
+  }, []);
   return (
     isFontLoaded && (
-      <SafeAreaProvider>
-        <Navigation />
-      </SafeAreaProvider>
+
+          <SafeAreaProvider>
+            <AppContextProvider>
+              <Navigation />
+            </AppContextProvider>
+          </SafeAreaProvider>
     )
   )
-}
+};
 
 export default App

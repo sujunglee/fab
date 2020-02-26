@@ -1,6 +1,6 @@
 import React from "react"
 import { TouchableOpacity, StyleSheet } from "react-native"
-import { colors } from "../../../constants/styles"
+import { colors} from "../../../constants/styles"
 import { StyledText } from "../../StyledText"
 
 const VoteButton = ({ onPress, content }) => {
@@ -23,7 +23,7 @@ VoteButton.defaultProps = {
 const styles = StyleSheet.create({
   button: {
     margin: 8,
-    backgroundColor: colors.MAIN_BLUE,
+    backgroundColor: colors.primary.main,
     paddingVertical: 4,
     paddingHorizontal: 32,
     borderRadius: 10
