@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useContext} from "react"
 import { View, Text } from "react-native"
 import VoteScreen from "../../components/Vote/VoteScreen"
 import { SafeAreaView } from "react-native-safe-area-context"
@@ -6,6 +6,8 @@ import db from "../../db/init"
 import { getUserBadge } from "../../db/userBadge"
 import { StyledText } from "../../components/StyledText"
 import { colors } from "../../constants/styles"
+import {AppContext} from "../../context/AppContext";
+import {CountDown} from "../../components/countdown/";
 
 const getTotalNumVoters = room => {
   const optAInfluencers = Object.keys(room.optionA.voters_influencer).length
@@ -127,14 +129,14 @@ const Vote = ({ navigation }) => {
         }}
       >
         <View
-          style={{ backgroundColor: "#d9eafa", padding: 32, borderRadius: 20 }}
+          style={{ backgroundColor: colors.general.white, padding: 32, borderRadius: 20 }}
         >
           <StyledText
             type="semibold"
             size={32}
-            style={{ color: colors.MAIN_BLUE }}
+            style={{ color: colors.primary.main }}
           >
-            Looks like there's no more posts to vote on!
+            There's no more posts to vote on!
           </StyledText>
         </View>
       </SafeAreaView>
@@ -142,13 +144,13 @@ const Vote = ({ navigation }) => {
   }
 
   return (
-    <VoteScreen
-      roomData={roomlist[currentRoom]}
-      userID={userID}
-      badge={badge}
-      handleNextRoom={handleNextRoom}
-    />
+        <VoteScreen
+          roomData={roomlist[currentRoom]}
+          userID={userID}
+          badge={badge}
+          handleNextRoom={handleNextRoom}
+      />
   )
-}
+};
 
 export default Vote

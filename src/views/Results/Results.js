@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react"
-import Chart from "../../components/Chart"
-import db from "../../db/init"
 import getVoteData from "../../db/getVoteData"
-import getRoomData from "../../db/getRoomData"
 import { Image, View, Text, StyleSheet, Dimensions } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { PieChart } from "react-native-svg-charts"
-import { Col, Row, Grid } from "react-native-easy-grid";
-import Labels from "../../components/Labels";
-import CountDown from "../../components/countdown/CountDown";
+import Labels from "../../components/Labels"
+import CountDown from "../../components/countdown/CountDown"
 import { StyledText } from "../../components/StyledText"
 
-export const createChartData = ({ influencer, normal, competitor, totalNumVoters}) => {
+export const createChartData = ({
+  influencer,
+  normal,
+  competitor,
+  totalNumVoters
+}) => {
   const data = [
     {
       key: 3,
@@ -48,30 +49,21 @@ const styles = StyleSheet.create({
   }
 })
 
-
-const Results = () => {
-  const [scores, setScore] = useState(null);
-  const [roomData, setRoomData] = useState(null);
+const Results = ({ route }) => {
+  const [scores, setScore] = useState(null)
 
   useEffect(() => {
+    const { roomID } = route.params
     const getScore = async () => {
-      const v = await getVoteData({ roomID: "room1" })
+      const v = await getVoteData({ roomID })
       setScore(v)
     }
     getScore()
   }, [])
 
-  useEffect(() => {
-    const getRoom = async () => {
-      const data = await getRoomData({ roomID: "room1" })
-      setRoomData(data)
-    }
-    getRoom()
-  }, [])
-
-  const deviceWidth = Dimensions.get('window').width
-
-  return (scores && roomData) ? (
+  const deviceWidth = Dimensions.get("window").width
+  const { roomData } = route.params
+  return scores ? (
     <SafeAreaView>
       <View>
         <View style={{ padding: 25, height: 150 }}>
@@ -79,13 +71,18 @@ const Results = () => {
             {roomData.title}
           </StyledText>
         </View>
-        <View style={{ flexDirection: "row"}}>
+        <View style={{ flexDirection: "row" }}>
           <View style={{ flex: 1 }}>
-            <View style={{ justifyContent: 'center', alignItems: 'center'}}>
-              <Image source={{ uri: roomData.pictureA }} style={{ width: 150, height: 200 }} />
+            <View style={{ justifyContent: "center", alignItems: "center" }}>
+              <Image
+                source={{ uri: roomData.pictureA }}
+                style={{ width: 150, height: 200 }}
+              />
             </View>
-            <View style={{ justifyContent: 'center', alignItems: 'center'}}>
-              <StyledText type="bold" size={20} style={{ paddingTop: 10 }}>Option A</StyledText>
+            <View style={{ justifyContent: "center", alignItems: "center" }}>
+              <StyledText type="bold" size={20} style={{ paddingTop: 10 }}>
+                Option A
+              </StyledText>
             </View>
             <PieChart
               style={{ height: 200 }}
@@ -94,20 +91,26 @@ const Results = () => {
                 influencer: scores.numInfluencersA,
                 normal: scores.numNormalA,
                 competitor: scores.scoreB,
-                totalNumVoters: scores.numInfluencersA + scores.numNormalA + scores.scoreB
+                totalNumVoters:
+                  scores.numInfluencersA + scores.numNormalA + scores.scoreB
               })}
               spacing={0}
-              outerRadius={'95%'}
+              outerRadius={"95%"}
             >
               <Labels />
             </PieChart>
           </View>
           <View style={{ flex: 1 }}>
-            <View style={{ justifyContent: 'center', alignItems: 'center'}}>
-              <Image source={{ uri: roomData.pictureB }} style={{ width: 150, height: 200 }} />
+            <View style={{ justifyContent: "center", alignItems: "center" }}>
+              <Image
+                source={{ uri: roomData.pictureB }}
+                style={{ width: 150, height: 200 }}
+              />
             </View>
-            <View style={{ justifyContent: 'center', alignItems: 'center'}}>
-              <StyledText type="bold" size={20} style={{ paddingTop: 10 }}>Option B</StyledText>
+            <View style={{ justifyContent: "center", alignItems: "center" }}>
+              <StyledText type="bold" size={20} style={{ paddingTop: 10 }}>
+                Option B
+              </StyledText>
             </View>
             <PieChart
               style={{ height: 200 }}
@@ -116,11 +119,12 @@ const Results = () => {
                 influencer: scores.numInfluencersB,
                 normal: scores.numNormalB,
                 competitor: scores.scoreA,
-                totalNumVoters: scores.numInfluencersA + scores.numNormalA + scores.scoreB
+                totalNumVoters:
+                  scores.numInfluencersA + scores.numNormalA + scores.scoreB
               })}
               spacing={0}
-              outerRadius={'95%'}
-              innerRadius={'45%'}
+              outerRadius={"95%"}
+              innerRadius={"45%"}
             >
               <Labels />
             </PieChart>
@@ -130,8 +134,8 @@ const Results = () => {
       </View>
     </SafeAreaView>
   ) : (
-      <Text>Loading...</Text>
-    )
+    <Text>Loading...</Text>
+  )
 }
 
 export default Results
