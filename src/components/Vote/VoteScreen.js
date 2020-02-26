@@ -14,6 +14,10 @@ import {AppContext} from "../../context/AppContext";
 import CountDown from "../countdown/CountDown";
 import moment from "moment";
 
+function getRndInteger(min, max) {
+  return Math.floor(Math.random() * (max - min) ) + min;
+}
+
 
 // TODO: Reorganize these functions in a separate helper file
 const createChartData = ({
@@ -257,7 +261,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
               </View>
               <SkipButton onPress={handleSkip} style={{ marginTop: normalize(8), marginBottom:normalize(8) }} />
               <CountDown
-                  finishTime={moment().add({'seconds': 30}).toISOString()}
+                  finishTime={moment().add({'seconds': getRndInteger(3600/4, 86399)}).toISOString()}
                   isFinished={()=>console.log('Finished!')}
               />
             </View>
