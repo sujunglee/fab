@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { View, Text, Image, ScrollView, Modal } from "react-native"
+import { View, Text, Image, ScrollView, Modal, Dimensions } from "react-native"
 import { VoteButton, SkipButton } from "./VoteButton"
 import { SafeAreaView, useSafeArea } from "react-native-safe-area-context"
 import ImageViewer from "react-native-image-zoom-viewer"
@@ -44,6 +44,7 @@ const createChartData = ({
 const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
   const [voteState, setVoteState] = useState({})
   const [isImageOpen, setIsImageOpen] = useState(false)
+  const deviceWidth = Dimensions.get('window').width
   const [areImagesLoaded, setAreImagesLoaded] = useState({
     A: false,
     B: false
@@ -160,10 +161,10 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
             </View>
           </View>
           {voteState.voteResults ? (
-            <View style={{ flexDirection: "row" }}>
-              <View style={{ flex: 1 }}>
+            <View style={{ display: "flex", flexDirection: "row" }}>
+              <View style={{ textAlign: "center", justifyContent: "center", flex: 1 }}>
                 <PieChart
-                  style={{ height: 200 }}
+                  style={{ width: 160, height: 160 }}
                   valueAccessor={({ item }) => item.amount}
                   data={createChartData({
                     influencer: voteState.voteResults.numInfluencersA,
@@ -174,16 +175,25 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                       voteState.voteResults.numNormalA +
                       voteState.voteResults.scoreB
                   })}
-                  spacing={0}
                   outerRadius={"95%"}
+                />
+                <Text
+                    style={{
+                        position: 'absolute',
+                        left: 160/3,
+                        textAlign: 'center',
+                        fontSize: 30,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}
                 >
-                  <Labels />
-                </PieChart>
+                    {voteState.voteResults.scoreA / voteState.voteResults.scoreA + voteState.voteResults.scoreB}%
+                </Text>
               </View>
-              <View style={{ flex: 1 }}>
+              <View style={{ textAlign: "center", justifyContent: "center", flex: 1 }}>
                 {/*TODO: Factor this out into a clean, separate Chart component*/}
                 <PieChart
-                  style={{ height: 200 }}
+                  style={{ width: 160, height: 160 }}
                   valueAccessor={({ item }) => item.amount}
                   data={createChartData({
                     influencer: voteState.voteResults.numInfluencersB,
@@ -194,12 +204,20 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                       voteState.voteResults.numNormalA +
                       voteState.voteResults.scoreB
                   })}
-                  spacing={0}
                   outerRadius={"95%"}
-                  innerRadius={"45%"}
+                />
+                <Text
+                    style={{
+                        position: 'absolute',
+                        left: 160/3,
+                        textAlign: 'center',
+                        fontSize: 30,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}
                 >
-                  <Labels />
-                </PieChart>
+                    {voteState.voteResults.scoreA / voteState.voteResults.scoreA + voteState.voteResults.scoreB}%
+                </Text>
               </View>
             </View>
           ) : areImagesLoaded.A && areImagesLoaded.B ? (
