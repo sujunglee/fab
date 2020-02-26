@@ -285,13 +285,12 @@ const YourVote = () => (
       width: "100%",
       alignItems: "center",
       paddingVertical: 8,
-      marignTop: -8,
       position: "relative",
       top: -60
     }}
   >
 
-    <StyledText size={sizes.medium.fontSize} type={'regular'} style={{ position: "relative", top: -8, color:colors.general.white}} >
+    <StyledText size={sizes.medium.fontSize} type={'regular'} style={{ position: "relative", color:colors.general.white}} >
       YOUR VOTE
     </StyledText>
   </View>
