@@ -6,7 +6,7 @@ import ImageViewer from "react-native-image-zoom-viewer"
 import { StyledText } from "../StyledText"
 import { useNavigation } from "@react-navigation/native"
 import updateVotes from "../../db/updateVotes"
-import {colors, fontSize, sizes} from "../../constants/styles"
+import {colors, normalize, sizes} from "../../constants/styles"
 import { PieChart } from "react-native-svg-charts"
 import Labels from "../../components/Labels"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
@@ -120,7 +120,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
             }}
           >
             <View
-              style={{ alignItems: "center", flex: 1, marginHorizontal: 4 }}
+              style={{ alignItems: "center", flex: 1, marginRight:35 }}
             >
               <TouchableWithoutFeedback
                 onPress={() =>
@@ -132,7 +132,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
               >
                 <Image
                   source={{ uri: roomData.room.optionA.picture }}
-                  style={{ width: 200, height: 300 }}
+                  style={{ width: 200, height: 300, aspectRatio:4/3, minWidth:200, maxWidth:200, minHeight:300, maxHeight:300 }}
                   onLoad={() =>
                     setAreImagesLoaded({ ...areImagesLoaded, A: true })
                   }
@@ -154,7 +154,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
               >
                 <Image
                   source={{ uri: roomData.room.optionB.picture }}
-                  style={{ width: 200, height: 300, position: "relative" }}
+                  style={{ width: 200, height: 300, position: "relative", aspectRatio:4/3, minWidth:200, maxWidth:200, minHeight:300, maxHeight:300}}
                   onLoad={() =>
                     setAreImagesLoaded({ ...areImagesLoaded, B: true })
                   }
@@ -253,7 +253,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                   <VoteButton content="B" onPress={() => handlePress("B")} />
                 </View>
               </View>
-              <SkipButton onPress={handleSkip} style={{ marginTop: 16 }} />
+              <SkipButton onPress={handleSkip} style={{ marginTop: normalize(16) }} />
             </View>
           ) : (
             <View style={{ alignItems: "center", width: "100%" }}>

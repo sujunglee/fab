@@ -19,7 +19,6 @@ const StyledText = ({ children, style, type, size, ...rest }) => {
     text: {
       fontFamily: types[type],
       fontSize: size,
-      paddingTop: 10
     }
   })
   return (
