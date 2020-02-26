@@ -18,7 +18,8 @@ const StyledText = ({ children, style, type, size, ...rest }) => {
   const styles = StyleSheet.create({
     text: {
       fontFamily: types[type],
-      fontSize: size
+      fontSize: size,
+      paddingTop: 10
     }
   })
   return (

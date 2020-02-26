@@ -102,8 +102,8 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
             />
           </Modal>
         )}
-        <View style={{ padding: 25, maxHeight: 150 }}>
-          <StyledText type="bold" size={23}>
+        <View style={{ maxHeight: 150 }}>
+          <StyledText type="bold" size={22}>
             {roomData.room.meta_data.title}
           </StyledText>
         </View>
