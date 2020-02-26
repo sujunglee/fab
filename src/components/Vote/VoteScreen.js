@@ -214,13 +214,13 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                 }}
               >
                 <View style={{ alignItems: "center" }}>
-                  <StyledText type="bold" size={20} style={{ paddingTop: 10 }}>
+                  <StyledText type="bold" size={20} style={{ paddingTop: 5 }}>
                     Option A
                   </StyledText>
                   <VoteButton content="A" onPress={() => handlePress("A")} />
                 </View>
                 <View style={{ alignItems: "center" }}>
-                  <StyledText type="bold" size={20} style={{ paddingTop: 10 }}>
+                  <StyledText type="bold" size={20} style={{ paddingTop: 5 }}>
                     Option B
                   </StyledText>
                   <VoteButton content="B" onPress={() => handlePress("B")} />
@@ -248,10 +248,12 @@ const YourVote = () => (
       width: "100%",
       alignItems: "center",
       paddingVertical: 8,
-      marignTop: -8
+      marignTop: -8,
+      position: "relative",
+      top: -60
     }}
   >
-    <StyledText style={{ color: colors.MAIN_ORANGE }} type="bold">
+    <StyledText style={{ position: "relative", top: -8, color: colors.MAIN_ORANGE }} type="bold">
       YOUR VOTE
     </StyledText>
   </View>

@@ -76,11 +76,11 @@ const Results = ({ route }) => {
             <View style={{ justifyContent: "center", alignItems: "center" }}>
               <Image
                 source={{ uri: roomData.pictureA }}
-                style={{ width: 150, height: 200 }}
+                style={{ width: 140, height: 200 }}
               />
             </View>
             <View style={{ justifyContent: "center", alignItems: "center" }}>
-              <StyledText type="bold" size={20} style={{ paddingTop: 10 }}>
+              <StyledText type="bold" size={20} style={{ paddingTop: 5 }}>
                 Option A
               </StyledText>
             </View>
@@ -104,11 +104,11 @@ const Results = ({ route }) => {
             <View style={{ justifyContent: "center", alignItems: "center" }}>
               <Image
                 source={{ uri: roomData.pictureB }}
-                style={{ width: 150, height: 200 }}
+                style={{ width: 140, height: 200, }}
               />
             </View>
             <View style={{ justifyContent: "center", alignItems: "center" }}>
-              <StyledText type="bold" size={20} style={{ paddingTop: 10 }}>
+              <StyledText type="bold" size={20} style={{ paddingTop: 5 }}>
                 Option B
               </StyledText>
             </View>
