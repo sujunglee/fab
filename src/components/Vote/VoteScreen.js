@@ -186,6 +186,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                         fontSize: 30,
                         alignItems: 'center',
                         justifyContent: 'center',
+                        color: "#dd8300"
                     }}
                 >
                 {(voteState.voteResults.scoreB / (voteState.voteResults.scoreA + voteState.voteResults.scoreB)).toFixed(2)*100}%
@@ -215,6 +216,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                         fontSize: 30,
                         alignItems: 'center',
                         justifyContent: 'center',
+                        color: "#1563af"
                     }}
                 >
                     {(voteState.voteResults.scoreA / (voteState.voteResults.scoreA + voteState.voteResults.scoreB)).toFixed(2)*100}%
