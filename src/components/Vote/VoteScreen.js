@@ -122,7 +122,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
             }}
           >
             <View
-              style={{ alignItems: "center", flex: 1, marginRight:35 }}
+              style={{ alignItems: "center", flex: 1 }}
             >
               <TouchableWithoutFeedback
                 onPress={() =>
