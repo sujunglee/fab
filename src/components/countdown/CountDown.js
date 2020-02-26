@@ -3,18 +3,18 @@ import moment from "moment";
 import {StyleSheet, Text, View} from 'react-native';
 import {styles} from "./CountDownStyle";
 import PropTypes from 'prop-types';
+import StyledText from "../StyledText/StyledText";
 
 /**
  * Displays the countdown clock of a outfit
  *
- * ToDo: Load startTime directly from Db
  * @param isFinished() - Callback when the room is done
+ * @param finishTime - ISO formatted finish time
  * @author jideanene2020@u.northwestern.edu
  */
-const CountDown = ({startTime, isFinished}) => {
-    const DUMMY_TIME = moment().add({'seconds': 30}).toISOString();
 
-    const outfitStartTime = useRef(moment(DUMMY_TIME));
+const CountDown = ({finishTime, isFinished}) => {
+    const outfitStartTime = useRef(moment(finishTime));
     const [hasEnded, setHasEnded] = useState(false);
     const [timeLeft, setTimeLeft] = useState(outfitStartTime.current.diff(moment(), 'seconds'));
 
@@ -52,13 +52,17 @@ const CountDown = ({startTime, isFinished}) => {
     const formatted = moment.utc(timeLeft * 1000).format('HH:mm:ss');
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>TIME LEFT</Text>
-            <Text style={styles.content}>{hasEnded? 'COMPLETED' : formatted}</Text>
+            <StyledText style={styles.title}>TIME LEFT</StyledText>
+            <StyledText style={styles.content}>{hasEnded? 'COMPLETED' : formatted}</StyledText>
         </View>
     );
 };
 
 export default CountDown;
+
+CountDown.defaultProps = {
+    finishTime: moment().add({'seconds': 30}).toISOString()
+};
 
 CountDown.propTypes = {
     isFinished: PropTypes.func.isRequired,

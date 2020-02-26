@@ -11,6 +11,8 @@ import { PieChart } from "react-native-svg-charts"
 import Labels from "../../components/Labels"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import {AppContext} from "../../context/AppContext";
+import CountDown from "../countdown/CountDown";
+import moment from "moment";
 
 
 // TODO: Reorganize these functions in a separate helper file
@@ -107,7 +109,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
           </Modal>
         )}
         <View style={{ maxHeight: 150 }}>
-          <StyledText type="bold" size={22} style={{color:colors.text.primary.main}}>
+          <StyledText type="bold" size={sizes.small.fontSize} style={{color:colors.text.primary.main}}>
 
             {roomData.room.meta_data.title}
           </StyledText>
@@ -253,7 +255,11 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                   <VoteButton content="B" onPress={() => handlePress("B")} />
                 </View>
               </View>
-              <SkipButton onPress={handleSkip} style={{ marginTop: normalize(16) }} />
+              <SkipButton onPress={handleSkip} style={{ marginTop: normalize(8), marginBottom:normalize(8) }} />
+              <CountDown
+                  finishTime={moment().add({'seconds': 30}).toISOString()}
+                  isFinished={()=>console.log('Finished!')}
+              />
             </View>
           ) : (
             <View style={{ alignItems: "center", width: "100%" }}>

@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-
+import {sizes} from "../../constants/styles";
 //Loading custom fonts --> https://dev.to/edo_begagic/add-custom-fonts-to-react-native-expo-app-54d
 export const styles = StyleSheet.create({
     container: {
@@ -8,11 +8,11 @@ export const styles = StyleSheet.create({
     },
     title: {
         color:'#414141',
-        fontSize: 15,
+        fontSize: sizes.mini.fontSize,
     },
     content: {
         color: '#414141',
-        fontSize: 30
+        fontSize: sizes.large.fontSize
 
     },
 });
