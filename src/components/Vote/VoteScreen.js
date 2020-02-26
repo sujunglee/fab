@@ -106,7 +106,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
           </Modal>
         )}
         <View style={{ padding: 25, maxHeight: 150 }}>
-          <StyledText type="bold" size={23} style={{color:colors.text.primary.main}}>
+          <StyledText size={23} style={{color:colors.text.primary.main}}>
             {roomData.room.meta_data.title}
           </StyledText>
         </View>
@@ -217,13 +217,13 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                 }}
               >
                 <View style={{ alignItems: "center" }}>
-                  <StyledText type="bold" size={20} style={{ paddingTop: 10, color: colors.text.primary.main}}>
+                  <StyledText  size={20} style={{ paddingTop: 10, color: colors.text.secondary.main}}>
                     Option A
                   </StyledText>
                   <VoteButton content="A" onPress={() => handlePress("A")} />
                 </View>
                 <View style={{ alignItems: "center" }}>
-                  <StyledText type="bold" size={20} style={{ paddingTop: 10,  color: colors.text.primary.main }}>
+                  <StyledText size={20} style={{ paddingTop: 10,  color: colors.text.secondary.main }}>
                     Option B
                   </StyledText>
                   <VoteButton content="B" onPress={() => handlePress("B")} />
