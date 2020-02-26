@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react"
-import { View, Text, Image, ScrollView, Modal } from "react-native"
+import { View, Text, Image, ScrollView, Modal, Dimensions } from "react-native"
 import { VoteButton, SkipButton } from "./VoteButton"
 import { SafeAreaView, useSafeArea } from "react-native-safe-area-context"
 import ImageViewer from "react-native-image-zoom-viewer"
@@ -36,7 +36,7 @@ const createChartData = ({
     {
       key: 1,
       amount: competitor,
-      svg: { fill: "#f4f4f4" },
+      svg: { fill: "#D3D3D3" },
       totalNumVoters: totalNumVoters
     }
   ]
@@ -47,6 +47,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
 
   const [voteState, setVoteState] = useState({})
   const [isImageOpen, setIsImageOpen] = useState(false)
+  const deviceWidth = Dimensions.get('window').width
   const [areImagesLoaded, setAreImagesLoaded] = useState({
     A: false,
     B: false
@@ -105,8 +106,9 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
             />
           </Modal>
         )}
-        <View style={{ padding: 25, maxHeight: 150 }}>
-          <StyledText size={23} style={{color:colors.text.primary.main}}>
+        <View style={{ maxHeight: 150 }}>
+          <StyledText type="bold" size={22} style={{color:colors.text.primary.main}}>
+
             {roomData.room.meta_data.title}
           </StyledText>
         </View>
@@ -163,10 +165,10 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
             </View>
           </View>
           {voteState.voteResults ? (
-            <View style={{ flexDirection: "row" }}>
-              <View style={{ flex: 1 }}>
+            <View style={{ display: "flex", flexDirection: "row" }}>
+              <View style={{ alignItems: "center", textAlign: "center", justifyContent: "center", flex: 1 }}>
                 <PieChart
-                  style={{ height: 200 }}
+                  style={{ width: 160, height: 160 }}
                   valueAccessor={({ item }) => item.amount}
                   data={createChartData({
                     influencer: voteState.voteResults.numInfluencersA,
@@ -177,16 +179,26 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                       voteState.voteResults.numNormalA +
                       voteState.voteResults.scoreB
                   })}
-                  spacing={0}
                   outerRadius={"95%"}
+                />
+                <Text
+                    style={{
+                        position: 'absolute',
+                        left: 70,
+                        textAlign: 'center',
+                        fontSize: 30,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: "#dd8300"
+                    }}
                 >
-                  <Labels />
-                </PieChart>
+                {(voteState.voteResults.scoreB / (voteState.voteResults.scoreA + voteState.voteResults.scoreB)).toFixed(2)*100}%
+                </Text>
               </View>
-              <View style={{ flex: 1 }}>
+              <View style={{ alignItems: "center", textAlign: "center", justifyContent: "center", flex: 1 }}>
                 {/*TODO: Factor this out into a clean, separate Chart component*/}
                 <PieChart
-                  style={{ height: 200 }}
+                  style={{ width: 160, height: 160 }}
                   valueAccessor={({ item }) => item.amount}
                   data={createChartData({
                     influencer: voteState.voteResults.numInfluencersB,
@@ -197,12 +209,21 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                       voteState.voteResults.numNormalA +
                       voteState.voteResults.scoreB
                   })}
-                  spacing={0}
                   outerRadius={"95%"}
-                  innerRadius={"45%"}
+                />
+                <Text
+                    style={{
+                        position: 'absolute',
+                        left: 70,
+                        textAlign: 'center',
+                        fontSize: 30,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: "#1563af"
+                    }}
                 >
-                  <Labels />
-                </PieChart>
+                    {(voteState.voteResults.scoreA / (voteState.voteResults.scoreA + voteState.voteResults.scoreB)).toFixed(2)*100}%
+                </Text>
               </View>
             </View>
           ) : areImagesLoaded.A && areImagesLoaded.B ? (
@@ -217,13 +238,16 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                 }}
               >
                 <View style={{ alignItems: "center" }}>
-                  <StyledText  size={20} style={{ paddingTop: 10, color: colors.text.secondary.main}}>
+
+                  <StyledText size={20} style={{ paddingTop: 5, color: colors.text.secondary.main}}>
+
                     Option A
                   </StyledText>
                   <VoteButton content="A" onPress={() => handlePress("A")} />
                 </View>
                 <View style={{ alignItems: "center" }}>
-                  <StyledText size={20} style={{ paddingTop: 10,  color: colors.text.secondary.main }}>
+
+                  <StyledText  size={20} style={{ paddingTop: 5, color: colors.text.secondary.main }}>
                     Option B
                   </StyledText>
                   <VoteButton content="B" onPress={() => handlePress("B")} />
@@ -251,10 +275,13 @@ const YourVote = () => (
       width: "100%",
       alignItems: "center",
       paddingVertical: 8,
-      marignTop: -8
+      marignTop: -8,
+      position: "relative",
+      top: -60
     }}
   >
-    <StyledText style={{ color: colors.primary.main }} type="bold">
+
+    <StyledText style={{ position: "relative", top: -8, color:colors.primary.main}} type="bold">
       YOUR VOTE
     </StyledText>
   </View>
