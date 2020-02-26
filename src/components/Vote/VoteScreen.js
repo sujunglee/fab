@@ -80,6 +80,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
     handleNextRoom()
   }
 
+
   return roomData ? (
     <SafeAreaView style={{ flex: 1 }}>
       <View
@@ -187,7 +188,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                         justifyContent: 'center',
                     }}
                 >
-                    {voteState.voteResults.scoreA / voteState.voteResults.scoreA + voteState.voteResults.scoreB}%
+                {(voteState.voteResults.scoreB / (voteState.voteResults.scoreA + voteState.voteResults.scoreB)).toFixed(2)*100}%
                 </Text>
               </View>
               <View style={{ textAlign: "center", justifyContent: "center", flex: 1 }}>
@@ -216,7 +217,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                         justifyContent: 'center',
                     }}
                 >
-                    {voteState.voteResults.scoreA / voteState.voteResults.scoreA + voteState.voteResults.scoreB}%
+                    {(voteState.voteResults.scoreA / (voteState.voteResults.scoreA + voteState.voteResults.scoreB)).toFixed(2)*100}%
                 </Text>
               </View>
             </View>
