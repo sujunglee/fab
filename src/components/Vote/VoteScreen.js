@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import React, { useState, useContext} from "react"
-=======
-import React, { useState, useEffect } from "react"
->>>>>>> 6b49decc357dc7d9e23f573e2a25c3e07ba49b75
+import React, { useState, useEffect, useContext } from "react"
 import { View, Text, Image, ScrollView, Modal } from "react-native"
 import { VoteButton, SkipButton } from "./VoteButton"
 import { SafeAreaView, useSafeArea } from "react-native-safe-area-context"
