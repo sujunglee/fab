@@ -6,7 +6,7 @@ import ImageViewer from "react-native-image-zoom-viewer"
 import { StyledText } from "../StyledText"
 import { useNavigation } from "@react-navigation/native"
 import updateVotes from "../../db/updateVotes"
-import { colors,fontSize } from "../../constants/styles"
+import {colors, fontSize, sizes} from "../../constants/styles"
 import { PieChart } from "react-native-svg-charts"
 import Labels from "../../components/Labels"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
@@ -192,7 +192,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                         color: "#dd8300"
                     }}
                 >
-                {(voteState.voteResults.scoreB / (voteState.voteResults.scoreA + voteState.voteResults.scoreB)).toFixed(2)*100}%
+                {((voteState.voteResults.scoreB / (voteState.voteResults.scoreA + voteState.voteResults.scoreB))*100).toFixed()}%
                 </Text>
               </View>
               <View style={{ alignItems: "center", textAlign: "center", justifyContent: "center", flex: 1 }}>
@@ -222,7 +222,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                         color: "#1563af"
                     }}
                 >
-                    {(voteState.voteResults.scoreA / (voteState.voteResults.scoreA + voteState.voteResults.scoreB)).toFixed(2)*100}%
+                    {((voteState.voteResults.scoreA / (voteState.voteResults.scoreA + voteState.voteResults.scoreB))*100).toFixed()}%
                 </Text>
               </View>
             </View>
@@ -271,7 +271,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
 const YourVote = () => (
   <View
     style={{
-      backgroundColor: colors.general.white,
+      backgroundColor: colors.secondary.main,
       width: "100%",
       alignItems: "center",
       paddingVertical: 8,
@@ -281,7 +281,7 @@ const YourVote = () => (
     }}
   >
 
-    <StyledText style={{ position: "relative", top: -8, color:colors.primary.main}} type="bold">
+    <StyledText size={sizes.medium.fontSize} type={'regular'} style={{ position: "relative", top: -8, color:colors.general.white}} >
       YOUR VOTE
     </StyledText>
   </View>
