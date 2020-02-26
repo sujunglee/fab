@@ -163,7 +163,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
           </View>
           {voteState.voteResults ? (
             <View style={{ display: "flex", flexDirection: "row" }}>
-              <View style={{ textAlign: "center", justifyContent: "center", flex: 1 }}>
+              <View style={{ alignItems: "center", textAlign: "center", justifyContent: "center", flex: 1 }}>
                 <PieChart
                   style={{ width: 160, height: 160 }}
                   valueAccessor={({ item }) => item.amount}
@@ -181,7 +181,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                 <Text
                     style={{
                         position: 'absolute',
-                        left: 160/3,
+                        left: 70,
                         textAlign: 'center',
                         fontSize: 30,
                         alignItems: 'center',
@@ -191,7 +191,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                 {(voteState.voteResults.scoreB / (voteState.voteResults.scoreA + voteState.voteResults.scoreB)).toFixed(2)*100}%
                 </Text>
               </View>
-              <View style={{ textAlign: "center", justifyContent: "center", flex: 1 }}>
+              <View style={{ alignItems: "center", textAlign: "center", justifyContent: "center", flex: 1 }}>
                 {/*TODO: Factor this out into a clean, separate Chart component*/}
                 <PieChart
                   style={{ width: 160, height: 160 }}
@@ -210,7 +210,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                 <Text
                     style={{
                         position: 'absolute',
-                        left: 160/3,
+                        left: 70,
                         textAlign: 'center',
                         fontSize: 30,
                         alignItems: 'center',
