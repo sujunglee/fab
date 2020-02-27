@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useContext } from "react"
-import { View, Text, Image, ScrollView, Modal, Dimensions } from "react-native"
-import {PieChart} from "react-native-svg-charts";
+import React, { useState, useEffect } from "react"
+import { View, Image, Modal } from "react-native"
 import PropTypes from 'prop-types';
 import ImageViewer from "react-native-image-zoom-viewer";
 import {TouchableWithoutFeedback} from "react-native-gesture-handler";
-import VotingChart from "../VotingChart/VotingChart";
 import {colors, sizes} from "../../constants/styles";
 import {StyledText} from "../StyledText";
 

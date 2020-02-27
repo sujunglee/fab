@@ -1,16 +1,10 @@
-import React, { useState, useEffect, useContext } from "react"
-import { View, Text, Image, ScrollView, Modal, Dimensions } from "react-native"
+import React, { useState } from "react"
+import { View, Text, Dimensions } from "react-native"
 import { VoteButton, SkipButton } from "./VoteButton"
-import { SafeAreaView, useSafeArea } from "react-native-safe-area-context"
-import ImageViewer from "react-native-image-zoom-viewer"
+import { SafeAreaView } from "react-native-safe-area-context"
 import { StyledText } from "../StyledText"
-import { useNavigation } from "@react-navigation/native"
 import updateVotes from "../../db/updateVotes"
 import {colors, normalize, sizes} from "../../constants/styles"
-import { PieChart } from "react-native-svg-charts"
-import Labels from "../../components/Labels"
-import { TouchableWithoutFeedback } from "react-native-gesture-handler"
-import {AppContext} from "../../context/AppContext";
 import CountDown from "../countdown/CountDown";
 import moment from "moment";
 import {VotingChart} from "../VotingChart";
@@ -25,7 +19,6 @@ function getRndInteger(min, max) {
 const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
 
   const [voteState, setVoteState] = useState({});
-  const [isImageOpen, setIsImageOpen] = useState(false);
   const deviceWidth = Dimensions.get('window').width;
   const [areImagesLoaded, setAreImagesLoaded] = useState(false);
 
