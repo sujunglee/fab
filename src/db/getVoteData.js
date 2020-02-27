@@ -1,5 +1,5 @@
 import db from "./init"
-
+///might want to delete and just use getRoomData
 const getVoteData = async ({roomID}) => {
     const snapshot = await db.ref("rooms/active/" + roomID).once("value")
     console.log("SNAPSHOT: ", snapshot.val())

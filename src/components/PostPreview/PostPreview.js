@@ -6,10 +6,16 @@ import getRoomData from "../../db/getRoomData"
 import { useNavigation } from "@react-navigation/native"
 import { StyledText } from "../StyledText"
 
+const winnerPicture = ({postData}) =>{
+  return (postData.scoreA >= postData.scoreB) ? postData.pictureA : postData.pictureB;
+}
+
+
 const PostPreview = ({ roomID, userInfo }) => {
   const navigation = useNavigation()
 
   const [postData, setPostData] = useState({})
+
 
   useEffect(() => {
     const getPostData = async () => {
@@ -19,6 +25,7 @@ const PostPreview = ({ roomID, userInfo }) => {
         ...data,
         createdAt: createdAt
       })
+
     }
 
     getPostData()
@@ -36,7 +43,7 @@ const PostPreview = ({ roomID, userInfo }) => {
       underlayColor="#F4F4F4"
     >
       <View style={styles.innerContainer}>
-        <Image source={{ uri: postData.pictureA }} style={styles.image} />
+        <Image source={{ uri: winnerPicture({postData:postData})}} style={styles.image} />
         <View style={styles.textWrapper}>
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.timeText}>{postData.createdAt}</Text>
