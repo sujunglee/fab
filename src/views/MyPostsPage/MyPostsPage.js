@@ -13,55 +13,12 @@ const MyPostsPage = () => {
   console.log(user);
 
   return isLoggedIn ? (
-
     <SafeAreaView style={{ flex: 1 }}>
-
       <View style={{ backgroundColor: colors.general.white, flex: 1 }}>
-        <View style={{ flexDirection: "row", backgroundColor: colors.general.white, paddingTop: "15%", paddingBottom: 10, paddingLeft: 15 }}>
-          <View style={{ flex: 1 }}>
-            <StyledText size={sizes.xlarge.fontSize} style={{ color: colors.text.secondary.main }}>
-              My Stats
-              </StyledText>
-            <StyledText size={sizes.xlarge.fontSize} style={{ color: colors.text.secondary.main }}>
-              <Badge badge = {user.meta_data.badge} />
-            </StyledText>
-          </View>
-          <View style={{ flex: 1 }}>
-            <View style={{ flexDirection: "row" }}>
-              <StyledText size={sizes.medium.fontSize} style={{ color: colors.text.secondary.main }}>
-                Posts
-              </StyledText>
-              <StyledText size={sizes.large.fontSize} style={{ color: colors.text.secondary.main, paddingLeft: 5 }}>
-                {Object.keys(user.rooms_owned).length}
-              </StyledText>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <StyledText size={sizes.medium.fontSize} style={{ color: colors.text.secondary.main }}>
-                Votes
-              </StyledText>
-              <StyledText size={sizes.large.fontSize} style={{ color: colors.primary.light, paddingLeft: 5 }}>
-                {user.meta_data.number_voted}
-              </StyledText>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <View>
-                <StyledText size={sizes.medium.fontSize} style={{ color: colors.text.secondary.main }}>
-                  Percent
-              </StyledText>
-                <StyledText size={sizes.medium.fontSize} style={{ color: colors.text.secondary.main }}>
-                  Correct
-              </StyledText>
-              </View>
-              <StyledText size={sizes.large.fontSize} style={{ color: colors.primary.light, paddingLeft: 5 }}>
-                {Math.ceil(user.meta_data.number_correct * 100 / user.meta_data.number_voted)}%
-              </StyledText>
-            </View>
-          </View>
-        </View>
+        <UserStats user={user} />
         <ScrollView>
           {Object.keys(user.rooms_owned).map(roomID => (
             <PostPreview roomID={roomID} user={user} key={roomID} />
-
           ))}
         </ScrollView>
       </View >
@@ -73,6 +30,25 @@ const MyPostsPage = () => {
     )
 };
 
+
+const UserStats = ({ user }) => (
+  <View style={{ flexDirection: "row", backgroundColor: colors.general.white, paddingTop: "15%", paddingBottom: 10, paddingLeft: '8%', paddingRight: '8%' }}>
+    <View style={{ flex: 1 }}>
+      <StyledText size={sizes.xlarge.fontSize} style={{ color: colors.text.secondary.light }}>
+        My Stats
+              </StyledText>
+      <StyledText size={sizes.xlarge.fontSize} style={{ color: colors.text.secondary.main }}>
+        <Badge badge={user.meta_data.badge} />
+      </StyledText>
+    </View>
+    <View style={{ flex: 1 }}>
+      <PostCount count={Object.keys(user.rooms_owned).length} />
+      <VoteCount count={user.meta_data.number_voted} />
+      <PercentCorrect percent={Math.ceil(user.meta_data.number_correct * 100 / user.meta_data.number_voted)} />
+    </View>
+  </View>
+)
+
 const Badge = ({ badge }) => {
   if (badge === 'influencer')
     return (
@@ -82,6 +58,52 @@ const Badge = ({ badge }) => {
     )
   return null;
 }
+
+const PostCount = ({ count }) => (
+  <View style={{ flexDirection: "row", borderBottomColor: colors.text.secondary.light, borderBottomWidth: 1 }}>
+    <View style={{ width: '50%' }}>
+      <StyledText size={sizes.medium.fontSize} style={{ color: colors.text.secondary.main, textAlign: "right", paddingRight: 5 }}>
+        Posts
+      </StyledText>
+    </View>
+    <StyledText size={sizes.large.fontSize} style={{ color: colors.text.secondary.main, paddingLeft: 5 }}>
+      {count}
+    </StyledText>
+  </View>
+)
+
+const VoteCount = ({ count }) => (
+  <View style={{ flexDirection: "row", paddingTop: 5 }}>
+    <View style={{ width: '50%' }}>
+      <StyledText size={sizes.medium.fontSize} style={{ color: colors.text.secondary.main, textAlign: "right", paddingRight: 5 }}>
+        Votes
+    </StyledText>
+    </View>
+    <StyledText size={sizes.large.fontSize} style={{ color: colors.primary.light, paddingLeft: 5 }}>
+      {count}
+    </StyledText>
+  </View>
+)
+
+const PercentCorrect = ({ percent }) => (
+  <View style={{ flexDirection: "row" }}>
+    <View style={{ width: '50%' }}>
+      <StyledText size={sizes.medium.fontSize} style={{ color: colors.text.secondary.main, lineHeight: 15, paddingTop: 5, textAlign: "right", paddingRight: 5 }}>
+        Percent Correct
+      </StyledText>
+    </View>
+    <View style={{ flexDirection: "row", position: "relative" }}>
+      <View style={{ flexDirection: "row" }}>
+        <StyledText size={sizes.large.fontSize} style={{ color: colors.primary.light, paddingLeft: 5 }}>
+          {percent}
+        </StyledText>
+        <StyledText size={sizes.medium.fontSize} style={{ color: colors.primary.light, bottom: 0 }}>
+          %
+    </StyledText>
+      </View>
+    </View>
+  </View>
+)
 
 
 export default MyPostsPage
