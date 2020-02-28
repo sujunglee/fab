@@ -90,14 +90,14 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
 
                     Option A
                   </StyledText>
-                  <VoteButton content="A" onPress={() => handlePress("A")} />
+                  <VoteButton content="A" onPress={() => handlePress("optionA")} />
                 </View>
                 <View style={{ alignItems: "center" }}>
 
                   <StyledText  size={20} style={{ paddingTop: 5, color: colors.text.secondary.main }}>
                     Option B
                   </StyledText>
-                  <VoteButton content="B" onPress={() => handlePress("B")} />
+                  <VoteButton content="B" onPress={() => handlePress("optionB")} />
                 </View>
               </View>
               <SkipButton onPress={handleSkip} style={{ marginTop: normalize(8), marginBottom:normalize(8) }} />

@@ -84,7 +84,7 @@ const RoomImages = ({roomData,selectedOption, imageLoadCallback}) =>{
                             resizeMode="contain"
                         />
                     </TouchableWithoutFeedback>
-                    {selectedOption === "A" && <YourVote />}
+                    {selectedOption === "optionA" && <YourVote />}
                 </View>
                 <View
                     style={{ alignItems: "center", flex: 1, marginHorizontal: 4 }}
@@ -106,7 +106,7 @@ const RoomImages = ({roomData,selectedOption, imageLoadCallback}) =>{
                             resizeMode="contain"
                         />
                     </TouchableWithoutFeedback>
-                    {selectedOption === "B" && <YourVote />}
+                    {selectedOption === "optionB" && <YourVote />}
                 </View>
             </View>
 
