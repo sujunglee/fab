@@ -9,9 +9,20 @@ const addVote = async ({roomID, selection, userID, badge}) =>{
     return 0;
 };
 
+const incVoteCount = ({roomID, userID}) => {
+    let dbRef = db.ref(`users/${userID}/meta_data/number_voted`);
+    dbRef.transaction((counter) => {
+        return counter + 1 
+    
+    }).catch((error) => {
+        console.log("incVoteCount failed: " + error.message)
+    });
+}
+
 
 const updateVotes = async ({roomID, selection, userID, badge}) => {
     const voted = await addVote({roomID:roomID, selection:selection, userID: userID, badge:badge})
+    incVoteCount({roomID:roomID, userID:userID})
     const snapshot = await db.ref(`rooms/active/${roomID}`).once("value")
     const numInfluencersA = Object.keys(snapshot.val().optionA.voters_influencer)
         .length

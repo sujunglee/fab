@@ -10,12 +10,22 @@ const MyPostsPage = () => {
   // const navigation = useNavigation()
   const userID = "jbrain98";
   const { user, isLoggedIn } = useContext(AppContext);
+  const [userInfo, setUserInfo] = useState(null)
   console.log(user);
 
-  return isLoggedIn ? (
+  useEffect(() => {
+    const getUser = async () => {
+      const v = await getUserInfo({ userID: userID })
+      setUserInfo(v)
+    }
+    getUser()
+  }, [])
+
+
+  return (isLoggedIn && userInfo)? (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ backgroundColor: colors.general.white, flex: 1 }}>
-        <UserStats user={user} />
+        <UserStats user={userInfo} />
         <ScrollView>
           {Object.keys(user.rooms_owned).map(roomID => (
             <PostPreview roomID={roomID} user={user} key={roomID} />
