@@ -5,8 +5,10 @@ import getUserInfo from "../../db/getUserInfo"
 import { StyledText } from "../../components/StyledText"
 import { AppContext } from "../../context/AppContext";
 import { colors, normalize, sizes } from "../../constants/styles";
+import db from "../../db/init"
 
 const MyPostsPage = () => {
+
   // const navigation = useNavigation()
   const userID = "jbrain98";
   const { user, isLoggedIn } = useContext(AppContext);
@@ -14,20 +16,19 @@ const MyPostsPage = () => {
   console.log(user);
 
   useEffect(() => {
-    const getUser = async () => {
-      const v = await getUserInfo({ userID: userID })
-      setUserInfo(v)
+    const handleData = snap => {
+      if (snap.val()) setUserInfo(snap.val());
     }
-    getUser()
-  }, [])
-
+    db.ref("users/" + userID).on('value', handleData, error => alert(error));
+    return () => { db.ref("users/" + userID).off('value', handleData); };
+  }, []);
 
   return (isLoggedIn && userInfo)? (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ backgroundColor: colors.general.white, flex: 1 }}>
         <UserStats user={userInfo} />
         <ScrollView>
-          {Object.keys(user.rooms_owned).map(roomID => (
+          {Object.keys(userInfo.rooms_owned).map(roomID => (
             <PostPreview roomID={roomID} user={user} key={roomID} />
           ))}
         </ScrollView>
