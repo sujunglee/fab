@@ -1,13 +1,12 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {TouchableOpacity, StyleSheet, View, Image, TouchableWithoutFeedback} from 'react-native';
-import {colors, sizes} from "../../../constants/styles";
+import React from 'react';
+import { StyleSheet, View, TouchableWithoutFeedback} from 'react-native';
 
 const ShootPictureButton = ({camera, shootPictureCallBack}) =>{
 
 
 
     const handleShortCapture = async () => {
-        const photoData = await camera.takePictureAsync();
+        const photoData = await camera.current.takePictureAsync();
         shootPictureCallBack({photoData:photoData});
     };
 

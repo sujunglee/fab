@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {TouchableOpacity, StyleSheet, View} from 'react-native';
+import React from 'react';
+import {TouchableOpacity} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import {colors, sizes} from "../../../constants/styles";
 

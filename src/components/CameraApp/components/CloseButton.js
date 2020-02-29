@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { Ionicons } from '@expo/vector-icons';
 import {sizes} from "../../../constants/styles";
 
-const CloseButton =({closeCallBack, style})=>{
+const CloseButton =({closeCallBack})=>{
 
     return (
         <TouchableOpacity

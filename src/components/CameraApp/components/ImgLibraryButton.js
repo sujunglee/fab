@@ -1,11 +1,10 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState} from 'react';
 import {TouchableOpacity, StyleSheet, View, Image,StatusBar} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import {colors, sizes} from "../../../constants/styles";
 import * as ImagePicker from 'expo-image-picker';
-import {useNavigation} from '@react-navigation/native';
 
-const ImgLibaryButton = ({imgPreview, imgPickedCallback}) => {
+const ImgLibraryButton = ({imgPreview, imgPickedCallback,outfitOption}) => {
     const [previewLoaded, setPreviewLoaded] = useState(false);
 
     const handleClick = async () => {
@@ -67,4 +66,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default ImgLibaryButton;
+export default ImgLibraryButton;
