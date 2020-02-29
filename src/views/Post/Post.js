@@ -2,12 +2,10 @@ import React,{useEffect} from "react"
 import { View, Text ,Button} from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import {CameraApp} from "../../components/CameraApp";
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator,CardStyleInterpolators, StackCardInterpolationProps } from '@react-navigation/stack';
 import { useNavigation } from "@react-navigation/native"
 import {cameraHeaderStyle} from './PostStyles'
 const Stack = createStackNavigator();
-
-
 
 
 // The actual post page
@@ -25,13 +23,18 @@ const PostPage = ({route}) =>{
 };
 
 
-
-
 const Post = () => {
   return (
-        <Stack.Navigator initialRouteName={"PostPage"} screenOptions={{headerShown: false}}>
+        <Stack.Navigator gestureDirection="vertical"
+                         initialRouteName={"PostPage"}
+                         screenOptions={
+                             {
+                                 headerShown: false,
+                                 cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS
+                             }
+                         }>
             <Stack.Screen  name="PostPage" component={PostPage} />
-            <Stack.Screen name="CameraApp" component={CameraApp} options={cameraHeaderStyle} />
+            <Stack.Screen name="CameraApp" component={CameraApp}  />
         </Stack.Navigator>
   )
 };
