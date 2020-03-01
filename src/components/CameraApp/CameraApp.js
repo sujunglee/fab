@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {useState, useEffect, useRef} from 'react';
-import {View, Text, StatusBar, TouchableOpacity, ImageBackground, StyleSheet} from 'react-native';
+import {View, Text, StatusBar, TouchableOpacity, ImageBackground, StyleSheet, Image} from 'react-native';
 import {Camera} from 'expo-camera';
 import * as Permissions from 'expo-permissions';
 import {useNavigation} from '@react-navigation/native';
@@ -20,6 +20,9 @@ import {CAMERA_TYPES,CAMERA_FLASH_MODES} from "./constants"
 const CameraApp = ({route}) => {
     const navigation = useNavigation();
     const outfitOption = route.params.outfitOption;
+    const pictureCallBack = route.params.testFunction;
+
+    pictureCallBack;
 
     // will hold reference to actual camera component
     const camera = useRef(null);
@@ -142,7 +145,6 @@ const CameraApp = ({route}) => {
         setPictureTaken(null);
     };
 
-
     return (
 
         <SafeAreaView style={{flex: 1, borderRadius: 20, backgroundColor: colors.general.black, overflow: 'hidden'}}>
@@ -179,6 +181,7 @@ const CameraApp = ({route}) => {
                         }}>
 
                             <ImgLibraryButton imgPreview={imgPreview} imgPickedCallback={imgPickedCallback} outfitOption={outfitOption}/>
+
                             <ShootPictureButton camera={camera} shootPictureCallBack={shootPictureCallBack}/>
                             <FlipCameraButton cameraFlipCallBack={cameraFlipCallBack}/>
 
