@@ -10,18 +10,17 @@ const db = fb.database();
  * @param optionA_uri
  * @param optionB_uri
  */
-const _createRoom = async ({userId, time_created, title, optionA_uri, optionB_uri}) => {
+const _createRoom = async ({userId, time_created, title, outfitA_url, outfitB_url}) => {
 
     const meta_data = {owner: userId, time_created: time_created, title: title};
-    const optionA = {picture: optionA_uri};
-    const optionB = {picture: optionB_uri};
+    const optionA = {picture: outfitA_url};
+    const optionB = {picture: outfitB_url};
 
     // push creates a uniqueId when it creates the entry.
-    let newRoomInfo = await db.ref("rooms/active/").push().set({meta_data, optionA, optionB});
+    let newPostRef = await db.ref("rooms/active/").push();
+    await newPostRef.set({meta_data, optionA, optionB});
 
-    console.log("INFO");
-    console.log(newRoomInfo);
-    return newRoomInfo.key;
+    return newPostRef.key;
 };
 
 
@@ -34,15 +33,15 @@ const _createRoom = async ({userId, time_created, title, optionA_uri, optionB_ur
  * @see https://gist.github.com/anantn/4323967
  */
 const _addUserInfo = ({userId, roomId, time_created}) =>{
-   let dbRef =  db.ref(`users`).child(userId);
-    dbRef.transaction((userInfo)=>{
+   let dbRef =  db.ref('users').child(userId);
+    dbRef.transaction((userInfo)=> {
         // if user exists
         if (userInfo){
                 userInfo['rooms_owned'][roomId] = {time_created: time_created};
-                return;
+                return userInfo;
         // if user does not exist
         }else{
-            let meta_data = {badge:BADGES.NORMAL, number_correct:0, number_voted:0,time_created: timeCreated}
+            let meta_data = {badge:BADGES.NORMAL, number_correct:0, number_voted:0,time_created};
             let rooms_owned = {[roomId]:time_created};
             return {meta_data,rooms_owned}
         }
@@ -50,10 +49,11 @@ const _addUserInfo = ({userId, roomId, time_created}) =>{
 };
 
 
-const createRoom = async ({userId, time_created, title, optionA_uri, optionB_uri})=>{
-    let roomId = await _createRoom({userId, time_created, title, optionA_uri, optionB_uri});
-    console.log(roomId)
-    //_addUserInfo({userId,time_created,roomId});
+const createRoom = async ({userId, time_created, title, outfitA_url, outfitB_url})=>{
+
+    let roomId = await _createRoom({userId, time_created, title, outfitA_url, outfitB_url});
+    _addUserInfo({userId,time_created,roomId});
+
     return roomId;
 };
 

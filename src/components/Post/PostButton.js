@@ -17,26 +17,29 @@ const _isExist = (key) =>{
 
 const PostButton = ({title,outfitA,outfitB})=>{
 
-    const [outfitUrls, setOutfitUrls] = useState({'A':null, 'B':null});
+    const [outfitA_url, setOutfitA_url] = useState(null);
+    const [outfitB_url, setOutfitB_url] = useState(null);
     const [urlsLoaded, setUrlsLoaded] = useState(false);
-    const currInstant = moment().toISOString();
     const deviceId = Constants.deviceId;
 
-    const uploadCallback = ({outfit,url}) =>{
-        if (outfit==='A'){
-            setOutfitUrls({...outfitUrls,'A':url})
-        }
-        if (outfit==='B'){
-            setOutfitUrls({...outfitUrls,'B':url})
-        }
-    };
 
     useEffect(()=>{
-        if ((outfitUrls.A!==null && outfitUrls.B!==null) && (urlsLoaded===false)){
+        if ((outfitA_url!==null && outfitB_url!==null) && (!urlsLoaded)){
             setUrlsLoaded(true);
+            console.log('Uploading new values to Db')
+            // upload data to Db
+            const currInstant = moment().toISOString();
+            createRoom({userId: deviceId, time_created: currInstant, title,outfitA_url, outfitB_url})
         }
-    },[outfitUrls.A, outfitUrls.B]);
+    },[outfitA_url, outfitB_url]);
 
+    const uploadCallback_A = ({url}) =>{
+        setOutfitA_url(url)
+    };
+
+    const uploadCallback_B = ({url}) =>{
+        setOutfitB_url(url)
+    };
 
     const handlePress = async () => {
         if (!_isExist(outfitA) && !_isExist(outfitB)) {
@@ -46,15 +49,9 @@ const PostButton = ({title,outfitA,outfitB})=>{
         } else if (!_isExist(outfitA) && _isExist(outfitB)) {
             alert("Please select a picture for option A.");
         } else {
-
-            // Upload the images to firebase storage and capture the urls
-             await uploadImage({uri: outfitA.uri, uploadCallback, outfit: 'A'});
-             await uploadImage({uri: outfitB.uri, uploadCallback, outfit: 'B'});
-
-            //let optionB_uri = await uploadImage(outfitB);
-
-            // upload data to Db
-           // createRoom({userId: deviceId, time_created: currInstant, title, optionA_uri, optionB_uri})
+              // Upload the images to firebase storage and capture the urls
+              uploadImage({uri: outfitA.uri, uploadCallback:uploadCallback_A});
+              uploadImage({uri: outfitB.uri, uploadCallback:uploadCallback_B});
         }
     };
 
@@ -82,5 +79,9 @@ const styles =  StyleSheet.create({
     }
 });
 
+
+PostButton.defaultProps = {
+    title: "Scoopdi woop poop"
+};
 
 export default PostButton;
