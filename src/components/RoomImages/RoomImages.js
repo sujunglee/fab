@@ -6,6 +6,8 @@ import {TouchableWithoutFeedback} from "react-native-gesture-handler";
 import {colors, sizes} from "../../constants/styles";
 import {StyledText} from "../StyledText";
 
+let x = 'https://firebasestorage.googleapis.com/v0/b/fabapp-a1ea0.appspot.com/o/my-image.jpg?alt=media&token=995d6347-0435-41ac-96e1-91106786ab2c'
+
 const YourVote = () => (
     <View
         style={{

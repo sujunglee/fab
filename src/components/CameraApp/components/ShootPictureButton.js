@@ -6,7 +6,7 @@ const ShootPictureButton = ({camera, shootPictureCallBack}) =>{
 
 
     const handleShortCapture = async () => {
-        const photoData = await camera.current.takePictureAsync();
+        const photoData = await camera.current.takePictureAsync({base64:true});
         shootPictureCallBack({photoData:photoData});
     };
 
