@@ -7,8 +7,6 @@ import {Camera} from "expo-camera";
 
 
 const FlashButton = ({cameraFlashModeIdx,cameraFlashModeCallBack})=>{
-    console.log(cameraFlashModeIdx)
-    console.log("heyyy")
     return(
         <TouchableOpacity
             onPress={cameraFlashModeCallBack}
