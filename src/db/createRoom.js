@@ -7,8 +7,8 @@ const db = fb.database();
  * @param userId - the deviceId
  * @param time_created - iso 8601 formatted
  * @param title
- * @param optionA_uri
- * @param optionB_uri
+ * @param outfitA_url
+ * @param outfitB_url
  */
 const _createRoom = async ({userId, time_created, title, outfitA_url, outfitB_url}) => {
 
