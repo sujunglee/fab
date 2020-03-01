@@ -2,12 +2,13 @@ import React, { useEffect, useState, useContext} from "react"
 import { View, Text } from "react-native"
 import VoteScreen from "../../components/Vote/VoteScreen"
 import { SafeAreaView } from "react-native-safe-area-context"
-import db from "../../db/init"
+import fb from "../../db/init"
 import { getUserBadge } from "../../db/userBadge"
 import { StyledText } from "../../components/StyledText"
 import { colors } from "../../constants/styles"
 import {AppContext} from "../../context/AppContext";
 import {CountDown} from "../../components/countdown/";
+const db = fb.database();
 
 const getTotalNumVoters = room => {
   const optAInfluencers = Object.keys(room.optionA.voters_influencer).length

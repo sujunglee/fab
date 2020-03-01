@@ -57,9 +57,6 @@ const CountDown = ({finishTime, isFinished}) => {
         </View>
     );
 };
-
-export default CountDown;
-
 CountDown.defaultProps = {
     finishTime: moment().add({'seconds': 30}).toISOString()
 };
@@ -67,3 +64,6 @@ CountDown.defaultProps = {
 CountDown.propTypes = {
     isFinished: PropTypes.func.isRequired,
 };
+
+export default CountDown;
+

@@ -1,4 +1,6 @@
-import db from "./init"
+import fb from "./init"
+const db = fb.database();
+
 ///might want to delete and just use getRoomData
 const getVoteData = async ({roomID}) => {
     const snapshot = await db.ref("rooms/active/" + roomID).once("value")

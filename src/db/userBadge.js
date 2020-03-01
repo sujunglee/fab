@@ -1,4 +1,5 @@
-import db from "./init"
+import fb from "./init"
+const db = fb.database();
 
 const getUserBadge = async ({userID}) => {
     const snapshot = await db.ref("users/" + userID + "/meta_data/badge").once("value");

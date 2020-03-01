@@ -1,4 +1,5 @@
-import db from "./init"
+import fb from "./init"
+const db = fb.database();
 
 const getRoomData = async ({roomID}) => {
     const snapshot = await db.ref("rooms/active/" + roomID).once("value")

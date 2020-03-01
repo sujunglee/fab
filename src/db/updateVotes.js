@@ -1,4 +1,5 @@
-import db from "./init"
+import fb from "./init"
+const db = fb.database();
 
 const addVote = async ({roomID, selection, userID, badge}) =>{
     const rank = (badge=="influencer") ? 'voters_influencer' : 'voters_normal';

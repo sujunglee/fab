@@ -15,6 +15,14 @@ import ImgLibraryButton from "./components/ImgLibraryButton";
 import ShootPictureButton from "./components/ShootPictureButton";
 import FlipCameraButton from "./components/FlipCameraButton";
 import {CAMERA_TYPES,CAMERA_FLASH_MODES} from "./constants"
+import {
+  Ionicons,
+  MaterialIcons,
+  Foundation,
+  MaterialCommunityIcons,
+  Octicons
+} from '@expo/vector-icons';
+
 
 
 const CameraApp = ({route}) => {
@@ -32,7 +40,7 @@ const CameraApp = ({route}) => {
 
     const [pictureTaken, setPictureTaken] = useState(null);
     const [imgPreview, setImgPreview] = useState(null);
-
+    const [isLibraryImg, setIsLibraryImg] = useState(false);
 
     useEffect(() => {
 
@@ -98,11 +106,12 @@ const CameraApp = ({route}) => {
     /*
     Called when close
      */
-    const handleClose = ({uri}) => {
+    const handleClose = ({uri,base64}) => {
         try {
             navigation.navigate('PostPage', {
                 outfitOption,
-                uri
+                uri,
+                base64
             })
         } finally {
 
@@ -117,8 +126,9 @@ const CameraApp = ({route}) => {
     };
 
 
-    const imgPickedCallback = ({uri})=>{
-        handleClose({uri})
+    const imgPickedCallback = (photoData)=>{
+         setPictureTaken(photoData);
+         setIsLibraryImg(true);
     };
 
 
@@ -135,11 +145,12 @@ const CameraApp = ({route}) => {
     };
 
     const usePhotoCallBack =()=>{
-        handleClose({uri:pictureTaken.uri});
+        handleClose(pictureTaken);
     };
 
     const retakePhotoCallBack = ()=>{
         setPictureTaken(null);
+        setIsLibraryImg(false);
     };
 
 
@@ -156,6 +167,8 @@ const CameraApp = ({route}) => {
                         </ImageBackground>
                         :
                     <Camera
+                        ratio={'4:3'}
+                        autoFocus={Camera.Constants.AutoFocus.on}
                         zoom={0}
                         flashMode={CAMERA_FLASH_MODES[cameraFlashModeIdx]}
                         type={CAMERA_TYPES[cameraTypeIdx]}
@@ -203,7 +216,7 @@ const CameraApp = ({route}) => {
                         alignSelf: 'flex-start',
                         height: '100%',
                         marginRight: sizes.mini.fontSize
-                    }}>Retake</StyledText>
+                    }}>{isLibraryImg? 'Cancel': 'Retake'}</StyledText>
                 </TouchableOpacity>
             </View>}
 

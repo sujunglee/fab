@@ -9,11 +9,11 @@ const ImgLibraryButton = ({imgPreview, imgPickedCallback,outfitOption}) => {
 
     const handleClick = async () => {
         StatusBar.setBarStyle('default', true);
-        let pickerResult = await ImagePicker.launchImageLibraryAsync();
+        let pickerResult = await ImagePicker.launchImageLibraryAsync({base64:true});
         if (pickerResult.cancelled===true){
             StatusBar.setBarStyle('light-content', true);
         }else{
-            imgPickedCallback({uri:pickerResult.uri})
+            imgPickedCallback(pickerResult)
         }
     };
 
