@@ -1,21 +1,76 @@
-import React from "react"
-import { View, Text } from "react-native"
+import React,{useEffect,useState} from "react"
+import { View, Text ,Button} from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
+import {CameraApp} from "../../components/CameraApp";
+import { createStackNavigator,CardStyleInterpolators } from '@react-navigation/stack';
+import { useNavigation } from "@react-navigation/native"
+const Stack = createStackNavigator();
+
+
+// The actual post page
+const PostPage = ({route}) =>{
+
+    const [outfitA_uri, setOutfitA_uri] = useState(null);
+    const [outfitB_uri, setOutfitB_uri] = useState(null);
+    const navigation = useNavigation();
+
+
+    useEffect(()=>{
+       // Set the tabbar to visible just in case
+        navigation.setOptions({
+            tabBarVisible: true
+        });
+
+        // get the uri for optionA or optionB from the camera
+        if (route.params !== undefined){
+            if (route.params.outfitOption==='A'){
+                console.log(route.params.uri);
+                setOutfitA_uri(route.params.uri);
+            }
+            if (route.params.outfitOption==='B'){
+                 console.log(route.params.uri);
+                setOutfitB_uri(route.params.uri);
+            }
+        }
+
+    },[route]);
+
+
+    return(
+        <SafeAreaView>
+            <Text> My post page</Text>
+            <Button
+                title="Go to Camera for A"
+                onPress={() => navigation.navigate('CameraApp', {outfitOption: 'A'})}
+                />
+
+                <Button
+                title="Go to Camera for B"
+                onPress={() => navigation.navigate('CameraApp', {outfitOption: 'B'})}
+                />
+        </SafeAreaView>
+    )
+};
+
 
 const Post = () => {
   return (
-    <SafeAreaView>
-      <View
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100%"
-        }}
-      >
-        <Text>This is the Post screen</Text>
-      </View>
-    </SafeAreaView>
+        <Stack.Navigator gestureDirection="vertical"
+                         initialRouteName={"PostPage"}
+                         screenOptions={
+                             {
+                                 gestureDirection:'vertical-inverted',
+                                 gestureEnabled:true,
+                                 headerShown: false,
+                                 cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS
+                             }
+                         }>
+            <Stack.Screen  name="PostPage" component={PostPage} />
+            <Stack.Screen name="CameraApp" component={CameraApp}  />
+        </Stack.Navigator>
   )
-}
+};
+
+
 
 export default Post

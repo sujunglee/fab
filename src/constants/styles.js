@@ -60,6 +60,7 @@ export const colors = {
         }
     },
     general: {
-        white: '#F4F4F4'
+        white: '#F4F4F4',
+        black: '#323232'
     }
 };
