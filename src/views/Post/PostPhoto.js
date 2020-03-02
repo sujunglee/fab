@@ -34,7 +34,7 @@ const PostPhoto = ({outfit, onCloseCallback}) => {
 
                 <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                     <StyledText
-                                size={normalize(17)}
+                                size={normalize(15)}
                                 style={{paddingTop: normalize(5), color: colors.text.secondary.main}}>
                         Take Photo
                     </StyledText>
@@ -60,17 +60,17 @@ const styles = StyleSheet.create({
     photo_option: {
         width: '48.5%',
         height: '90%',
-        borderColor: '#808080',
-        borderWidth: 1,
+        borderColor: '#A9A9A9',
+        borderWidth: 0.5,
         backgroundColor: '#E8E8E8',
-        borderRadius: 5,
+        borderRadius: 2,
         alignItems: 'center',
         justifyContent: 'center',
     },
     image: {
         width: '100%',
         height: '100%',
-        borderRadius: 5,
+        borderRadius: 2,
     }
 
 });
