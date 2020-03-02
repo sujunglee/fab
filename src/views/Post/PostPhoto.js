@@ -2,10 +2,11 @@ import React from "react"
 import {View, Button, StyleSheet, Image, ImageBackground} from "react-native"
 import {CameraApp} from "../../components/CameraApp";
 import PropTypes from 'prop-types';
-
 import CloseButton from "../../components/CameraApp/components/CloseButton";
 import {useNavigation} from "@react-navigation/native"
-
+import StyledText from "../../components/StyledText/StyledText";
+import {colors, normalize, sizes} from "../../constants/styles";
+import VoteButton from "../../components/Vote/VoteButton/VoteButton";
 
 /**
  * The post photo
@@ -15,7 +16,7 @@ import {useNavigation} from "@react-navigation/native"
 const PostPhoto = ({outfit, onCloseCallback}) => {
     const navigation = useNavigation();
 
-    const onClose = ()=>{
+    const onClose = () => {
         onCloseCallback(outfit)
     };
 
@@ -25,16 +26,24 @@ const PostPhoto = ({outfit, onCloseCallback}) => {
                 <ImageBackground source={{uri: outfit.uri}} style={{...styles.image}} resizeMode={'cover'}>
                     {/* make image darker so close button will always show*/}
                     <View style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.15)'}}>
-                         {/* close button in top right corner */}
+                        {/* close button in top right corner */}
                         <CloseButton style={styles.close_button} closeCallBack={onClose}/>
                     </View>
                 </ImageBackground>
                 :
-                <Button
-                    title={`Go to Camera for ${outfit.outfitOption}`}
-                    onPress={() => navigation.navigate('CameraApp', {outfitOption: outfit.outfitOption})}
-                />}
+
+                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                    <StyledText
+                                size={normalize(17)}
+                                style={{paddingTop: normalize(5), color: colors.text.secondary.main}}>
+                        Take Photo
+                    </StyledText>
+                    <VoteButton content={outfit.outfitOption}
+                                onPress={() => navigation.navigate('CameraApp', {outfitOption: outfit.outfitOption})}/>
+                </View>
+            }
         </View>
+
     )
 };
 
@@ -50,7 +59,7 @@ const styles = StyleSheet.create({
     },
     photo_option: {
         width: '48.5%',
-        height: '100%',
+        height: '90%',
         borderColor: '#808080',
         borderWidth: 1,
         backgroundColor: '#E8E8E8',

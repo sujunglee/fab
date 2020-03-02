@@ -58,8 +58,10 @@ const PostPage = ({route}) => {
 
             <View style={styles.photos_container}>
                 <PostPhoto outfit={outfitA} onCloseCallback={onPictureCloseCallback}/>
+
                 <PostPhoto outfit={outfitB} onCloseCallback={onPictureCloseCallback}/>
             </View>
+
 
             <PostButton title={'Poopdi scoop woop'} outfitA={outfitA} outfitB={outfitB}/>
         </SafeAreaView>
