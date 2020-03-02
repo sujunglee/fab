@@ -42,6 +42,11 @@ const CameraApp = ({route}) => {
     const [imgPreview, setImgPreview] = useState(null);
     const [isLibraryImg, setIsLibraryImg] = useState(false);
 
+    useEffect(()=>{
+        // set the status bar at the top to white
+        StatusBar.setBarStyle('light-content', true);
+    },[pictureTaken]);
+
     useEffect(() => {
 
         // hides the navbar
