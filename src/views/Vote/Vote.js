@@ -6,18 +6,16 @@ import fb from "../../db/init"
 import { getUserBadge } from "../../db/userBadge"
 import { StyledText } from "../../components/StyledText"
 import { colors } from "../../constants/styles"
+import {getNumberOfVoters} from "../../db/Utility";
 import {AppContext} from "../../context/AppContext";
 import {CountDown} from "../../components/countdown/";
 const db = fb.database();
 
 const getTotalNumVoters = room => {
-  const optAInfluencers = Object.keys(room.optionA.voters_influencer).length
-  const optANormal = Object.keys(room.optionA.voters_normal).length
-  const optBInfluencers = Object.keys(room.optionB.voters_influencer).length
-  const optBNormal = Object.keys(room.optionB.voters_normal).length
 
-  return optAInfluencers + optANormal + optBInfluencers + optBNormal
-}
+  const {numInfluencersA,numNormalA,numInfluencersB,numNormalB} = getNumberOfVoters(room);
+  return numInfluencersA + numNormalA + numInfluencersB + numNormalB
+};
 
 const getActiveList = async () => {
   const snapshot = await db.ref("rooms/active/").once("value")
@@ -37,6 +35,10 @@ const getActiveList = async () => {
 
   return activeRooms
 }
+
+
+
+
 
 const Vote = ({ navigation }) => {
   const userID = "jbrain98"

@@ -31,7 +31,16 @@ const PostButton = ({title, outfitA, outfitB}) => {
             // upload data to Db
             const currInstant = moment().toISOString();
             createRoom({userId: deviceId, time_created: currInstant, title, outfitA_url, outfitB_url})
-                .then(() => console.log('NAVIGATE TO RESULT ROOM!!!!!!!!'))
+                .then(() => {
+                    // Navigate to the results room
+                    console.log('NAVIGATE TO RESULT ROOM!!!!!!!!');
+
+                    // reset state variables
+                    setOutfitA_url(null);
+                    setOutfitB_url(null);
+                    setUrlsLoaded(null);
+                    setIsPressed(false);
+                })
         }
     }, [outfitA_url, outfitB_url]);
 

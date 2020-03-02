@@ -32,18 +32,18 @@ const _createRoom = async ({userId, time_created, title, outfitA_url, outfitB_ur
  * @see https://firebase.google.com/docs/database/web/read-and-write#save_data_as_transactions
  * @see https://gist.github.com/anantn/4323967
  */
-const _addUserInfo = ({userId, roomId, time_created}) =>{
-   let dbRef =  db.ref('users').child(userId);
-    dbRef.transaction((userInfo)=> {
+const _addUserInfo = async ({userId, roomId, time_created}) => {
+    let dbRef = db.ref('users').child(userId);
+    await dbRef.transaction((userInfo) => {
         // if user exists
-        if (userInfo){
-                userInfo['rooms_owned'][roomId] = {time_created: time_created};
-                return userInfo;
-        // if user does not exist
-        }else{
-            let meta_data = {badge:BADGES.NORMAL, number_correct:0, number_voted:0,time_created};
-            let rooms_owned = {[roomId]:time_created};
-            return {meta_data,rooms_owned}
+        if (userInfo) {
+            userInfo['rooms_owned'][roomId] = {time_created: time_created};
+            return userInfo;
+            // if user does not exist
+        } else {
+            let meta_data = {badge: BADGES.NORMAL, number_correct: 0, number_voted: 0, time_created};
+            let rooms_owned = {[roomId]: time_created};
+            return {meta_data, rooms_owned}
         }
     })
 };
@@ -52,7 +52,7 @@ const _addUserInfo = ({userId, roomId, time_created}) =>{
 const createRoom = async ({userId, time_created, title, outfitA_url, outfitB_url})=>{
 
     let roomId = await _createRoom({userId, time_created, title, outfitA_url, outfitB_url});
-    _addUserInfo({userId,time_created,roomId});
+    await _addUserInfo({userId, time_created, roomId});
 
     return roomId;
 };

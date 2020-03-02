@@ -1,4 +1,5 @@
 import fb from "./init"
+import {getNumberOfVoters} from './Utility'
 const db = fb.database();
 
 const getRoomData = async ({roomID}) => {
@@ -7,15 +8,13 @@ const getRoomData = async ({roomID}) => {
     const timeCreated = snapshot.val().meta_data.time_created;
     const pictureA = snapshot.val().optionA.picture;
     const pictureB = snapshot.val().optionB.picture;
-    const numInfluencersA = Object.keys(snapshot.val().optionA.voters_influencer)
-        .length
-    const numNormalA = Object.keys(snapshot.val().optionA.voters_normal).length
-    const numInfluencersB = Object.keys(snapshot.val().optionB.voters_influencer)
-        .length
-    const numNormalB = Object.keys(snapshot.val().optionB.voters_normal).length
-    const scoreA = numNormalA + numInfluencersA
-    const scoreB = numNormalB + numInfluencersB
-    const results = {
+
+
+    const {numInfluencersA,numNormalA,numInfluencersB,numNormalB} = getNumberOfVoters(snapshot.val());
+    const scoreA = numNormalA + numInfluencersA;
+    const scoreB = numNormalB + numInfluencersB;
+
+    return {
         title: title,
         timeCreated: timeCreated,
         pictureA: pictureA,
@@ -27,7 +26,6 @@ const getRoomData = async ({roomID}) => {
         scoreA: scoreA,
         scoreB: scoreB
     }
-    return results
-}
+};
 
 export default getRoomData
