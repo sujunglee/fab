@@ -161,7 +161,9 @@ const CameraApp = ({route}) => {
 
                     {pictureTaken !==null?
                         <ImageBackground source={{uri:pictureTaken.uri}} style={styles.preview}>
-                            <CloseButton closeCallBack={handleClose}/>
+                             <View style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.05)'}}>
+                                <CloseButton closeCallBack={handleClose}/>
+                             </View>
                         </ImageBackground>
                         :
                     <Camera
@@ -176,7 +178,7 @@ const CameraApp = ({route}) => {
 
 
                         <FlashButton cameraFlashModeIdx={cameraFlashModeIdx} cameraFlashModeCallBack={cameraFlashModeCallBack}/>
-                        <CloseButton closeCallBack={handleClose} style={styles.closeButton}/>
+                        <CloseButton closeCallBack={handleClose} />
 
 
                         <View style={{

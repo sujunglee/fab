@@ -5,12 +5,15 @@ import PropTypes from "prop-types";
 import { Ionicons } from '@expo/vector-icons';
 import {sizes} from "../../../constants/styles";
 
-const CloseButton =({closeCallBack})=>{
+const isObjectNull = obj =>{
+    return Object.entries(obj).length === 0 && obj.constructor === Object
+};
 
+const CloseButton =({style, closeCallBack})=>{
     return (
         <TouchableOpacity
             onPress={closeCallBack}
-            style={styles.container}>
+            style={isObjectNull(style)? styles.container: style}>
             <Ionicons name="md-close" size={32} color="white" />
         </TouchableOpacity>
 
