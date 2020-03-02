@@ -1,39 +1,37 @@
 import fb from "./init"
+import {getNumberOfVoters} from './Utility'
 const db = fb.database();
 
 const addVote = async ({roomID, selection, userID, badge}) =>{
-    const rank = (badge=="influencer") ? 'voters_influencer' : 'voters_normal';
-    const snapshot = await db.ref(`rooms/active/${roomID}/${selection}/${rank}`)
-    .child(userID)
-    .set(1)
-    .catch(error => alert(error));
-    return 0;
+    const rank = (badge==="influencer") ? 'voters_influencer' : 'voters_normal';
+    await db.ref(`rooms/active/${roomID}/${selection}/${rank}`)
+        .child(userID)
+        .set(1)
+        .catch(error => alert(error));
 };
 
-const incVoteCount = ({roomID, userID}) => {
+const incVoteCount = ({userID}) => {
     let dbRef = db.ref(`users/${userID}/meta_data/number_voted`);
     dbRef.transaction((counter) => {
-        return counter + 1 
+        return counter? counter + 1 :1
     
     }).catch((error) => {
         console.log("incVoteCount failed: " + error.message)
     });
-}
+};
 
 
 const updateVotes = async ({roomID, selection, userID, badge}) => {
-    const voted = await addVote({roomID:roomID, selection:selection, userID: userID, badge:badge})
-    incVoteCount({roomID:roomID, userID:userID})
-    const snapshot = await db.ref(`rooms/active/${roomID}`).once("value")
-    const numInfluencersA = Object.keys(snapshot.val().optionA.voters_influencer)
-        .length
-    const numNormalA = Object.keys(snapshot.val().optionA.voters_normal).length
-    const numInfluencersB = Object.keys(snapshot.val().optionB.voters_influencer)
-        .length
-    const numNormalB = Object.keys(snapshot.val().optionB.voters_normal).length
-    const scoreA = numNormalA + numInfluencersA
-    const scoreB = numNormalB + numInfluencersB
-    const results = {
+    await addVote({roomID,selection,  userID,badge});
+    incVoteCount({userID});
+
+    const snapshot = await db.ref(`rooms/active/${roomID}`).once("value");
+
+    const {numInfluencersA,numNormalA,numInfluencersB,numNormalB} = getNumberOfVoters(snapshot.val());
+    const scoreA = numNormalA + numInfluencersA;
+    const scoreB = numNormalB + numInfluencersB;
+
+    return {
         numInfluencersA: numInfluencersA * 2,
         numNormalA: numNormalA,
         numInfluencersB: numInfluencersB * 2,
@@ -41,8 +39,7 @@ const updateVotes = async ({roomID, selection, userID, badge}) => {
         scoreA: scoreA,
         scoreB: scoreB
     }
-    return results
-}
+};
 
 
 export default updateVotes;

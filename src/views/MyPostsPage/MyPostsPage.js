@@ -5,7 +5,9 @@ import getUserInfo from "../../db/getUserInfo"
 import { StyledText } from "../../components/StyledText"
 import { AppContext } from "../../context/AppContext";
 import { colors, normalize, sizes } from "../../constants/styles";
-import db from "../../db/init"
+import fb from "../../db/init"
+const db = fb.database();
+
 
 const MyPostsPage = () => {
 

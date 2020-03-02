@@ -94,7 +94,8 @@ const styles = StyleSheet.create({
   image: {
     aspectRatio: 2 / 3,
     height: 75,
-    width: 75
+    width: 75,
+    borderRadius:3
   }
 })
 export default PostPreview
