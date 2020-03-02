@@ -2,6 +2,7 @@ import React from "react"
 import { TouchableOpacity, StyleSheet } from "react-native"
 import { colors} from "../../../constants/styles"
 import { StyledText } from "../../StyledText"
+import {normalize} from "../../../constants/styles";
 
 const VoteButton = ({ onPress, content }) => {
   return (

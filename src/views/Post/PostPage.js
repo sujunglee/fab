@@ -3,16 +3,18 @@ import {View, StyleSheet} from "react-native"
 import {SafeAreaView} from "react-native-safe-area-context"
 import {useNavigation} from "@react-navigation/native"
 import PostButton from "../../components/Post/PostButton";
-import {colors, normalize, sizes} from "../../constants/styles";
-import StyledText from "../../components/StyledText/StyledText";
+import {colors, normalize} from "../../constants/styles";
 import PostPhoto from "./PostPhoto";
+import TitleEntry from "./TitleEntry";
 
 // The actual post page
 const PostPage = ({route}) => {
 
     const [outfitA, setOutfitA] = useState({uri:undefined, outfitOption:'A'});
     const [outfitB, setOutfitB] = useState({uri:undefined, outfitOption:'B'});
+    const [roomTitle, setRoomTile] = useState('Poopdi scoop woop');
     const navigation = useNavigation();
+
 
 
     useEffect(() => {
@@ -53,17 +55,16 @@ const PostPage = ({route}) => {
         <SafeAreaView style={styles.container}>
 
             <View style={styles.title_container}>
-                <StyledText> What Cardigan should I wear for a big presentation today?</StyledText>
+               <TitleEntry/>
             </View>
 
             <View style={styles.photos_container}>
                 <PostPhoto outfit={outfitA} onCloseCallback={onPictureCloseCallback}/>
-
                 <PostPhoto outfit={outfitB} onCloseCallback={onPictureCloseCallback}/>
             </View>
 
 
-            <PostButton title={'Poopdi scoop woop'} outfitA={outfitA} outfitB={outfitB}/>
+            <PostButton title={roomTitle} outfitA={outfitA} outfitB={outfitB}/>
         </SafeAreaView>
     )
 };
@@ -88,12 +89,10 @@ const styles = StyleSheet.create({
 
     title_container: {
         borderColor: colors.general.black,
-        borderWidth: 1,
         height: '15%',
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 5
     }
 
 });
