@@ -4,6 +4,8 @@ import { StyleSheet, Text, View, ScrollView } from "react-native"
 import { SafeAreaProvider } from "react-native-safe-area-context"
 import { Navigation } from "./src/Navigation/"
 import {AppContextProvider} from "./src/context/AppContext";
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import  {colors}  from "./src/constants/styles"
 
 const styles = StyleSheet.create({
   container: {
@@ -11,6 +13,21 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   }
 })
+
+
+const theme = {
+  ...DefaultTheme,
+  roundness: 2,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: colors.primary.main,
+    accent: colors.secondary.main,
+    placeContent:colors.text.secondary.main,
+    text:colors.text.primary.main
+  }
+};
+
+
 
 const App = () => {
   const [isFontLoaded, setisFontLoaded] = useState(false)
@@ -35,7 +52,9 @@ const App = () => {
 
           <SafeAreaProvider>
             <AppContextProvider>
-              <Navigation />
+              <PaperProvider theme={theme}>
+                <Navigation />
+              </PaperProvider>
             </AppContextProvider>
           </SafeAreaProvider>
     )

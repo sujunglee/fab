@@ -1,11 +1,12 @@
 import moment from "moment";
-import {TouchableOpacity, View, StyleSheet, ActivityIndicator} from 'react-native';
+import {TouchableOpacity, View, StyleSheet} from 'react-native';
 import StyledText from "../StyledText/StyledText";
 import Constants from 'expo-constants';
 import createRoom from "../../db/createRoom";
 import {colors, sizes, normalize} from "../../constants/styles";
 import React, {useState, useEffect} from "react"
 import uploadImage from "../../db/uploadImg";
+import { ActivityIndicator } from 'react-native-paper';
 
 /**
  * Checks if a parameter (or key) exists
@@ -72,10 +73,11 @@ const PostButton = ({title, outfitA, outfitB, postFinishedCallback}) => {
     return (
         isPressed ?
             <View style={styles.container}>
-                <ActivityIndicator size="large" color={colors.general.white}/>
+                 <ActivityIndicator animating={true} color={colors.general.white} />
             </View>
             :
             <TouchableOpacity onPress={handlePress}>
+
                 <View style={styles.container}>
                     <StyledText size={sizes.xlarge.fontSize} style={styles.text}> POST </StyledText>
                 </View>

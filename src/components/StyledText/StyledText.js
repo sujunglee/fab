@@ -4,7 +4,7 @@ import { StyleSheet, Text } from "react-native"
 const types = {
   bold: "source-sans-pro-bold",
   semibold: "source-sans-pro-semibold",
-  regular: "source-sans-pro-semibold"
+  regular: "source-sans-pro-regular"
 }
 
 /*
