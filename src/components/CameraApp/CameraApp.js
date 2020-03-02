@@ -68,8 +68,6 @@ const CameraApp = ({route}) => {
             //  let pickerResult = await ImagePicker.launchCameraAsync();
             let uri = await MediaLibrary.getAssetsAsync({first: 1});
             setImgPreview(uri.assets[0].uri);
-
-
         };
         getPermissions();
 
