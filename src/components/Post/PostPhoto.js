@@ -1,12 +1,12 @@
 import React from "react"
 import {View, Button, StyleSheet, Image, ImageBackground} from "react-native"
-import {CameraApp} from "../../components/CameraApp";
+import {CameraApp} from "../CameraApp";
 import PropTypes from 'prop-types';
-import CloseButton from "../../components/CameraApp/components/CloseButton";
+import CloseButton from "../CameraApp/components/CloseButton";
 import {useNavigation} from "@react-navigation/native"
-import StyledText from "../../components/StyledText/StyledText";
+import StyledText from "../StyledText/StyledText";
 import {colors, normalize, sizes} from "../../constants/styles";
-import VoteButton from "../../components/Vote/VoteButton/VoteButton";
+import VoteButton from "../Vote/VoteButton/VoteButton";
 
 /**
  * The post photo

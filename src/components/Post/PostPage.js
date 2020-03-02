@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react"
 import {View, StyleSheet} from "react-native"
 import {SafeAreaView} from "react-native-safe-area-context"
 import {useNavigation} from "@react-navigation/native"
-import PostButton from "../../components/Post/PostButton";
+import PostButton from "./PostButton";
 import {colors, normalize} from "../../constants/styles";
 import PostPhoto from "./PostPhoto";
 import TitleEntry from "./TitleEntry";
@@ -12,7 +12,7 @@ const PostPage = ({route}) => {
 
     const [outfitA, setOutfitA] = useState({uri:undefined, outfitOption:'A'});
     const [outfitB, setOutfitB] = useState({uri:undefined, outfitOption:'B'});
-    const [roomTitle, setRoomTile] = useState('Poopdi scoop woop');
+    const [roomTitle, setRoomTile] = useState('');
     const navigation = useNavigation();
 
 
@@ -48,7 +48,15 @@ const PostPage = ({route}) => {
         if (outfit.outfitOption==='B'){
             setOutfitB({uri:undefined, outfitOption:'B'})
         }
+    };
 
+    /**
+     * Called after user hits the post button - clean up state
+     */
+    const onPostFinished = ()=>{
+        setOutfitA({uri:undefined, outfitOption:'A'});
+        setOutfitB({uri:undefined, outfitOption:'B'});
+        setRoomTile('');
     };
 
     return (
@@ -64,7 +72,7 @@ const PostPage = ({route}) => {
             </View>
 
 
-            <PostButton title={roomTitle} outfitA={outfitA} outfitB={outfitB}/>
+            <PostButton title={roomTitle} outfitA={outfitA} outfitB={outfitB} postFinishedCallback={onPostFinished}/>
         </SafeAreaView>
     )
 };

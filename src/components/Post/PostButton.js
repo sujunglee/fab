@@ -11,12 +11,12 @@ import uploadImage from "../../db/uploadImg";
  * Checks if a parameter (or key) exists
  * @param key
  */
-const _isExist = (key) => {
-    return (key !== null && key !== undefined)
+const _uriExist = ({uri}) => {
+    return (uri !== null && uri !== undefined)
 };
 
 
-const PostButton = ({title, outfitA, outfitB}) => {
+const PostButton = ({title, outfitA, outfitB, postFinishedCallback}) => {
 
     const [outfitA_url, setOutfitA_url] = useState(null);
     const [outfitB_url, setOutfitB_url] = useState(null);
@@ -28,6 +28,7 @@ const PostButton = ({title, outfitA, outfitB}) => {
     useEffect(() => {
         if ((outfitA_url !== null && outfitB_url !== null) && (!urlsLoaded)) {
             setUrlsLoaded(true);
+
             // upload data to Db
             const currInstant = moment().toISOString();
             createRoom({userId: deviceId, time_created: currInstant, title, outfitA_url, outfitB_url})
@@ -40,6 +41,7 @@ const PostButton = ({title, outfitA, outfitB}) => {
                     setOutfitB_url(null);
                     setUrlsLoaded(null);
                     setIsPressed(false);
+                    postFinishedCallback();
                 })
         }
     }, [outfitA_url, outfitB_url]);
@@ -53,12 +55,12 @@ const PostButton = ({title, outfitA, outfitB}) => {
     };
 
     const handlePress = async () => {
-        if (!_isExist(outfitA) && !_isExist(outfitB)) {
-            alert("Please select a picture.");
-        } else if (_isExist(outfitA) && !_isExist(outfitB)) {
-            alert("Please select a picture for option B.");
-        } else if (!_isExist(outfitA) && _isExist(outfitB)) {
-            alert("Please select a picture for option A.");
+        if (!_uriExist(outfitA) && !_uriExist(outfitB)) {
+            alert("Please take a photo");
+        } else if (_uriExist(outfitA) && !_uriExist(outfitB)) {
+            alert("Please take a photo for option B");
+        } else if (!_uriExist(outfitA) && _uriExist(outfitB)) {
+            alert("Please take a photo for option A");
         } else {
             setIsPressed(true);
             // Upload the images to firebase storage and capture the urls

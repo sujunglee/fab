@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import {CameraApp} from "../../components/CameraApp";
 import { createStackNavigator,CardStyleInterpolators } from '@react-navigation/stack';
 import { useNavigation } from "@react-navigation/native"
-import PostPage from "./PostPage";
+import PostPage from "../../components/Post/PostPage";
 const Stack = createStackNavigator();
 
 
