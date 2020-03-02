@@ -1,38 +1,22 @@
 import React, {useEffect, useState} from "react"
-import {View, Button, StyleSheet, Image} from "react-native"
+import {View, StyleSheet} from "react-native"
 import {SafeAreaView} from "react-native-safe-area-context"
-import {CameraApp} from "../../components/CameraApp";
 import {useNavigation} from "@react-navigation/native"
 import PostButton from "../../components/Post/PostButton";
 import {colors, normalize, sizes} from "../../constants/styles";
 import StyledText from "../../components/StyledText/StyledText";
-/*
-                    <View style={styles.photo_option}>
-                        <Button
-                        title="Go to Camera for A"
-                        onPress={() => navigation.navigate('CameraApp', {outfitOption: 'A'})}
-                        />
-                    </View>
-
-                     <View style={styles.photo_option}>
-                        <Button
-                        title="Go to Camera for B"
-                        onPress={() => navigation.navigate('CameraApp', {outfitOption: 'B'})}
-                        />
-                    </View>
- */
-
+import PostPhoto from "./PostPhoto";
 
 // The actual post page
 const PostPage = ({route}) => {
 
-    const [outfitA, setOutfitA] = useState(null);
-    const [outfitB, setOutfitB] = useState(null);
+    const [outfitA, setOutfitA] = useState({uri:undefined, outfitOption:'A'});
+    const [outfitB, setOutfitB] = useState({uri:undefined, outfitOption:'B'});
     const navigation = useNavigation();
 
 
     useEffect(() => {
-        // Set the tabbar to visible just in case
+        // Set the tabbar to visible just in case - we remove this for the camera
         navigation.setOptions({
             tabBarVisible: true
         });
@@ -42,15 +26,28 @@ const PostPage = ({route}) => {
         // use the `base64' to send data
         if (route.params !== undefined) {
             if (route.params.outfitOption === 'A') {
-                setOutfitA({uri: route.params.uri, base64: route.params.base64});
+                setOutfitA({uri: route.params.uri, outfitOption:'A'});
             }
             if (route.params.outfitOption === 'B') {
-                setOutfitB({uri: route.params.uri, base64: route.params.base64});
+                setOutfitB({uri: route.params.uri,outfitOption:'B'});
             }
         }
 
     }, [route]);
 
+    /**
+     * Called when picture is closed
+     */
+    const onPictureCloseCallback = (outfit) =>{
+        if (outfit.outfitOption==='A'){
+            setOutfitA({uri:undefined, outfitOption:'A'})
+        }
+
+        if (outfit.outfitOption==='B'){
+            setOutfitB({uri:undefined, outfitOption:'B'})
+        }
+
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -60,36 +57,16 @@ const PostPage = ({route}) => {
             </View>
 
             <View style={styles.photos_container}>
-                <View style={styles.photo_option}>
-                    {outfitA ?
-                        <Image source={{uri: outfitA.uri}} style={{...styles.image,backgroundColor:undefined }} resizeMode={'cover'}/>
-                        :
-                        <Button
-                            title="Go to Camera for A"
-                            onPress={() => navigation.navigate('CameraApp', {outfitOption: 'A'})}
-                        />}
-
-                </View>
-
-                <View style={styles.photo_option}>
-
-                    {outfitB ?
-                        <Image source={{uri: outfitB.uri}} style={{...styles.image,backgroundColor:undefined }} />
-                        :
-                        <Button
-                            title="Go to Camera for B"
-                            onPress={() => navigation.navigate('CameraApp', {outfitOption: 'B'})}
-                        />}
-
-
-                </View>
+                <PostPhoto outfit={outfitA} onCloseCallback={onPictureCloseCallback}/>
+                <PostPhoto outfit={outfitB} onCloseCallback={onPictureCloseCallback}/>
             </View>
-
 
             <PostButton title={'Poopdi scoop woop'} outfitA={outfitA} outfitB={outfitB}/>
         </SafeAreaView>
     )
 };
+
+
 
 
 const styles = StyleSheet.create({
@@ -98,22 +75,13 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center'
     },
+
     photos_container: {
         flexDirection: 'row',
         width: '100%',
         height: '40%',
         justifyContent: 'space-around',
         marginBottom: normalize(100)
-    },
-    photo_option: {
-        width: '48.5%',
-        height: '100%',
-        borderColor: '#808080',
-        borderWidth: 1,
-        backgroundColor: '#E8E8E8',
-        borderRadius: 5,
-        alignItems: 'center',
-        justifyContent: 'center',
     },
 
     title_container: {
@@ -124,11 +92,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 5
-    },
-
-    image: {
-        width: '100%',
-        height: '100%'
     }
 
 });
