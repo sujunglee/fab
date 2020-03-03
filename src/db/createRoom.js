@@ -21,6 +21,8 @@ const _createRoom = async ({userId, time_created, title, outfitA_url, outfitB_ur
     let newPostRef = await db.ref("rooms/active/").push();
     await newPostRef.set({meta_data, optionA, optionB});
 
+    console.log("NEW ROOM ID 1: ", newPostRef)
+
     return newPostRef.key;
 };
 
@@ -60,6 +62,8 @@ const createRoom = async ({userId, time_created, title, outfitA_url, outfitB_url
 
     let roomId = await _createRoom({userId, time_created, title, outfitA_url, outfitB_url});
     await _addUserRoom({userId, time_created, roomId});
+
+    console.log("NEW ROOM ID 2:", roomId)
 
     return roomId;
 };
