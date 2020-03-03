@@ -9,6 +9,7 @@ import { StyledText } from "../../components/StyledText"
 import {colors, normalize, sizes} from "../../constants/styles"
 import {RoomTitle} from "../../components/RoomTitle";
 import {RoomImages} from "../../components/RoomImages";
+import {VotingChart} from "../../components/VotingChart";
 
 export const createChartData = ({
   influencer,
@@ -72,7 +73,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: "100%" ,
     height: '100%',
-
   },
   options_container_text:{
     alignItems: "center"
@@ -82,20 +82,19 @@ const styles = StyleSheet.create({
     color: colors.text.secondary.main
   },
   photo_option: {
-      width: '48.5%',
-      height: '100%',
-      borderColor: '#A9A9A9',
-      borderWidth: 0.5,
-      backgroundColor: '#E8E8E8',
-      borderRadius: 2,
-      alignItems: 'center',
-      justifyContent: 'center'
+    width: '48.5%',
+    height: '100%',
+    borderColor: '#A9A9A9',
+    borderWidth: 0.5,
+    backgroundColor: '#E8E8E8',
+    borderRadius: 2,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   image: {
-  height: '100%',
-  width: '100%',
-  resizeMode: 'cover',
-
+    height: '100%',
+    width: '100%',
+    resizeMode: 'cover',
   },
   sub_container: {
       width: '100%',
@@ -119,7 +118,9 @@ const Results = ({ route }) => {
 
   const deviceWidth = Dimensions.get("window").width
   const { roomData } = route.params
-  return scores && (roomData.title !== undefined) ? (
+  console.log("***THE ROOM DATA: ", roomData);
+
+  return scores ? (
     <SafeAreaView>
       <View style={styles.container}>
         <View style={styles.title_container}>
@@ -133,9 +134,7 @@ const Results = ({ route }) => {
                     source={{uri: roomData.pictureA}}
                     style={styles.image}
                 />
-
             </View>
-
             <View style={styles.photo_option}>
 
                 <Image
@@ -145,68 +144,9 @@ const Results = ({ route }) => {
             </View>
           </View>
         </View>
-
-        {/*<View style={{ flexDirection: "row" }}>
-          <View style={{ flex: 1 }}>
-            <View style={{ justifyContent: "center", alignItems: "center" }}>
-              <Image
-                source={{ uri: roomData.pictureA }}
-                style={{ width: 140, height: 200 }}
-              />
-            </View>
-            <View style={{ justifyContent: "center", alignItems: "center" }}>
-              <StyledText type="bold" size={20} style={{ paddingTop: 5 }}>
-                Option A
-              </StyledText>
-            </View>
-            <PieChart
-              style={{ height: 200 }}
-              valueAccessor={({ item }) => item.amount}
-              data={createChartData({
-                influencer: scores.numInfluencersA,
-                normal: scores.numNormalA,
-                competitor: scores.scoreB,
-                totalNumVoters:
-                  scores.numInfluencersA + scores.numNormalA + scores.scoreB
-              })}
-              spacing={0}
-              outerRadius={"95%"}
-            >
-              <Labels />
-            </PieChart>
-          </View>
-
-          <View style={{ flex: 1 }}>
-            <View style={styles.photo_option}>
-
-              <Image
-                  source={{uri: roomData.pictureB}}
-                  style={styles.image}
-              />
-            </View>
-            <View style={{ justifyContent: "center", alignItems: "center" }}>
-              <StyledText type="bold" size={20} style={{ paddingTop: 5 }}>
-                Option B
-              </StyledText>
-            </View>
-            <PieChart
-              style={{ height: 200 }}
-              valueAccessor={({ item }) => item.amount}
-              data={createChartData({
-                influencer: scores.numInfluencersB,
-                normal: scores.numNormalB,
-                competitor: scores.scoreA,
-                totalNumVoters:
-                  scores.numInfluencersA + scores.numNormalA + scores.scoreB
-              })}
-              spacing={0}
-              outerRadius={"95%"}
-              innerRadius={"45%"}
-            >
-              <Labels />
-            </PieChart>
-          </View>
-        </View>*/}
+        <View>
+          <VotingChart  voteResults={roomData}/>
+        </View>
         <CountDown isFinished={() => console.log("Finished!")} />
       </View>
     </SafeAreaView>
