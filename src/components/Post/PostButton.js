@@ -65,15 +65,10 @@ const PostButton = ({title, outfitA, outfitB, postFinishedCallback}) => {
             createdAt: createdAt
           })
 
-          console.log("****THE DATA BEING SET: ", data)
-
         }
 
         if (roomID !== "") {
           getPostData()
-        }
-        else {
-          console.log("room Id is NOT set to anything yet")
         }
 
 
@@ -100,6 +95,12 @@ const PostButton = ({title, outfitA, outfitB, postFinishedCallback}) => {
             uploadImage({uri: outfitA.uri, uploadCallback: uploadCallback_A});
             uploadImage({uri: outfitB.uri, uploadCallback: uploadCallback_B});
         }
+
+        navigation.navigate(screens.RESULTS, {
+          roomID: roomID,
+          roomData: postData
+        })
+
     };
 
     return (
