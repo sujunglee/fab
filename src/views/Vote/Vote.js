@@ -6,17 +6,21 @@ import fb from "../../db/init"
 import { getUserBadge } from "../../db/userBadge"
 import { StyledText } from "../../components/StyledText"
 import { colors } from "../../constants/styles"
-import { getNumberOfVoters } from "../../db/Utility";
-import { AppContext } from "../../context/AppContext";
-import { CountDown } from "../../components/countdown/";
-const db = fb.database();
-import Constants from 'expo-constants';
+import { getNumberOfVoters } from "../../db/Utility"
+import { AppContext } from "../../context/AppContext"
+import { CountDown } from "../../components/countdown/"
+const db = fb.database()
+import Constants from "expo-constants"
 
 const getTotalNumVoters = room => {
-
-  const { numInfluencersA, numNormalA, numInfluencersB, numNormalB } = getNumberOfVoters(room);
+  const {
+    numInfluencersA,
+    numNormalA,
+    numInfluencersB,
+    numNormalB
+  } = getNumberOfVoters(room)
   return numInfluencersA + numNormalA + numInfluencersB + numNormalB
-};
+}
 
 const getActiveList = async () => {
   const snapshot = await db.ref("rooms/active/").once("value")
@@ -24,8 +28,9 @@ const getActiveList = async () => {
 
   for (var roomID of Object.keys(snapshot.val())) {
     getTotalNumVoters(snapshot.val()[roomID])
-    if (snapshot.val()[roomID]["meta_data"]["owner"] !== Constants.installationId) {
-      
+    if (
+      snapshot.val()[roomID]["meta_data"]["owner"] !== Constants.installationId
+    ) {
       const currRoom = {
         numVotes: getTotalNumVoters(snapshot.val()[roomID]),
         id: roomID,
@@ -39,9 +44,6 @@ const getActiveList = async () => {
 
   return activeRooms
 }
-
-
-
 
 const Vote = ({ navigation }) => {
   const userID = Constants.installationId
@@ -135,7 +137,11 @@ const Vote = ({ navigation }) => {
         }}
       >
         <View
-          style={{ backgroundColor: colors.general.white, padding: 32, borderRadius: 20 }}
+          style={{
+            backgroundColor: colors.general.white,
+            padding: 32,
+            borderRadius: 20
+          }}
         >
           <StyledText
             type="semibold"
@@ -157,6 +163,6 @@ const Vote = ({ navigation }) => {
       handleNextRoom={handleNextRoom}
     />
   )
-};
+}
 
 export default Vote
