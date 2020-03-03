@@ -22,8 +22,15 @@ const theme = {
     ...DefaultTheme.colors,
     primary: colors.primary.main,
     accent: colors.secondary.main,
-    placeContent:colors.text.secondary.main,
+    placeholder:colors.text.secondary.light,
     text:colors.text.primary.main
+  },
+  font:{
+    ...DefaultTheme.fonts,
+    regular:{
+      fontFamily: 'source-sans-pro-regular',
+      fontWeight: 'normal'
+    }
   }
 };
 
