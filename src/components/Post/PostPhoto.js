@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
 import {View, Button, StyleSheet, Image, ImageBackground} from "react-native"
 import {CameraApp} from "../CameraApp";
 import PropTypes from 'prop-types';
@@ -7,9 +7,6 @@ import {useNavigation} from "@react-navigation/native"
 import StyledText from "../StyledText/StyledText";
 import {colors, normalize, sizes} from "../../constants/styles";
 import VoteButton from "../Vote/VoteButton/VoteButton";
-
-// https://docs.expo.io/versions/latest/sdk/imagemanipulator/
-// https://stackoverflow.com/questions/48045366/retrieve-file-from-firebase-storage
 
 /**
  * The post photo
@@ -25,6 +22,7 @@ const PostPhoto = ({outfit, onCloseCallback}) => {
 
     return (
         <View style={styles.photo_option}>
+
             {outfit.uri !== undefined ?
                 <ImageBackground source={{uri: outfit.uri}} style={{...styles.image}} resizeMode={'cover'}>
                     {/* make image darker so close button will always show*/}
@@ -37,8 +35,8 @@ const PostPhoto = ({outfit, onCloseCallback}) => {
 
                 <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                     <StyledText
-                                size={normalize(15)}
-                                style={{paddingTop: normalize(5), color: colors.text.secondary.main}}>
+                        size={normalize(15)}
+                        style={{paddingTop: normalize(5), color: colors.text.secondary.main}}>
                         Take Photo
                     </StyledText>
                     <VoteButton content={outfit.outfitOption}
