@@ -20,7 +20,7 @@ const PostPreview = ({ roomID, userInfo }) => {
   useEffect(() => {
     const getPostData = async () => {
       const data = await getRoomData({ roomID })
-      const createdAt = moment(data.timeCreated).format("dddd h:hh A")
+      const createdAt = moment(data.timeCreated).format("dddd h:mm A")
       setPostData({
         ...data,
         createdAt: createdAt
