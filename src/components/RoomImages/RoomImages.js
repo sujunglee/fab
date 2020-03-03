@@ -56,8 +56,12 @@ const RoomImages = ({roomData, selectedOption, imageLoadCallback}) => {
 
             {/*Modal for image zoom-in + expansion*/}
             {isImageOpen.state &&
+            
             <Modal visible={isImageOpen.state}>
-                <ImageViewer
+                <ImageBackground source={{url:isImageOpen.url}} style={styles.container}>
+                        <CloseButton closeCallBack={() => setIsImageOpen({state:false})}/>
+                </ImageBackground>
+                {/*<ImageViewer
                     enableImageZoom
                     enableSwipeDown
                     onSwipeDown={() => setIsImageOpen({state: false})}
@@ -66,7 +70,7 @@ const RoomImages = ({roomData, selectedOption, imageLoadCallback}) => {
                             url: isImageOpen.url
                         }
                     ]}
-                />
+                />*/}
             </Modal>}
 
             <View style={styles.photo_option}>
@@ -147,13 +151,4 @@ RoomImages.propTypes = {
     imageLoadCallback: PropTypes.func
 };
 
-const styles =  StyleSheet.create({
-    preview: {
-        height: '100%',
-        width: '100%',
-        borderRadius:20,
-        overflow:'hidden',
-        flexDirection: 'row'
-    }
-});
 export default RoomImages;
