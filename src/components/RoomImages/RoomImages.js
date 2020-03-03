@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react"
-import { View, Image, Modal } from "react-native"
+import { View, Image, Modal, ImageBackground, StyleSheet } from "react-native"
 import PropTypes from 'prop-types';
 import ImageViewer from "react-native-image-zoom-viewer";
 import {TouchableWithoutFeedback} from "react-native-gesture-handler";
 import {colors, sizes} from "../../constants/styles";
 import {StyledText} from "../StyledText";
+import CloseButton from "../CameraApp/components/CloseButton"
 
 let x = 'https://firebasestorage.googleapis.com/v0/b/fabapp-a1ea0.appspot.com/o/my-image.jpg?alt=media&token=995d6347-0435-41ac-96e1-91106786ab2c'
 
@@ -48,7 +49,10 @@ const RoomImages = ({roomData,selectedOption, imageLoadCallback}) =>{
         <View>
             {isImageOpen.state && (
                 <Modal visible={isImageOpen.state}>
-                    <ImageViewer
+                    <ImageBackground source={{url:isImageOpen.url}} style={styles.preview}>
+                        <CloseButton closeCallBack={() => setIsImageOpen({state:false})}/>
+                    </ImageBackground>
+                    {/* <ImageViewer
                         enableImageZoom
                         enableSwipeDown
                         onSwipeDown={() => setIsImageOpen({ state: false })}
@@ -57,7 +61,7 @@ const RoomImages = ({roomData,selectedOption, imageLoadCallback}) =>{
                                 url: isImageOpen.url
                             }
                         ]}
-                    />
+                    /> */}
                 </Modal>
             )}
 
@@ -125,4 +129,13 @@ RoomImages.propTypes = {
     imageLoadCallback: PropTypes.func
 };
 
+const styles =  StyleSheet.create({
+    preview: {
+        height: '100%',
+        width: '100%',
+        borderRadius:20,
+        overflow:'hidden',
+        flexDirection: 'row'
+    }
+});
 export default RoomImages;
