@@ -10,6 +10,7 @@ import moment from "moment";
 import {VotingChart} from "../VotingChart";
 import {RoomImages} from "../RoomImages";
 import {RoomTitle} from "../RoomTitle";
+import Loader from "../FancyLoader/FancyLoader";
 
 function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min) ) + min;
@@ -60,75 +61,115 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
 
   return roomData ? (
     <SafeAreaView>
-      <View
-        style={{
-          flexDirection: "column",
-          width: "100%"
-        }}
-      >
 
-        <RoomTitle title={roomData.room.meta_data.title}/>
 
-        <View styles={styles.photo_container}>
-          <RoomImages roomData={roomData} selectedOption={voteState.selectedOption} imageLoadCallback={imageLoadCallback}/>
+      <View style={styles.container}>
+
+        {/*Room Title*/}
+        <View style={styles.title_container}>
+          <RoomTitle title={roomData.room.meta_data.title}/>
+        </View>
+        {/*Room Images*/}
+        <View style={styles.photo_container}>
+          <RoomImages
+              roomData={roomData}
+              selectedOption={voteState.selectedOption}
+              imageLoadCallback={imageLoadCallback}/>
         </View>
 
-          <View style={{ width: "100%" }}>
-          {voteState.voteResults ? (
-          <VotingChart  voteResults={voteState.voteResults}/>
-          ) : areImagesLoaded ? (
-            <View style={{ alignItems: "center", flexDirection: "column" }}>
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  width: "100%",
-                  paddingHorizontal: 42,
-                  justifyContent: "space-between"
-                }}
-              >
-                <View style={{ alignItems: "center" }}>
 
-                  <StyledText size={20} style={{ paddingTop: 5, color: colors.text.secondary.main}}>
+          <View style={{ width: "100%", height:'48%' }}>
+          {voteState.voteResults ?
+              (<VotingChart  voteResults={voteState.voteResults}/>)
+              : areImagesLoaded ? (
 
-                    Option A
-                  </StyledText>
-                  <VoteButton content="A" onPress={() => handlePress("optionA")} />
-                </View>
-                <View style={{ alignItems: "center" }}>
+                  <View style={styles.buttons_and_timer_container}>
 
-                  <StyledText  size={20} style={{ paddingTop: 5, color: colors.text.secondary.main }}>
-                    Option B
-                  </StyledText>
-                  <VoteButton content="B" onPress={() => handlePress("optionB")} />
-                </View>
-              </View>
-              <SkipButton onPress={handleSkip} style={{ marginTop: normalize(8), marginBottom:normalize(8) }} />
-              <CountDown
-                  finishTime={moment().add({'seconds': getRndInteger(3600/4, 86399)}).toISOString()}
-                  isFinished={()=>console.log('Finished!')}
-              />
-            </View>
+                    <View style={styles.buttons_container}>
+
+                      <View style={styles.options_container_text}>
+                        <StyledText size={normalize(18)} style={styles.option_text}>
+                          Option A
+                        </StyledText>
+                        <VoteButton content="A" onPress={() => handlePress("optionA")} />
+                      </View>
+
+                      <View style={styles.options_container_text}>
+                        <StyledText  size={normalize(18)} style={styles.option_text}>
+                          Option B
+                        </StyledText>
+                        <VoteButton content="B" onPress={() => handlePress("optionB")} />
+                      </View>
+
+                    </View>
+
+                    <SkipButton onPress={handleSkip} style={styles.skip_button} />
+                    <CountDown
+                        finishTime={moment().add({'seconds': getRndInteger(3600/4, 86399)}).toISOString()}
+                        isFinished={()=>console.log('Finished!')}
+                    />
+                  </View>
           ) : (
-            <View style={{ alignItems: "center", width: "100%" }}>
-              <StyledText type="bold">Loading...</StyledText>
+
+             <View style={styles.loading_container}>
+              <Loader />
             </View>
           )}
         </View>
       </View>
     </SafeAreaView>
   ) : (
-    <Text>Loading...</Text>
+      <Loader visible={true}/>
   )
 };
 
+  { /*<Loader />*/}
 const styles = StyleSheet.create({
-    photo_container:{
+  container:{
+    flexDirection: "column",
+    width: "100%",
+    height: '100%'
+  },
+  photo_container:{
       width: '100%',
       alignItems: 'center',
-      justifyContent: 'center'
+      justifyContent: 'center',
+      height: '40%',
+    },
 
-    }
+  buttons_and_timer_container:{
+    alignItems: "center",
+    flexDirection: "column",
+  },
+  buttons_container:{
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: '80%'
+  },
+  title_container:{
+    height:'12%',
+    width:'100%',
+    alignItems:'center',
+    justifyContent: 'center'
+  },
+  loading_container:{
+    alignItems: "center",
+    justifyContent: 'center',
+    width: "100%" ,
+    height: '100%',
+
+  },
+  options_container_text:{
+    alignItems: "center"
+  },
+  option_text:{
+    paddingTop: 5,
+    color: colors.text.secondary.main
+  },
+  skip_button:{
+    marginTop: normalize(8),
+    marginBottom:normalize(8)
+  }
 });
 
 

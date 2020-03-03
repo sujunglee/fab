@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react"
-import { View, Image, Modal , ImageBackground,StyleSheet} from "react-native"
+import React, {useState, useEffect} from "react"
+import {View, Image, Modal, ImageBackground, StyleSheet, TouchableWithoutFeedback} from "react-native"
 import PropTypes from 'prop-types';
 import ImageViewer from "react-native-image-zoom-viewer";
-import {TouchableWithoutFeedback} from "react-native-gesture-handler";
 import {StyledText} from "../StyledText";
 import {colors, normalize, sizes} from "../../constants/styles";
 
@@ -20,15 +19,21 @@ const YourVote = () => (
         }}
     >
 
-        <StyledText size={sizes.medium.fontSize} type={'regular'} style={{ position: "relative", color:colors.general.white}} >
+        <StyledText size={sizes.medium.fontSize} type={'regular'}
+                    style={{position: "relative", color: colors.general.white}}>
             YOUR VOTE
         </StyledText>
     </View>
 );
 
+//const testPictures = 'https://i.imgur.com/VakBHis.jpg';
 
-const RoomImages = ({roomData,selectedOption, imageLoadCallback}) =>{
+const RoomImages = ({roomData, selectedOption, imageLoadCallback}) => {
     console.log(selectedOption);
+    console.log(roomData);
+
+    //roomData.room.optionA.picture = testPictures;
+    //roomData.room.optionB.picture = testPictures;
 
     const [isImageOpen, setIsImageOpen] = useState(false);
     const [areImagesLoaded, setAreImagesLoaded] = useState({
@@ -36,10 +41,10 @@ const RoomImages = ({roomData,selectedOption, imageLoadCallback}) =>{
         B: false
     });
 
-    useEffect(()=>{
-        if(areImagesLoaded.A===true && areImagesLoaded.B===true){
-            imageLoadCallback();
-         }
+    useEffect(() => {
+            if (areImagesLoaded.A === true && areImagesLoaded.B === true) {
+                imageLoadCallback();
+            }
         },
         [areImagesLoaded]
     );
@@ -47,32 +52,63 @@ const RoomImages = ({roomData,selectedOption, imageLoadCallback}) =>{
     return (
         <View style={styles.container}>
 
-                <View
-                    style={styles.photo_option}
-                >
-                    <Image
-                            source={{ uri: roomData.room.optionA.picture }}
-                            style={styles.image}
-                            onLoad={() =>
-                                setAreImagesLoaded({ ...areImagesLoaded, A: true })
-                            }
-                            resizeMode="cover"
-                        />
-                </View>
-                <View
-                    style={styles.photo_option}
-                >
-                    <Image
-                            source={{ uri: roomData.room.optionB.picture }}
-                            style={styles.image}
-                            onLoad={() =>
-                                setAreImagesLoaded({ ...areImagesLoaded, B: true })
-                            }
-                            resizeMode="cover"
-                        />
 
-                </View>
+            {/*Modal for image zoom-in + expansion*/}
+            {isImageOpen.state &&
+            <Modal visible={isImageOpen.state}>
+                <ImageViewer
+                    enableImageZoom
+                    enableSwipeDown
+                    onSwipeDown={() => setIsImageOpen({state: false})}
+                    imageUrls={[
+                        {
+                            url: isImageOpen.url
+                        }
+                    ]}
+                />
+            </Modal>}
 
+            <View style={styles.photo_option}>
+                <TouchableWithoutFeedback
+                    onPress={() =>
+                        setIsImageOpen({
+                            state: true,
+                            url: roomData.room.optionA.picture
+                        })
+                    }>
+
+                    <Image
+                        source={{uri: roomData.room.optionA.picture}}
+                        style={styles.image}
+                        onLoad={() =>
+                            setAreImagesLoaded({...areImagesLoaded, A: true})
+                        }
+                    />
+                </TouchableWithoutFeedback>
+
+                {selectedOption === "optionA" && <YourVote />}
+            </View>
+
+            <View style={styles.photo_option}>
+                <TouchableWithoutFeedback
+                    onPress={() =>
+                        setIsImageOpen({
+                            state: true,
+                            url: roomData.room.optionB.picture
+                        })
+                    }>
+
+                    <Image
+                        source={{uri: roomData.room.optionB.picture}}
+                        style={styles.image}
+                        onLoad={() =>
+                            setAreImagesLoaded({...areImagesLoaded, B: true})
+                        }
+                    />
+                </TouchableWithoutFeedback>
+
+                 {selectedOption === "optionB" && <YourVote />}
+            </View>
         </View>
     )
 };
@@ -80,29 +116,28 @@ const RoomImages = ({roomData,selectedOption, imageLoadCallback}) =>{
 
 const styles = StyleSheet.create({
     photo_option: {
-        width: '48%',
-        height: '60%',
+        width: '48.5%',
+        height: '100%',
         borderColor: '#A9A9A9',
         borderWidth: 0.5,
         backgroundColor: '#E8E8E8',
         borderRadius: 2,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'center'
     },
     image: {
-        width: '100%',
-        height: '100%',
-        borderRadius: 2,
+    height: '100%',
+    width: '100%',
+    resizeMode: 'cover',
+
     },
     container: {
         width: '100%',
-        height: '60%',
+        height: '100%',
         justifyContent: 'space-around',
-        marginBottom: normalize(100),
         flexDirection: 'row'
     },
 });
-
 
 
 RoomImages.propTypes = {
