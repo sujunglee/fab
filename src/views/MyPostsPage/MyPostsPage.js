@@ -7,12 +7,13 @@ import { AppContext } from "../../context/AppContext";
 import { colors, normalize, sizes } from "../../constants/styles";
 import fb from "../../db/init"
 const db = fb.database();
+import Constants from 'expo-constants';
 
 
 const MyPostsPage = () => {
 
   // const navigation = useNavigation()
-  const userID = "jbrain98";
+  const userID = Constants.installationId;
   const { user, isLoggedIn } = useContext(AppContext);
   const [userInfo, setUserInfo] = useState(null)
   console.log(user);
@@ -25,12 +26,12 @@ const MyPostsPage = () => {
     return () => { db.ref("users/" + userID).off('value', handleData); };
   }, []);
 
-  return (isLoggedIn && userInfo)? (
+  return (isLoggedIn && userInfo) ? (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ backgroundColor: colors.general.white, flex: 1 }}>
         <UserStats user={userInfo} />
         <ScrollView>
-          {Object.keys(userInfo.rooms_owned).map(roomID => (
+          {userInfo.rooms_owned && Object.keys(userInfo.rooms_owned).map(roomID => (
             <PostPreview roomID={roomID} user={user} key={roomID} />
           ))}
         </ScrollView>
@@ -55,9 +56,9 @@ const UserStats = ({ user }) => (
       </StyledText>
     </View>
     <View style={{ flex: 1 }}>
-      <PostCount count={Object.keys(user.rooms_owned).length} />
+      <PostCount count={('rooms_owned' in user) ? Object.keys(user.rooms_owned).length : 0} />
       <VoteCount count={user.meta_data.number_voted} />
-      <PercentCorrect percent={Math.ceil(user.meta_data.number_correct * 100 / user.meta_data.number_voted)} />
+      <PercentCorrect percent={Math.ceil(user.meta_data.number_correct * 100 / user.meta_data.number_voted)} numVotes={user.meta_data.number_voted} />
     </View>
   </View>
 )
@@ -98,25 +99,32 @@ const VoteCount = ({ count }) => (
   </View>
 )
 
-const PercentCorrect = ({ percent }) => (
-  <View style={{ flexDirection: "row" }}>
-    <View style={{ width: '50%' }}>
-      <StyledText size={sizes.medium.fontSize} style={{ color: colors.text.secondary.main, lineHeight: 15, paddingTop: 5, textAlign: "right", paddingRight: 5 }}>
-        Percent Correct
+const PercentCorrect = ({ percent, numVotes }) => {
+  if (numVotes !== 0) {
+    return (
+      < View style={{ flexDirection: "row" }
+      }>
+        <View style={{ width: '50%' }}>
+          <StyledText size={sizes.medium.fontSize} style={{ color: colors.text.secondary.main, lineHeight: 15, paddingTop: 5, textAlign: "right", paddingRight: 5 }}>
+            Percent Correct
       </StyledText>
-    </View>
-    <View style={{ flexDirection: "row", position: "relative" }}>
-      <View style={{ flexDirection: "row" }}>
-        <StyledText size={sizes.large.fontSize} style={{ color: colors.primary.light, paddingLeft: 5 }}>
-          {percent}
-        </StyledText>
-        <StyledText size={sizes.medium.fontSize} style={{ color: colors.primary.light, bottom: 0 }}>
-          %
+        </View>
+        <View style={{ flexDirection: "row", position: "relative" }}>
+          <View style={{ flexDirection: "row" }}>
+            <StyledText size={sizes.large.fontSize} style={{ color: colors.primary.light, paddingLeft: 5 }}>
+              {percent}
+            </StyledText>
+            <StyledText size={sizes.medium.fontSize} style={{ color: colors.primary.light, bottom: 0 }}>
+              %
     </StyledText>
-      </View>
-    </View>
-  </View>
-)
+          </View>
+        </View>
+      </View >
+    )
+  }
+  return null
+}
+
 
 
 export default MyPostsPage

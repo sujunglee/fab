@@ -1,4 +1,5 @@
 import fb from "./init"
+import addUser from "./addUser"
 import {BADGES} from '../constants/badges';
 
 const db = fb.database();
@@ -32,7 +33,12 @@ const _createRoom = async ({userId, time_created, title, outfitA_url, outfitB_ur
  * @see https://firebase.google.com/docs/database/web/read-and-write#save_data_as_transactions
  * @see https://gist.github.com/anantn/4323967
  */
-const _addUserInfo = async ({userId, roomId, time_created}) => {
+const _addUserRoom = async ({userId, roomId, time_created}) => {
+    await db.ref(`users/${userId}/rooms_owned`)
+        .child(roomId)
+        .set({time_created: time_created})
+        .catch(error => alert(error));
+    /*
     let dbRef = db.ref('users').child(userId);
     await dbRef.transaction((userInfo) => {
         // if user exists
@@ -46,13 +52,14 @@ const _addUserInfo = async ({userId, roomId, time_created}) => {
             return {meta_data, rooms_owned}
         }
     })
+    */
 };
 
 
 const createRoom = async ({userId, time_created, title, outfitA_url, outfitB_url})=>{
 
     let roomId = await _createRoom({userId, time_created, title, outfitA_url, outfitB_url});
-    await _addUserInfo({userId, time_created, roomId});
+    await _addUserRoom({userId, time_created, roomId});
 
     return roomId;
 };
