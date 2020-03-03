@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react"
-import {View, Image, Modal, ImageBackground, StyleSheet, TouchableWithoutFeedback} from "react-native"
+import {View, Image, Modal, ImageBackground, StyleSheet, StatusBar, TouchableWithoutFeedback} from "react-native"
 import PropTypes from 'prop-types';
 import ImageViewer from "react-native-image-zoom-viewer";
 import {StyledText} from "../StyledText";
@@ -35,13 +35,30 @@ const RoomImages = ({roomData, selectedOption, imageLoadCallback}) => {
 
     //roomData.room.optionA.picture = testPictures;
     //roomData.room.optionB.picture = testPictures;
-
     const [isImageOpen, setIsImageOpen] = useState(false);
     const [areImagesLoaded, setAreImagesLoaded] = useState({
         A: false,
         B: false
     });
 
+    const closeImage = () => {
+        StatusBar.setBarStyle('default',true);
+        setIsImageOpen({state:false});
+    }
+    const openImageB =() =>{
+        StatusBar.setBarStyle('light-content',true);
+        setIsImageOpen({
+            state: true,
+            url: roomData.room.optionB.picture
+        })
+    }
+    const openImageA = () => {
+        StatusBar.setBarStyle('light-content',true);
+        setIsImageOpen({
+            state: true,
+            url: roomData.room.optionA.picture
+        })
+    }
     useEffect(() => {
             if (areImagesLoaded.A === true && areImagesLoaded.B === true) {
                 imageLoadCallback();
@@ -59,7 +76,7 @@ const RoomImages = ({roomData, selectedOption, imageLoadCallback}) => {
             
             <Modal visible={isImageOpen.state}>
                 <ImageBackground source={{url:isImageOpen.url}} style={styles.container}>
-                        <CloseButton closeCallBack={() => setIsImageOpen({state:false})}/>
+                        <CloseButton closeCallBack={() => closeImage()}/>
                 </ImageBackground>
                 {/*<ImageViewer
                     enableImageZoom
@@ -76,10 +93,7 @@ const RoomImages = ({roomData, selectedOption, imageLoadCallback}) => {
             <View style={styles.photo_option}>
                 <TouchableWithoutFeedback
                     onPress={() =>
-                        setIsImageOpen({
-                            state: true,
-                            url: roomData.room.optionA.picture
-                        })
+                        openImageA()
                     }>
 
                     <Image
@@ -97,10 +111,7 @@ const RoomImages = ({roomData, selectedOption, imageLoadCallback}) => {
             <View style={styles.photo_option}>
                 <TouchableWithoutFeedback
                     onPress={() =>
-                        setIsImageOpen({
-                            state: true,
-                            url: roomData.room.optionB.picture
-                        })
+                        openImageB()
                     }>
 
                     <Image
