@@ -61,10 +61,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
 
   return roomData ? (
     <SafeAreaView>
-
-
       <View style={styles.container}>
-
         {/*Room Title*/}
         <View style={styles.title_container}>
           <RoomTitle title={roomData.room.meta_data.title}/>
@@ -74,7 +71,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
           <RoomImages
               roomData={roomData}
               selectedOption={voteState.selectedOption}
-              imageLoadCallback={imageLoadCallback}/>
+              imageLoadCallback={imageLoadCallback} />
         </View>
 
 
@@ -84,9 +81,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
               : areImagesLoaded ? (
 
                   <View style={styles.buttons_and_timer_container}>
-
                     <View style={styles.buttons_container}>
-
                       <View style={styles.options_container_text}>
                         <StyledText size={normalize(18)} style={styles.option_text}>
                           Option A

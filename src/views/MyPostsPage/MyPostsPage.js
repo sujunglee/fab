@@ -14,6 +14,7 @@ const MyPostsPage = () => {
 
   // const navigation = useNavigation()
   const userID = Constants.installationId;
+  console.log("USER ID: ", userID);
   const { user, isLoggedIn } = useContext(AppContext);
   const [userInfo, setUserInfo] = useState(null)
   console.log(user);

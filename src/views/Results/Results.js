@@ -8,6 +8,7 @@ import CountDown from "../../components/countdown/CountDown"
 import { StyledText } from "../../components/StyledText"
 import {colors, normalize, sizes} from "../../constants/styles"
 import {RoomTitle} from "../../components/RoomTitle";
+import {RoomImages} from "../../components/RoomImages";
 
 export const createChartData = ({
   influencer,
@@ -80,10 +81,28 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     color: colors.text.secondary.main
   },
-  skip_button:{
-    marginTop: normalize(8),
-    marginBottom:normalize(8)
-  }
+  photo_option: {
+      width: '48.5%',
+      height: '100%',
+      borderColor: '#A9A9A9',
+      borderWidth: 0.5,
+      backgroundColor: '#E8E8E8',
+      borderRadius: 2,
+      alignItems: 'center',
+      justifyContent: 'center'
+  },
+  image: {
+  height: '100%',
+  width: '100%',
+  resizeMode: 'cover',
+
+  },
+  sub_container: {
+      width: '100%',
+      height: '100%',
+      justifyContent: 'space-around',
+      flexDirection: 'row'
+  },
 });
 
 const Results = ({ route }) => {
@@ -100,19 +119,38 @@ const Results = ({ route }) => {
 
   const deviceWidth = Dimensions.get("window").width
   const { roomData } = route.params
-  console.log("THE ROOM DATA TITLE: ", roomData.title);
   return scores && (roomData.title !== undefined) ? (
     <SafeAreaView>
       <View style={styles.container}>
-      <View style={styles.title_container}>
-        <RoomTitle title={roomData.title}/>
-      </View>
-        <View style={{ flexDirection: "row" }}>
+        <View style={styles.title_container}>
+          <RoomTitle title={roomData.title}/>
+        </View>
+
+        <View style={styles.photo_container}>
+          <View style={styles.sub_container}>
+            <View style={styles.photo_option}>
+                <Image
+                    source={{uri: roomData.pictureA}}
+                    style={styles.image}
+                />
+
+            </View>
+
+            <View style={styles.photo_option}>
+
+                <Image
+                    source={{uri: roomData.pictureB}}
+                    style={styles.image}
+                />
+            </View>
+          </View>
+        </View>
+
+        {/*<View style={{ flexDirection: "row" }}>
           <View style={{ flex: 1 }}>
             <View style={{ justifyContent: "center", alignItems: "center" }}>
               <Image
                 source={{ uri: roomData.pictureA }}
-
                 style={{ width: 140, height: 200 }}
               />
             </View>
@@ -137,12 +175,13 @@ const Results = ({ route }) => {
               <Labels />
             </PieChart>
           </View>
-          <View style={{ flex: 1 }}>
-            <View style={{ justifyContent: "center", alignItems: "center" }}>
-              <Image
-                source={{ uri: roomData.pictureB }}
 
-                style={{ width: 140, height: 200, }}
+          <View style={{ flex: 1 }}>
+            <View style={styles.photo_option}>
+
+              <Image
+                  source={{uri: roomData.pictureB}}
+                  style={styles.image}
               />
             </View>
             <View style={{ justifyContent: "center", alignItems: "center" }}>
@@ -167,7 +206,7 @@ const Results = ({ route }) => {
               <Labels />
             </PieChart>
           </View>
-        </View>
+        </View>*/}
         <CountDown isFinished={() => console.log("Finished!")} />
       </View>
     </SafeAreaView>
