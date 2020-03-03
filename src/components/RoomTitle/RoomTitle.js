@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 
 const RoomTitle = ({title}) =>{
     return (
-        <View style={{ maxHeight: 150 }}>
+        <View style={{ maxHeight: 150 , alignSelf:'center'}}>
             <StyledText type="bold" size={sizes.small.fontSize} style={{color:colors.text.primary.main}}>
                 {title}
             </StyledText>
