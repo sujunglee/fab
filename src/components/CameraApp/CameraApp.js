@@ -162,7 +162,7 @@ const CameraApp = ({route}) => {
         <SafeAreaView style={{flex: 1, borderRadius: 20, backgroundColor: colors.general.black, overflow: 'hidden'}}>
 
 
-                <View style={{height: '97%', width: '100%'}}>
+                <View style={{height: '94%', width: '100%'}}>
 
                     {pictureTaken !==null?
                         <ImageBackground source={{uri:pictureTaken.uri}} style={styles.preview}>
@@ -205,12 +205,11 @@ const CameraApp = ({route}) => {
                 </View>
 
 
-            {pictureTaken && <View style={{flex: 1, justifyContent: 'space-between', flexDirection: 'row', width: '100%'}}>
+            {pictureTaken && <View style={{ justifyContent: 'space-between', alignItems: 'center',padding:0,flexDirection: 'row', width: '100%',height:'6%'}}>
+
                 <TouchableOpacity onPress={usePhotoCallBack}>
                     <StyledText size={sizes.small.fontSize} style={{
                         color: colors.primary.light,
-                        alignSelf: 'flex-end',
-                        height: '100%',
                         marginLeft: sizes.mini.fontSize
                     }}>Use Photo</StyledText>
                 </TouchableOpacity>
@@ -218,8 +217,6 @@ const CameraApp = ({route}) => {
                 <TouchableOpacity onPress={retakePhotoCallBack}>
                     <StyledText size={sizes.small.fontSize} style={{
                         color: colors.primary.light,
-                        alignSelf: 'flex-start',
-                        height: '100%',
                         marginRight: sizes.mini.fontSize
                     }}>{isLibraryImg? 'Cancel': 'Retake'}</StyledText>
                 </TouchableOpacity>

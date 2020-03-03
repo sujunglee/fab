@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react"
-import {View, StyleSheet} from "react-native"
+import {View, StyleSheet, TouchableWithoutFeedback, Keyboard} from "react-native"
 import {SafeAreaView} from "react-native-safe-area-context"
 import {useNavigation} from "@react-navigation/native"
 import PostButton from "./PostButton";
@@ -9,12 +9,11 @@ import TitleEntry from "./TitleEntry";
 
 // The actual post page
 const PostPage = ({route}) => {
-
-    const [outfitA, setOutfitA] = useState({uri:undefined, outfitOption:'A'});
-    const [outfitB, setOutfitB] = useState({uri:undefined, outfitOption:'B'});
-    const [roomTitle, setRoomTile] = useState('');
+    const placeHolderText = 'Which one should I choose?';
+    const [outfitA, setOutfitA] = useState({uri: undefined, outfitOption: 'A'});
+    const [outfitB, setOutfitB] = useState({uri: undefined, outfitOption: 'B'});
+    const [roomTitle, setRoomTitle] = useState('Which one should I choose?');
     const navigation = useNavigation();
-
 
 
     useEffect(() => {
@@ -28,10 +27,10 @@ const PostPage = ({route}) => {
         // use the `base64' to send data
         if (route.params !== undefined) {
             if (route.params.outfitOption === 'A') {
-                setOutfitA({uri: route.params.uri, outfitOption:'A'});
+                setOutfitA({uri: route.params.uri, outfitOption: 'A'});
             }
             if (route.params.outfitOption === 'B') {
-                setOutfitB({uri: route.params.uri,outfitOption:'B'});
+                setOutfitB({uri: route.params.uri, outfitOption: 'B'});
             }
         }
 
@@ -40,44 +39,55 @@ const PostPage = ({route}) => {
     /**
      * Called when picture is closed
      */
-    const onPictureCloseCallback = (outfit) =>{
-        if (outfit.outfitOption==='A'){
-            setOutfitA({uri:undefined, outfitOption:'A'})
+    const onPictureCloseCallback = (outfit) => {
+        if (outfit.outfitOption === 'A') {
+            setOutfitA({uri: undefined, outfitOption: 'A'})
         }
 
-        if (outfit.outfitOption==='B'){
-            setOutfitB({uri:undefined, outfitOption:'B'})
+        if (outfit.outfitOption === 'B') {
+            setOutfitB({uri: undefined, outfitOption: 'B'})
+        }
+    };
+
+    const onTitleChangeCallBack = (text)=>{
+        if (text===''){
+            setRoomTitle(placeHolderText)
+        }else{
+            setRoomTitle(text)
         }
     };
 
     /**
      * Called after user hits the post button - clean up state
      */
-    const onPostFinished = ()=>{
-        setOutfitA({uri:undefined, outfitOption:'A'});
-        setOutfitB({uri:undefined, outfitOption:'B'});
-        setRoomTile('');
+    const onPostFinished = () => {
+        setOutfitA({uri: undefined, outfitOption: 'A'});
+        setOutfitB({uri: undefined, outfitOption: 'B'});
+        setRoomTitle(placeHolderText);
     };
 
     return (
-        <SafeAreaView style={styles.container}>
+        <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
 
-            <View style={styles.title_container}>
-               <TitleEntry/>
-            </View>
+            <SafeAreaView style={styles.container}>
 
-            <View style={styles.photos_container}>
-                <PostPhoto outfit={outfitA} onCloseCallback={onPictureCloseCallback}/>
-                <PostPhoto outfit={outfitB} onCloseCallback={onPictureCloseCallback}/>
-            </View>
+                <View style={styles.title_container}>
+                    <TitleEntry onTitleChangeCallBack={onTitleChangeCallBack} placeholderText={placeHolderText}/>
+                </View>
+
+                <View style={styles.photos_container}>
+                    <PostPhoto outfit={outfitA} onCloseCallback={onPictureCloseCallback}/>
+                    <PostPhoto outfit={outfitB} onCloseCallback={onPictureCloseCallback}/>
+                </View>
 
 
-            <PostButton title={roomTitle} outfitA={outfitA} outfitB={outfitB} postFinishedCallback={onPostFinished}/>
-        </SafeAreaView>
+                <PostButton title={roomTitle} outfitA={outfitA} outfitB={outfitB}
+                            postFinishedCallback={onPostFinished}/>
+            </SafeAreaView>
+        </TouchableWithoutFeedback>
+
     )
 };
-
-
 
 
 const styles = StyleSheet.create({
