@@ -6,6 +6,8 @@ import { PieChart } from "react-native-svg-charts"
 import Labels from "../../components/Labels"
 import CountDown from "../../components/countdown/CountDown"
 import { StyledText } from "../../components/StyledText"
+import {colors, normalize, sizes} from "../../constants/styles"
+import {RoomTitle} from "../../components/RoomTitle";
 
 export const createChartData = ({
   influencer,
@@ -37,17 +39,52 @@ export const createChartData = ({
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    alignItems: "flex-start" // if you want to fill rows left to right
-  },
-  item: {
-    width: "50%", // is 50% of container width
+  container:{
     flexDirection: "column",
+    width: "100%",
+    height: '100%'
+  },
+  photo_container:{
+      width: '100%',
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: '40%',
+    },
+
+  buttons_and_timer_container:{
+    alignItems: "center",
+    flexDirection: "column",
+  },
+  buttons_container:{
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: '80%'
+  },
+  title_container:{
+    height:'12%',
+    width:'100%',
+    alignItems:'center',
+    justifyContent: 'center'
+  },
+  loading_container:{
+    alignItems: "center",
+    justifyContent: 'center',
+    width: "100%" ,
+    height: '100%',
+
+  },
+  options_container_text:{
     alignItems: "center"
+  },
+  option_text:{
+    paddingTop: 5,
+    color: colors.text.secondary.main
+  },
+  skip_button:{
+    marginTop: normalize(8),
+    marginBottom:normalize(8)
   }
-})
+});
 
 const Results = ({ route }) => {
   const [scores, setScore] = useState(null)
@@ -63,14 +100,13 @@ const Results = ({ route }) => {
 
   const deviceWidth = Dimensions.get("window").width
   const { roomData } = route.params
-  return scores ? (
+  console.log("THE ROOM DATA TITLE: ", roomData.title);
+  return scores && (roomData.title !== undefined) ? (
     <SafeAreaView>
-      <View>
-        <View style={{ padding: 25, height: 150 }}>
-          <StyledText type="bold" size={23}>
-            {roomData.title}
-          </StyledText>
-        </View>
+      <View style={styles.container}>
+      <View style={styles.title_container}>
+        <RoomTitle title={roomData.title}/>
+      </View>
         <View style={{ flexDirection: "row" }}>
           <View style={{ flex: 1 }}>
             <View style={{ justifyContent: "center", alignItems: "center" }}>
