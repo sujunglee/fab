@@ -8,6 +8,9 @@ import React, {useState, useEffect} from "react"
 import uploadImage from "../../db/uploadImg";
 import { ActivityIndicator } from 'react-native-paper';
 import { screens } from "../../Navigation/constants"
+import { useNavigation } from "@react-navigation/native"
+import getRoomData from "../../db/getRoomData";
+
 
 /**
  * Checks if a parameter (or key) exists
@@ -20,11 +23,15 @@ const _uriExist = ({uri}) => {
 
 const PostButton = ({title, outfitA, outfitB, postFinishedCallback}) => {
 
+    const navigation = useNavigation()
+
     const [outfitA_url, setOutfitA_url] = useState(null);
     const [outfitB_url, setOutfitB_url] = useState(null);
     const [urlsLoaded, setUrlsLoaded] = useState(false);
     const [isPressed, setIsPressed] = useState(false);
-    const[roomID, setRoomID] = useState(null);
+    const [roomID, setRoomID] = useState("");
+    const [postData, setPostData] = useState({});
+
     const deviceId = Constants.installationId;
 
     // ToDo: Navigate to the results room after room is created.
@@ -49,6 +56,27 @@ const PostButton = ({title, outfitA, outfitB, postFinishedCallback}) => {
                 })
 
         }
+
+        const getPostData = async () => {
+          const data = await getRoomData({ roomID })
+          const createdAt = moment(data.timeCreated).format("dddd h:hh A")
+          setPostData({
+            ...data,
+            createdAt: createdAt
+          })
+
+          console.log("****THE DATA BEING SET: ", data)
+
+        }
+
+        if (roomID !== "") {
+          getPostData()
+        }
+        else {
+          console.log("room Id is NOT set to anything yet")
+        }
+
+
     }, [outfitA_url, outfitB_url]);
 
     const uploadCallback_A = ({url}) => {
@@ -72,15 +100,7 @@ const PostButton = ({title, outfitA, outfitB, postFinishedCallback}) => {
             uploadImage({uri: outfitA.uri, uploadCallback: uploadCallback_A});
             uploadImage({uri: outfitB.uri, uploadCallback: uploadCallback_B});
         }
-
-        navigation.navigate(screens.RESULTS, {
-          roomID: roomID,
-          roomData: postData
-        })
     };
-
-    console.log("*******The room ID is: ", roomID);
-
 
     return (
         isPressed ?
