@@ -4,18 +4,33 @@ import LottieView from "lottie-react-native";
 import {colors, normalize, sizes} from "../../constants/styles"
 import StyledText from "../StyledText/StyledText";
 export default class Loader extends React.Component {
+  _isMounted = false;
+
   constructor(props){
     super(props);
     this.state = {loadLoader: false}
   }
 
   componentDidMount() {
-    this.animation.play();
-    // Or set a specific startFrame and endFrame with:
-    // this.animation.play(30, 120);
+    this._isMounted = true;
 
-    // load animation after a short timeout
-    setTimeout(()=>{ this.setState({loadLoader: true}) }, 500);
+    if (this._isMounted){
+      this.animation.play();
+      // Or set a specific startFrame and endFrame with:
+      // this.animation.play(30, 120);
+
+      // load animation after a short timeout
+      setTimeout(()=>{
+        if (this._isMounted){
+          this.setState({loadLoader: true})
+        }
+      }, 500);
+    }
+
+  }
+
+  componentWillUnmount(){
+    this._isMounted = false;
   }
 
   resetAnimation = () => {
