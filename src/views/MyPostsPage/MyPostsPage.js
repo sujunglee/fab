@@ -7,15 +7,19 @@ import { AppContext } from "../../context/AppContext";
 import { colors, normalize, sizes } from "../../constants/styles";
 import fb from "../../db/init"
 const db = fb.database();
+import Constants from 'expo-constants';
 
 
 const MyPostsPage = () => {
 
   // const navigation = useNavigation()
-  const userID = "jbrain98";
+  const deviceId = Constants.deviceId;
+  console.log("DEVICE ID!: ", deviceId);
+  // const userID = "jbrain98";
+  const userID = deviceId;
   const { user, isLoggedIn } = useContext(AppContext);
   const [userInfo, setUserInfo] = useState(null)
-  console.log(user);
+  console.log("!!!! THE USER: ", user);
 
   useEffect(() => {
     const handleData = snap => {

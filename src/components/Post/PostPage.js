@@ -13,6 +13,7 @@ const PostPage = ({route}) => {
     const [outfitA, setOutfitA] = useState({uri: undefined, outfitOption: 'A'});
     const [outfitB, setOutfitB] = useState({uri: undefined, outfitOption: 'B'});
     const [roomTitle, setRoomTitle] = useState('Which one should I choose?');
+    const [roomID, setroomID] = useState("");
     const navigation = useNavigation();
 
 

@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from "react"
 import getUserInfo from "../../db/getUserInfo";
 import db from "../../db/init"
+import Constants from 'expo-constants';
 
 const SAMPLE_USERID = "jbrain98";
 
@@ -16,6 +17,8 @@ const AppContext = createContext(initialState);
 
 const AppContextProvider = ({ children }) => {
     const [state, setState] = useState(initialState);
+    const deviceId = Constants.deviceId;
+
     /*
     //does not work
     useEffect(() => {
@@ -34,12 +37,13 @@ const AppContextProvider = ({ children }) => {
     */
 
     useEffect(() => {
-        // load data with hardcoded userId
-        getUserInfo({ userID: SAMPLE_USERID }).then((user) => {
+        // No longer load data with hardcoded userId
+        // but load with deviceId instead
+        getUserInfo({ userID: deviceId }).then((user) => {
             setState({
                 ...state,
                 isLoggedIn: true,
-                userID: SAMPLE_USERID,
+                userID: deviceId,
                 user
             })
         }
