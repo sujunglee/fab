@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext} from "react"
+import React, { useEffect, useState, useContext } from "react"
 import { View, Text } from "react-native"
 import VoteScreen from "../../components/Vote/VoteScreen"
 import { SafeAreaView } from "react-native-safe-area-context"
@@ -6,15 +6,15 @@ import fb from "../../db/init"
 import { getUserBadge } from "../../db/userBadge"
 import { StyledText } from "../../components/StyledText"
 import { colors } from "../../constants/styles"
-import {getNumberOfVoters} from "../../db/Utility";
-import {AppContext} from "../../context/AppContext";
-import {CountDown} from "../../components/countdown/";
+import { getNumberOfVoters } from "../../db/Utility";
+import { AppContext } from "../../context/AppContext";
+import { CountDown } from "../../components/countdown/";
 const db = fb.database();
 import Constants from 'expo-constants';
 
 const getTotalNumVoters = room => {
 
-  const {numInfluencersA,numNormalA,numInfluencersB,numNormalB} = getNumberOfVoters(room);
+  const { numInfluencersA, numNormalA, numInfluencersB, numNormalB } = getNumberOfVoters(room);
   return numInfluencersA + numNormalA + numInfluencersB + numNormalB
 };
 
@@ -24,19 +24,21 @@ const getActiveList = async () => {
 
   for (var roomID of Object.keys(snapshot.val())) {
     getTotalNumVoters(snapshot.val()[roomID])
-    const currRoom = {
-      numVotes: getTotalNumVoters(snapshot.val()[roomID]),
-      id: roomID,
-      room: snapshot.val()[roomID]
+    if (snapshot.val()[roomID]["meta_data"]["owner"] !== Constants.installationId) {
+      
+      const currRoom = {
+        numVotes: getTotalNumVoters(snapshot.val()[roomID]),
+        id: roomID,
+        room: snapshot.val()[roomID]
+      }
+      activeRooms.push(currRoom)
     }
-    activeRooms.push(currRoom)
   }
 
   activeRooms.sort((a, b) => (a.numVotes > b.numVotes ? 1 : -1))
 
   return activeRooms
 }
-
 
 
 
@@ -148,12 +150,12 @@ const Vote = ({ navigation }) => {
   }
 
   return (
-        <VoteScreen
-          roomData={roomlist[currentRoom]}
-          userID={userID}
-          badge={badge}
-          handleNextRoom={handleNextRoom}
-      />
+    <VoteScreen
+      roomData={roomlist[currentRoom]}
+      userID={userID}
+      badge={badge}
+      handleNextRoom={handleNextRoom}
+    />
   )
 };
 
