@@ -8,6 +8,9 @@ import StyledText from "../StyledText/StyledText";
 import {colors, normalize, sizes} from "../../constants/styles";
 import VoteButton from "../Vote/VoteButton/VoteButton";
 
+// https://docs.expo.io/versions/latest/sdk/imagemanipulator/
+// https://stackoverflow.com/questions/48045366/retrieve-file-from-firebase-storage
+
 /**
  * The post photo
  * @param outfit - {uri:string, outfitOption: enum [A,B]} for example {uri:'https://tinyurl/dvdfr', outfitOption: 'A'}
