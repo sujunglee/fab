@@ -27,7 +27,7 @@ const TitleEntry = ({placeholderText, onTitleChangeCallBack}) => {
             <View style={styles.text_container}>
                 <TextInput
                     placeholder ={placeholderText}
-                    style={{height: normalize(40), backgroundColor: colors.general.white}}
+                    style={{height: normalize(46), backgroundColor: colors.general.white}}
                     label={''}
                     multiline={true}
                     onChangeText={text => onChange(text)}
