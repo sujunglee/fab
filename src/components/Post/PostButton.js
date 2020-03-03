@@ -23,7 +23,7 @@ const PostButton = ({title, outfitA, outfitB, postFinishedCallback}) => {
     const [outfitB_url, setOutfitB_url] = useState(null);
     const [urlsLoaded, setUrlsLoaded] = useState(false);
     const [isPressed, setIsPressed] = useState(false);
-    const deviceId = Constants.deviceId;
+    const deviceId = Constants.installationId;
 
     // ToDo: Navigate to the results room after room is created.
     useEffect(() => {
