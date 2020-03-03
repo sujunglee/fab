@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { View, Text, Dimensions } from "react-native"
+import { View, Text, Dimensions, StyleSheet} from "react-native"
 import { VoteButton, SkipButton } from "./VoteButton"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { StyledText } from "../StyledText"
@@ -59,18 +59,21 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
   };
 
   return roomData ? (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView>
       <View
         style={{
-          alignItems: "center",
           flexDirection: "column",
           width: "100%"
         }}
       >
 
         <RoomTitle title={roomData.room.meta_data.title}/>
-        <View style={{ width: "100%" }}>
+
+        <View styles={styles.photo_container}>
           <RoomImages roomData={roomData} selectedOption={voteState.selectedOption} imageLoadCallback={imageLoadCallback}/>
+        </View>
+
+          <View style={{ width: "100%" }}>
           {voteState.voteResults ? (
           <VotingChart  voteResults={voteState.voteResults}/>
           ) : areImagesLoaded ? (
@@ -118,6 +121,17 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
     <Text>Loading...</Text>
   )
 };
+
+const styles = StyleSheet.create({
+    photo_container:{
+      width: '100%',
+      alignItems: 'center',
+      justifyContent: 'center'
+
+    }
+});
+
+
 
 
 export default VoteScreen

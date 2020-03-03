@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react"
-import { View, Image, Modal } from "react-native"
+import { View, Image, Modal , ImageBackground,StyleSheet} from "react-native"
 import PropTypes from 'prop-types';
 import ImageViewer from "react-native-image-zoom-viewer";
 import {TouchableWithoutFeedback} from "react-native-gesture-handler";
-import {colors, sizes} from "../../constants/styles";
 import {StyledText} from "../StyledText";
+import {colors, normalize, sizes} from "../../constants/styles";
 
 let x = 'https://firebasestorage.googleapis.com/v0/b/fabapp-a1ea0.appspot.com/o/my-image.jpg?alt=media&token=995d6347-0435-41ac-96e1-91106786ab2c'
 
@@ -45,79 +45,65 @@ const RoomImages = ({roomData,selectedOption, imageLoadCallback}) =>{
     );
 
     return (
-        <View>
-            {isImageOpen.state && (
-                <Modal visible={isImageOpen.state}>
-                    <ImageViewer
-                        enableImageZoom
-                        enableSwipeDown
-                        onSwipeDown={() => setIsImageOpen({ state: false })}
-                        imageUrls={[
-                            {
-                                url: isImageOpen.url
-                            }
-                        ]}
-                    />
-                </Modal>
-            )}
+        <View style={styles.container}>
 
-            <View
-                style={{
-                    flexDirection: "row"
-                }}
-            >
                 <View
-                    style={{ alignItems: "center", flex: 1 }}
+                    style={styles.photo_option}
                 >
-                    <TouchableWithoutFeedback
-                        onPress={() =>
-                            setIsImageOpen({
-                                state: true,
-                                url: roomData.room.optionA.picture
-                            })
-                        }
-                    >
-                        <Image
+                    <Image
                             source={{ uri: roomData.room.optionA.picture }}
-                            style={{ width: 200, height: 300, aspectRatio:4/3, minWidth:200, maxWidth:200, minHeight:300, maxHeight:300 }}
+                            style={styles.image}
                             onLoad={() =>
                                 setAreImagesLoaded({ ...areImagesLoaded, A: true })
                             }
-                            resizeMode="contain"
+                            resizeMode="cover"
                         />
-                    </TouchableWithoutFeedback>
-                    {selectedOption === "optionA" && <YourVote />}
                 </View>
                 <View
-                    style={{ alignItems: "center", flex: 1, marginHorizontal: 4 }}
+                    style={styles.photo_option}
                 >
-                    <TouchableWithoutFeedback
-                        onPress={() =>
-                            setIsImageOpen({
-                                state: true,
-                                url: roomData.room.optionB.picture
-                            })
-                        }
-                    >
-                        <Image
+                    <Image
                             source={{ uri: roomData.room.optionB.picture }}
-                            style={{ width: 200, height: 300, position: "relative", aspectRatio:4/3, minWidth:200, maxWidth:200, minHeight:300, maxHeight:300}}
+                            style={styles.image}
                             onLoad={() =>
                                 setAreImagesLoaded({ ...areImagesLoaded, B: true })
                             }
-                            resizeMode="contain"
+                            resizeMode="cover"
                         />
-                    </TouchableWithoutFeedback>
-                    {selectedOption === "optionB" && <YourVote />}
+
                 </View>
-            </View>
 
         </View>
-
-
     )
-
 };
+
+
+const styles = StyleSheet.create({
+    photo_option: {
+        width: '48%',
+        height: '60%',
+        borderColor: '#A9A9A9',
+        borderWidth: 0.5,
+        backgroundColor: '#E8E8E8',
+        borderRadius: 2,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    image: {
+        width: '100%',
+        height: '100%',
+        borderRadius: 2,
+    },
+    container: {
+        width: '100%',
+        height: '60%',
+        justifyContent: 'space-around',
+        marginBottom: normalize(100),
+        flexDirection: 'row'
+    },
+});
+
+
 
 RoomImages.propTypes = {
     roomData: PropTypes.object.isRequired,
