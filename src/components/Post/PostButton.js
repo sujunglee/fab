@@ -65,8 +65,8 @@ const PostButton = ({title, outfitA, outfitB, postFinishedCallback}) => {
         } else {
             setIsPressed(true);
             // Upload the images to firebase storage and capture the urls
-            uploadImage({uri: outfitA.uri, uploadCallback: uploadCallback_A});
-            uploadImage({uri: outfitB.uri, uploadCallback: uploadCallback_B});
+            uploadImage({outfit:outfitA, uploadCallback: uploadCallback_A});
+            uploadImage({outfit:outfitB, uploadCallback: uploadCallback_B});
         }
     };
 
