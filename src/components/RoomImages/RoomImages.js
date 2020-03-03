@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react"
-import { View, Image, Modal, ImageBackground, StyleSheet } from "react-native"
+import React, {useState, useEffect} from "react"
+import {View, Image, Modal, ImageBackground, StyleSheet, TouchableWithoutFeedback} from "react-native"
 import PropTypes from 'prop-types';
 import ImageViewer from "react-native-image-zoom-viewer";
-import {TouchableWithoutFeedback} from "react-native-gesture-handler";
-import {colors, sizes} from "../../constants/styles";
 import {StyledText} from "../StyledText";
 import CloseButton from "../CameraApp/components/CloseButton"
+import {colors, normalize, sizes} from "../../constants/styles";
 
 let x = 'https://firebasestorage.googleapis.com/v0/b/fabapp-a1ea0.appspot.com/o/my-image.jpg?alt=media&token=995d6347-0435-41ac-96e1-91106786ab2c'
 
@@ -21,15 +20,21 @@ const YourVote = () => (
         }}
     >
 
-        <StyledText size={sizes.medium.fontSize} type={'regular'} style={{ position: "relative", color:colors.general.white}} >
+        <StyledText size={sizes.medium.fontSize} type={'regular'}
+                    style={{position: "relative", color: colors.general.white}}>
             YOUR VOTE
         </StyledText>
     </View>
 );
 
+//const testPictures = 'https://i.imgur.com/VakBHis.jpg';
 
-const RoomImages = ({roomData,selectedOption, imageLoadCallback}) =>{
+const RoomImages = ({roomData, selectedOption, imageLoadCallback}) => {
     console.log(selectedOption);
+    console.log(roomData);
+
+    //roomData.room.optionA.picture = testPictures;
+    //roomData.room.optionB.picture = testPictures;
 
     const [isImageOpen, setIsImageOpen] = useState(false);
     const [areImagesLoaded, setAreImagesLoaded] = useState({
@@ -37,91 +42,104 @@ const RoomImages = ({roomData,selectedOption, imageLoadCallback}) =>{
         B: false
     });
 
-    useEffect(()=>{
-        if(areImagesLoaded.A===true && areImagesLoaded.B===true){
-            imageLoadCallback();
-         }
+    useEffect(() => {
+            if (areImagesLoaded.A === true && areImagesLoaded.B === true) {
+                imageLoadCallback();
+            }
         },
         [areImagesLoaded]
     );
 
     return (
-        <View>
-            {isImageOpen.state && (
-                <Modal visible={isImageOpen.state}>
-                    <ImageBackground source={{url:isImageOpen.url}} style={styles.preview}>
-                        <CloseButton closeCallBack={() => setIsImageOpen({state:false})}/>
-                    </ImageBackground>
-                    {/* <ImageViewer
-                        enableImageZoom
-                        enableSwipeDown
-                        onSwipeDown={() => setIsImageOpen({ state: false })}
-                        imageUrls={[
-                            {
-                                url: isImageOpen.url
-                            }
-                        ]}
-                    /> */}
-                </Modal>
-            )}
+        <View style={styles.container}>
 
-            <View
-                style={{
-                    flexDirection: "row"
-                }}
-            >
-                <View
-                    style={{ alignItems: "center", flex: 1 }}
-                >
-                    <TouchableWithoutFeedback
-                        onPress={() =>
-                            setIsImageOpen({
-                                state: true,
-                                url: roomData.room.optionA.picture
-                            })
+
+            {/*Modal for image zoom-in + expansion*/}
+            {isImageOpen.state &&
+            <Modal visible={isImageOpen.state}>
+                <ImageViewer
+                    enableImageZoom
+                    enableSwipeDown
+                    onSwipeDown={() => setIsImageOpen({state: false})}
+                    imageUrls={[
+                        {
+                            url: isImageOpen.url
                         }
-                    >
-                        <Image
-                            source={{ uri: roomData.room.optionA.picture }}
-                            style={{ width: 200, height: 300, aspectRatio:4/3, minWidth:200, maxWidth:200, minHeight:300, maxHeight:300 }}
-                            onLoad={() =>
-                                setAreImagesLoaded({ ...areImagesLoaded, A: true })
-                            }
-                            resizeMode="contain"
-                        />
-                    </TouchableWithoutFeedback>
-                    {selectedOption === "optionA" && <YourVote />}
-                </View>
-                <View
-                    style={{ alignItems: "center", flex: 1, marginHorizontal: 4 }}
-                >
-                    <TouchableWithoutFeedback
-                        onPress={() =>
-                            setIsImageOpen({
-                                state: true,
-                                url: roomData.room.optionB.picture
-                            })
+                    ]}
+                />
+            </Modal>}
+
+            <View style={styles.photo_option}>
+                <TouchableWithoutFeedback
+                    onPress={() =>
+                        setIsImageOpen({
+                            state: true,
+                            url: roomData.room.optionA.picture
+                        })
+                    }>
+
+                    <Image
+                        source={{uri: roomData.room.optionA.picture}}
+                        style={styles.image}
+                        onLoad={() =>
+                            setAreImagesLoaded({...areImagesLoaded, A: true})
                         }
-                    >
-                        <Image
-                            source={{ uri: roomData.room.optionB.picture }}
-                            style={{ width: 200, height: 300, position: "relative", aspectRatio:4/3, minWidth:200, maxWidth:200, minHeight:300, maxHeight:300}}
-                            onLoad={() =>
-                                setAreImagesLoaded({ ...areImagesLoaded, B: true })
-                            }
-                            resizeMode="contain"
-                        />
-                    </TouchableWithoutFeedback>
-                    {selectedOption === "optionB" && <YourVote />}
-                </View>
+                    />
+                </TouchableWithoutFeedback>
+
+                {selectedOption === "optionA" && <YourVote />}
             </View>
 
+            <View style={styles.photo_option}>
+                <TouchableWithoutFeedback
+                    onPress={() =>
+                        setIsImageOpen({
+                            state: true,
+                            url: roomData.room.optionB.picture
+                        })
+                    }>
+
+                    <Image
+                        source={{uri: roomData.room.optionB.picture}}
+                        style={styles.image}
+                        onLoad={() =>
+                            setAreImagesLoaded({...areImagesLoaded, B: true})
+                        }
+                    />
+                </TouchableWithoutFeedback>
+
+                 {selectedOption === "optionB" && <YourVote />}
+            </View>
         </View>
-
-
     )
-
 };
+
+
+const styles = StyleSheet.create({
+    photo_option: {
+        width: '48.5%',
+        height: '100%',
+        borderColor: '#A9A9A9',
+        borderWidth: 0.5,
+        backgroundColor: '#E8E8E8',
+        borderRadius: 2,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    image: {
+    height: '100%',
+    width: '100%',
+    resizeMode: 'cover',
+
+    },
+    container: {
+        width: '100%',
+        height: '100%',
+        justifyContent: 'space-around',
+        flexDirection: 'row'
+    },
+});
+
 
 RoomImages.propTypes = {
     roomData: PropTypes.object.isRequired,

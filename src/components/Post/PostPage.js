@@ -8,12 +8,12 @@ import PostPhoto from "./PostPhoto";
 import TitleEntry from "./TitleEntry";
 
 // The actual post page
-const PostPage = ({route}) => {
+const PostPage = ({route, navigation}) => {
     const placeHolderText = 'Which one should I choose?';
     const [outfitA, setOutfitA] = useState({uri: undefined, outfitOption: 'A'});
     const [outfitB, setOutfitB] = useState({uri: undefined, outfitOption: 'B'});
     const [roomTitle, setRoomTitle] = useState('Which one should I choose?');
-    const navigation = useNavigation();
+    //const navigation = useNavigation();
 
 
     useEffect(() => {
@@ -27,10 +27,10 @@ const PostPage = ({route}) => {
         // use the `base64' to send data
         if (route.params !== undefined) {
             if (route.params.outfitOption === 'A') {
-                setOutfitA({uri: route.params.uri, outfitOption: 'A'});
+                setOutfitA({uri: route.params.uri, outfitOption: 'A', base64: route.params.base64});
             }
             if (route.params.outfitOption === 'B') {
-                setOutfitB({uri: route.params.uri, outfitOption: 'B'});
+                setOutfitB({uri: route.params.uri, outfitOption: 'B', base64: route.params.base64});
             }
         }
 
@@ -76,7 +76,7 @@ const PostPage = ({route}) => {
                 </View>
 
                 <View style={styles.photos_container}>
-                    <PostPhoto outfit={outfitA} onCloseCallback={onPictureCloseCallback}/>
+                    <PostPhoto outfit={outfitA} onCloseCallback={onPictureCloseCallback} />
                     <PostPhoto outfit={outfitB} onCloseCallback={onPictureCloseCallback}/>
                 </View>
 

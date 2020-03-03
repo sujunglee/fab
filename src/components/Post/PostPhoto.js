@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
 import {View, Button, StyleSheet, Image, ImageBackground} from "react-native"
 import {CameraApp} from "../CameraApp";
 import PropTypes from 'prop-types';
@@ -22,6 +22,7 @@ const PostPhoto = ({outfit, onCloseCallback}) => {
 
     return (
         <View style={styles.photo_option}>
+
             {outfit.uri !== undefined ?
                 <ImageBackground source={{uri: outfit.uri}} style={{...styles.image}} resizeMode={'cover'}>
                     {/* make image darker so close button will always show*/}
@@ -34,8 +35,8 @@ const PostPhoto = ({outfit, onCloseCallback}) => {
 
                 <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                     <StyledText
-                                size={normalize(15)}
-                                style={{paddingTop: normalize(5), color: colors.text.secondary.main}}>
+                        size={normalize(15)}
+                        style={{paddingTop: normalize(5), color: colors.text.secondary.main}}>
                         Take Photo
                     </StyledText>
                     <VoteButton content={outfit.outfitOption}

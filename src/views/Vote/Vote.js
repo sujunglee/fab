@@ -10,6 +10,7 @@ import {getNumberOfVoters} from "../../db/Utility";
 import {AppContext} from "../../context/AppContext";
 import {CountDown} from "../../components/countdown/";
 const db = fb.database();
+import Constants from 'expo-constants';
 
 const getTotalNumVoters = room => {
 
@@ -41,7 +42,7 @@ const getActiveList = async () => {
 
 
 const Vote = ({ navigation }) => {
-  const userID = "jbrain98"
+  const userID = Constants.installationId
   const [roomlist, setRoomList] = useState(null)
   const [badge, setBadge] = useState(null)
 

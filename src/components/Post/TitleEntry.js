@@ -12,10 +12,10 @@ import {
 // Textbox needs a callback to update the `roomTitle` state in the PostPage component.
 // also needs a way to reload and show "Enter title..."
 const TitleEntry = ({placeholderText, onTitleChangeCallBack}) => {
-    const [value, onChangeText] = React.useState('');
+    const [textValue, setTextValue] = React.useState('');
 
     const onChange = (text)=>{
-        onChangeText(text);
+        setTextValue(text);
         onTitleChangeCallBack(text);
     };
 
@@ -27,7 +27,7 @@ const TitleEntry = ({placeholderText, onTitleChangeCallBack}) => {
             <View style={styles.text_container}>
                 <TextInput
                     placeholder ={placeholderText}
-                    style={{height: normalize(40), backgroundColor: colors.general.white}}
+                    style={{height: normalize(46), backgroundColor: colors.general.white}}
                     label={''}
                     multiline={true}
                     onChangeText={text => onChange(text)}
