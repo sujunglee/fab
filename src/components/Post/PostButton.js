@@ -7,6 +7,7 @@ import {colors, sizes, normalize} from "../../constants/styles";
 import React, {useState, useEffect} from "react"
 import uploadImage from "../../db/uploadImg";
 import { ActivityIndicator } from 'react-native-paper';
+import { screens } from "../../Navigation/constants"
 
 /**
  * Checks if a parameter (or key) exists
@@ -23,6 +24,7 @@ const PostButton = ({title, outfitA, outfitB, postFinishedCallback}) => {
     const [outfitB_url, setOutfitB_url] = useState(null);
     const [urlsLoaded, setUrlsLoaded] = useState(false);
     const [isPressed, setIsPressed] = useState(false);
+    const[roomID, setRoomID] = useState(null);
     const deviceId = Constants.installationId;
 
     // ToDo: Navigate to the results room after room is created.
@@ -32,18 +34,20 @@ const PostButton = ({title, outfitA, outfitB, postFinishedCallback}) => {
 
             // upload data to Db
             const currInstant = moment().toISOString();
-            createRoom({userId: deviceId, time_created: currInstant, title, outfitA_url, outfitB_url})
-                .then(() => {
-                    // Navigate to the results room
-                    console.log('NAVIGATE TO RESULT ROOM!!!!!!!!');
 
+            createRoom({userId: deviceId, time_created: currInstant, title, outfitA_url, outfitB_url})
+                .then((result) => {
+                    // Navigate to the results room
                     // reset state variables
+
+                    setRoomID(result)
                     setOutfitA_url(null);
                     setOutfitB_url(null);
                     setUrlsLoaded(null);
                     setIsPressed(false);
                     postFinishedCallback();
                 })
+
         }
     }, [outfitA_url, outfitB_url]);
 
@@ -68,7 +72,15 @@ const PostButton = ({title, outfitA, outfitB, postFinishedCallback}) => {
             uploadImage({uri: outfitA.uri, uploadCallback: uploadCallback_A});
             uploadImage({uri: outfitB.uri, uploadCallback: uploadCallback_B});
         }
+
+        navigation.navigate(screens.RESULTS, {
+          roomID: roomID,
+          roomData: postData
+        })
     };
+
+    console.log("*******The room ID is: ", roomID);
+
 
     return (
         isPressed ?
