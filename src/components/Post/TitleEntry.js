@@ -30,7 +30,7 @@ const TitleEntry = ({placeholderText, onTitleChangeCallBack}) => {
                     style={{height: normalize(46), backgroundColor: colors.general.white}}
                     label={''}
                     multiline={true}
-                    onChangeText={text => setTextValue(text)}
+                    onChangeText={text => onChange(text)}
                 />
             </View>
         </View>
