@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import * as Font from "expo-font"
-import { StyleSheet, Text, View, ScrollView } from "react-native"
+import { StyleSheet, Text, View, ScrollView,StatusBar } from "react-native"
 import { SafeAreaProvider } from "react-native-safe-area-context"
 import { Navigation } from "./src/Navigation/"
 import {AppContextProvider} from "./src/context/AppContext";
@@ -39,6 +39,7 @@ const theme = {
 const App = () => {
   const [isFontLoaded, setisFontLoaded] = useState(false)
   useEffect(() => {
+    StatusBar.setBarStyle('default', true);
     const load = async () => {
       /*
         To add more of the fonts, go see what's in assets/fonts

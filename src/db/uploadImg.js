@@ -25,7 +25,14 @@ const compressImage = async ({uri}) => {
     let compressedInfo = await FileSystem.getInfoAsync(resizedPhoto.uri, {'size': true});
     console.log(`Compressed image size: ${compressedInfo.size} or ${compressedInfo.size / Math.pow(2, 20)} mb`);
     console.log(`Percent reduction: ${((originalInfo.size - compressedInfo.size) / originalInfo.size * 100)}%`);
-    return resizedPhoto.uri;
+
+    const directoryName = FileSystem.documentDirectory + 'images';
+    const fileName = `${directoryName}/${shortid.generate()}.jpeg`;
+
+    await FileSystem.makeDirectoryAsync(directoryName,{'intermediates':true});
+    await FileSystem.moveAsync({from: resizedPhoto.uri, to: fileName});
+    
+    return fileName;
 };
 
 const uploadImage = async ({uri, uploadCallback}) => {
