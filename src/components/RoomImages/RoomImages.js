@@ -5,6 +5,7 @@ import ImageViewer from "react-native-image-zoom-viewer";
 import {StyledText} from "../StyledText";
 import CloseButton from "../CameraApp/components/CloseButton"
 import {colors, normalize, sizes} from "../../constants/styles";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 let x = 'https://firebasestorage.googleapis.com/v0/b/fabapp-a1ea0.appspot.com/o/my-image.jpg?alt=media&token=995d6347-0435-41ac-96e1-91106786ab2c'
 
@@ -91,36 +92,47 @@ const RoomImages = ({roomData, selectedOption, imageLoadCallback}) => {
             </Modal>}
 
             <View style={styles.photo_option}>
-                <TouchableWithoutFeedback
+                <TouchableWithoutFeedback style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.15)'}}
                     onPress={() =>
                         openImageA()
                     }>
-
-                    <Image
+                    <ImageBackground source={{uri:roomData.room.optionA.picture}} style={styles.image} onLoad={() =>
+                            setAreImagesLoaded({...areImagesLoaded, A: true})}>
+                        <MaterialCommunityIcons name="arrow-expand" size={32} color="white" onPress={() =>
+                        openImageA()
+                    }/>    
+                    </ImageBackground>
+                    {/* <Image
                         source={{uri: roomData.room.optionA.picture}}
                         style={styles.image}
                         onLoad={() =>
                             setAreImagesLoaded({...areImagesLoaded, A: true})
                         }
-                    />
+                    /> */}
                 </TouchableWithoutFeedback>
 
                 {selectedOption === "optionA" && <YourVote />}
             </View>
 
             <View style={styles.photo_option}>
-                <TouchableWithoutFeedback
+                <TouchableWithoutFeedback style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.15)'}}
                     onPress={() =>
                         openImageB()
                     }>
-
-                    <Image
+                    <ImageBackground source={{uri:roomData.room.optionB.picture}} style={styles.image} onLoad={() =>
+                            setAreImagesLoaded({...areImagesLoaded, B: true})}>
+                            <MaterialCommunityIcons name="arrow-expand" size={32} color="white" onPress={() =>
+                            openImageB()
+                    }/>    
+                    </ImageBackground>
+                   {/*  <Image
                         source={{uri: roomData.room.optionB.picture}}
                         style={styles.image}
                         onLoad={() =>
                             setAreImagesLoaded({...areImagesLoaded, B: true})
                         }
                     />
+                    <MaterialCommunityIcons name="arrow-expand" size={32} color="white" /> */}
                 </TouchableWithoutFeedback>
 
                  {selectedOption === "optionB" && <YourVote />}
