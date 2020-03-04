@@ -11,11 +11,12 @@ import { VotingChart } from "../VotingChart"
 import { RoomImages } from "../RoomImages"
 import { RoomTitle } from "../RoomTitle"
 import Loader from "../FancyLoader/FancyLoader"
-import Moment from 'react-moment';
 
+/*
 function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min)) + min
 }
+*/
 
 const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
   const [voteState, setVoteState] = useState({})
