@@ -66,4 +66,3 @@ CountDown.propTypes = {
 };
 
 export default CountDown;
-
