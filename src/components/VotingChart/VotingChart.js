@@ -111,6 +111,14 @@ const VotingChart = ({voteResults}) =>{
                     )}
                 </Text>
             </View>
+
+            {(totalNumVoters === 0) ? (
+              <Text>No votes yet, come back soon!</Text>
+            ): (
+              <Text>""</Text>
+            )}
+
+
         </View>
     );
 
