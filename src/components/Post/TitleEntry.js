@@ -2,6 +2,8 @@ import React from "react"
 import {View, StyleSheet, Keyboard, TouchableWithoutFeedback} from "react-native"
 import {colors, normalize, sizes} from "../../constants/styles";
 import {TextInput} from 'react-native-paper';
+import StyledText from "../StyledText/StyledText";
+import {MAX_TITLE_CHARS} from "../../constants/styles";
 
 import {
     SimpleLineIcons
@@ -13,8 +15,10 @@ import {
 // also needs a way to reload and show "Enter title..."
 const TitleEntry = ({placeholderText, onTitleChangeCallBack}) => {
     const [textValue, setTextValue] = React.useState('');
+    const [titleCharsLeft, setTitleCharsLeft] = React.useState(MAX_TITLE_CHARS);
 
     const onChange = (text)=>{
+        setTitleCharsLeft(MAX_TITLE_CHARS - text.length);
         setTextValue(text);
         onTitleChangeCallBack(text);
     };
@@ -29,9 +33,11 @@ const TitleEntry = ({placeholderText, onTitleChangeCallBack}) => {
                     placeholder ={placeholderText}
                     style={{height: normalize(46), backgroundColor: colors.general.white}}
                     label={''}
-                    multiline={true}
+                    disabled={titleCharsLeft <= 0}
+                    multiline={false}
                     onChangeText={text => onChange(text)}
                 />
+              <StyledText>{titleCharsLeft} characters left</StyledText>
             </View>
         </View>
     )

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import StyledText from "../StyledText/StyledText";
 import {sizes} from "../../constants/styles";
 
-styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         justifyContent: 'center',

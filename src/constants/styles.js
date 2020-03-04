@@ -22,6 +22,8 @@ export const normalize = (size) => {
 /*****************************************************/
 /*****************************************************/
 
+export const MAX_TITLE_CHARS = 140;
+
 export const sizes = {
     mini: {
         fontSize: normalize(12),
