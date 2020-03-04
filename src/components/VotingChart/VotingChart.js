@@ -1,4 +1,4 @@
-import React from "react"
+import React,{useState} from "react"
 import {Text, View, StyleSheet} from "react-native"
 import {PieChart} from "react-native-svg-charts";
 import PropTypes from 'prop-types';
@@ -43,21 +43,26 @@ const createChartData = ({
         {
             key: 1,
             amount: competitor,
-            svg: {fill: "#f4f4f4"},
+            svg: {fill: "#E8E8E8"},
             totalNumVoters: totalNumVoters
         }
     ]
 };
 
 
+
+
 const VotingChart = ({voteResults}) =>{
 
-    const totalNumVoters = voteResults.scoreA + voteResults.scoreB
+    const voteA_percent = ((voteResults.scoreA / (voteResults.scoreA + voteResults.scoreB))*100);
+    const voteB_percent = ((voteResults.scoreB / (voteResults.scoreA + voteResults.scoreB))*100);
+    const totalNumVoters = voteResults.scoreA + voteResults.scoreB;
 
     return (
         <View style={{ display: "flex", flexDirection: "row" }}>
             <View style={{ alignItems: "center", textAlign: "center", justifyContent: "center", flex: 1 }}>
                 <PieChart
+                    padAngle={0}
                     style={{ width: 160, height: 160 }}
                     valueAccessor={({ item }) => item.amount}
                     data={createChartData({
@@ -79,19 +84,20 @@ const VotingChart = ({voteResults}) =>{
                         fontSize: 30,
                         alignItems: 'center',
                         justifyContent: 'center',
-                        color: "#dd8300"
+                        color: (voteA_percent ===voteB_percent? "#1563af":  (voteA_percent>voteB_percent?"#dd8300":"#1563af"))
                     }}
                 >
                   {(totalNumVoters === 0) ? (
                     ""
                   ) : (
-                    ((voteResults.scoreA / (voteResults.scoreA + voteResults.scoreB))*100).toFixed().toString() + "%"
+                    voteA_percent.toString() + "%"
                   )}
                 </Text>
             </View>
             <View style={{ alignItems: "center", textAlign: "center", justifyContent: "center", flex: 1 }}>
                 {/*TODO: Factor this out into a clean, separate Chart component*/}
                 <PieChart
+                     padAngle={0}
                     style={{ width: 160, height: 160 }}
                     valueAccessor={({ item }) => item.amount}
                     data={createChartData({
@@ -113,14 +119,14 @@ const VotingChart = ({voteResults}) =>{
                         fontSize: 30,
                         alignItems: 'center',
                         justifyContent: 'center',
-                        color: "#1563af"
+                        color: (voteA_percent ===voteB_percent? "#1563af":  (voteB_percent>voteA_percent?"#dd8300":"#1563af"))
                     }}
                 >
 
                     {(totalNumVoters === 0) ? (
                       ""
                     ) : (
-                      ((voteResults.scoreB / (voteResults.scoreA + voteResults.scoreB))*100).toFixed().toString() + "%"
+                      voteA_percent.toString() + "%"
                     )}
                 </Text>
             </View>

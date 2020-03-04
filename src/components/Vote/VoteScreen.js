@@ -12,15 +12,18 @@ import { RoomImages } from "../RoomImages"
 import { RoomTitle } from "../RoomTitle"
 import Loader from "../FancyLoader/FancyLoader"
 
+/*
 function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min)) + min
 }
+*/
 
 const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
   const [voteState, setVoteState] = useState({})
   const deviceWidth = Dimensions.get("window").width
   const [areImagesLoaded, setAreImagesLoaded] = useState(false)
   const [imageViewport, setImageViewport] = useState({})
+
 
   useEffect(() => {
     console.log(imageViewport)
@@ -60,6 +63,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
   const imageLoadCallback = () => {
     setAreImagesLoaded(true)
   }
+
 
   return roomData ? (
     <SafeAreaView>
@@ -154,9 +158,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
 
               <SkipButton onPress={handleSkip} style={styles.skip_button} />
               <CountDown
-                finishTime={moment()
-                  .add({ seconds: getRndInteger(3600 / 4, 86399) })
-                  .toISOString()}
+                  startTime={roomData.room.meta_data.time_created}
                 isFinished={() => console.log("Finished!")}
               />
             </View>
@@ -171,7 +173,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
   ) : (
     <Loader visible={true} />
   )
-}
+};
 
 const VotePercents = ({ score, voteResults, imageViewport }) => {
   const textStyles = {
