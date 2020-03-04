@@ -70,9 +70,7 @@ const RoomImages = ({roomData, selectedOption, imageLoadCallback}) => {
 
     return (
         <View style={styles.container}>
-
-
-            {/*Modal for image zoom-in + expansion*/}
+            
             {isImageOpen.state &&
             
             <Modal visible={isImageOpen.state}>
@@ -92,7 +90,7 @@ const RoomImages = ({roomData, selectedOption, imageLoadCallback}) => {
             </Modal>}
 
             <View style={styles.photo_option}>
-                <TouchableWithoutFeedback style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.15)'}}
+                <TouchableWithoutFeedback
                     onPress={() =>
                         openImageA()
                     }>
@@ -102,20 +100,13 @@ const RoomImages = ({roomData, selectedOption, imageLoadCallback}) => {
                         openImageA()
                     }/>    
                     </ImageBackground>
-                    {/* <Image
-                        source={{uri: roomData.room.optionA.picture}}
-                        style={styles.image}
-                        onLoad={() =>
-                            setAreImagesLoaded({...areImagesLoaded, A: true})
-                        }
-                    /> */}
                 </TouchableWithoutFeedback>
 
                 {selectedOption === "optionA" && <YourVote />}
             </View>
 
             <View style={styles.photo_option}>
-                <TouchableWithoutFeedback style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.15)'}}
+                <TouchableWithoutFeedback
                     onPress={() =>
                         openImageB()
                     }>
@@ -125,14 +116,6 @@ const RoomImages = ({roomData, selectedOption, imageLoadCallback}) => {
                             openImageB()
                     }/>    
                     </ImageBackground>
-                   {/*  <Image
-                        source={{uri: roomData.room.optionB.picture}}
-                        style={styles.image}
-                        onLoad={() =>
-                            setAreImagesLoaded({...areImagesLoaded, B: true})
-                        }
-                    />
-                    <MaterialCommunityIcons name="arrow-expand" size={32} color="white" /> */}
                 </TouchableWithoutFeedback>
 
                  {selectedOption === "optionB" && <YourVote />}
