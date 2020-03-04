@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react"
-import { View, Text, SafeAreaView, ScrollView, Button } from "react-native"
+import { View, Text, SafeAreaView, ScrollView, Button, StyleSheet } from "react-native"
 import { PostPreview } from "../../components/PostPreview"
 import getUserInfo from "../../db/getUserInfo"
 import { StyledText } from "../../components/StyledText"

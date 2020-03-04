@@ -118,7 +118,11 @@ const Results = ({ route }) => {
 
   const deviceWidth = Dimensions.get("window").width
   const { roomData } = route.params
-  console.log("***THE ROOM DATA: ", roomData);
+  const totalNumVoters = roomData.scoreA + roomData.scoreB
+
+  if (totalNumVoters === 0 ) {
+    console.log("NOBODY VOTED YET!!!");
+  }
 
   return scores ? (
     <SafeAreaView>
@@ -144,9 +148,16 @@ const Results = ({ route }) => {
             </View>
           </View>
         </View>
-        <View>
-          <VotingChart  voteResults={roomData}/>
-        </View>
+        {(totalNumVoters !== 0) ? (
+          <View>
+            <VotingChart  voteResults={roomData}/>
+          </View>
+          ) : (
+            <View>
+              <StyledText style={styles.title}>TIME LEFT</StyledText>
+            </View>
+          )
+        }
         <CountDown isFinished={() => console.log("Finished!")} />
       </View>
     </SafeAreaView>

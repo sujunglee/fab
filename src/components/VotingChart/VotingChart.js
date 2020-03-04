@@ -1,8 +1,25 @@
 import React from "react"
-import {Text, View} from "react-native"
+import {Text, View, StyleSheet} from "react-native"
 import {PieChart} from "react-native-svg-charts";
 import PropTypes from 'prop-types';
+import StyledText from "../StyledText/StyledText";
+import {sizes} from "../../constants/styles";
 
+styles = StyleSheet.create({
+    container: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    title: {
+        color:'#414141',
+        fontSize: sizes.mini.fontSize,
+    },
+    content: {
+        color: '#414141',
+        fontSize: sizes.large.fontSize
+
+    },
+});
 
 const createChartData = ({
                              influencer,
@@ -36,10 +53,6 @@ const createChartData = ({
 const VotingChart = ({voteResults}) =>{
 
     const totalNumVoters = voteResults.scoreA + voteResults.scoreB
-
-    if (totalNumVoters === 0) {
-      console.log("There's nothing here!");
-    }
 
     return (
         <View style={{ display: "flex", flexDirection: "row" }}>
@@ -111,12 +124,6 @@ const VotingChart = ({voteResults}) =>{
                     )}
                 </Text>
             </View>
-
-            {(totalNumVoters === 0) ? (
-              <Text>No votes yet, come back soon!</Text>
-            ): (
-              <Text>""</Text>
-            )}
 
 
         </View>
