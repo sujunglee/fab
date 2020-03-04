@@ -35,7 +35,7 @@ const TitleEntry = ({placeholderText, onTitleChangeCallBack}) => {
                     style={{height: normalize(46), backgroundColor: colors.general.white}}
                     label={''}
                     error={titleCharsLeft < 5}
-                    multiline={false}
+                    multiline={true}
                     onChangeText={text => {onChange(text)}}
                     maxLength={MAX_TITLE_CHARS}
                     value={textValue}
