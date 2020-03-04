@@ -43,6 +43,9 @@ const TitleEntry = ({placeholderText, onTitleChangeCallBack}) => {
                     value={textValue}
                     onBlur = {()=>setShowCharLimit(false)}
                     onFocus = {()=>setShowCharLimit(true)}
+                    textBreakStrategy={'simple'}
+                    numberOfLines ={2}
+                    maxHeight={60}
                 />
 
                {showCharLimit&& <Fade style={{flex:1,flexDirection: 'row-reverse' }}>

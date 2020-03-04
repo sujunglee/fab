@@ -22,7 +22,7 @@ export const normalize = (size) => {
 /*****************************************************/
 /*****************************************************/
 
-export const MAX_TITLE_CHARS = 80;
+export const MAX_TITLE_CHARS = 45;
 
 export const sizes = {
     mini: {
