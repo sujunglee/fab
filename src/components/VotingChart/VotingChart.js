@@ -34,6 +34,13 @@ const createChartData = ({
 
 
 const VotingChart = ({voteResults}) =>{
+
+    const totalNumVoters = voteResults.scoreA + voteResults.scoreB
+
+    if (totalNumVoters === 0) {
+      console.log("There's nothing here!");
+    }
+
     return (
         <View style={{ display: "flex", flexDirection: "row" }}>
             <View style={{ alignItems: "center", textAlign: "center", justifyContent: "center", flex: 1 }}>
@@ -62,7 +69,11 @@ const VotingChart = ({voteResults}) =>{
                         color: "#dd8300"
                     }}
                 >
-                    {((voteResults.scoreB / (voteResults.scoreA + voteResults.scoreB))*100).toFixed()}%
+                  {(totalNumVoters === 0) ? (
+                    ""
+                  ) : (
+                    ((voteResults.scoreA / (voteResults.scoreA + voteResults.scoreB))*100).toFixed().toString() + "%"
+                  )}
                 </Text>
             </View>
             <View style={{ alignItems: "center", textAlign: "center", justifyContent: "center", flex: 1 }}>
@@ -92,7 +103,12 @@ const VotingChart = ({voteResults}) =>{
                         color: "#1563af"
                     }}
                 >
-                    {((voteResults.scoreA / (voteResults.scoreA + voteResults.scoreB))*100).toFixed()}%
+
+                    {(totalNumVoters === 0) ? (
+                      ""
+                    ) : (
+                      ((voteResults.scoreB / (voteResults.scoreA + voteResults.scoreB))*100).toFixed().toString() + "%"
+                    )}
                 </Text>
             </View>
         </View>
@@ -106,4 +122,3 @@ VotingChart.propTypes = {
 
 
 export default VotingChart;
-
