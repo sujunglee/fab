@@ -102,6 +102,19 @@ const styles = StyleSheet.create({
       justifyContent: 'space-around',
       flexDirection: 'row'
   },
+  text_container: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingTop: 50
+  },
+  title: {
+      color:'#414141',
+      fontSize: sizes.large.fontSize,
+  },
+  content: {
+      color: '#414141',
+      fontSize: sizes.large.fontSize,
+  },
 });
 
 const Results = ({ route }) => {
@@ -153,8 +166,9 @@ const Results = ({ route }) => {
             <VotingChart  voteResults={roomData}/>
           </View>
           ) : (
-            <View>
-              <StyledText style={styles.title}>TIME LEFT</StyledText>
+            <View style={styles.text_container}>
+                <StyledText style={styles.title}>No votes yet.</StyledText>
+                <StyledText style={styles.content}>Check back soon.</StyledText>
             </View>
           )
         }
