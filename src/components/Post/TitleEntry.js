@@ -4,7 +4,7 @@ import {colors, normalize, sizes} from "../../constants/styles";
 import {TextInput} from 'react-native-paper';
 import StyledText from "../StyledText/StyledText";
 import {MAX_TITLE_CHARS} from "../../constants/styles";
-
+import Fade from "../Animations/Fade";
 import {
     SimpleLineIcons
 } from '@expo/vector-icons';
@@ -44,9 +44,10 @@ const TitleEntry = ({placeholderText, onTitleChangeCallBack}) => {
                     onBlur = {()=>setShowCharLimit(false)}
                     onFocus = {()=>setShowCharLimit(true)}
                 />
-                {showCharLimit&& <View style={{flex:1,flexDirection: 'row-reverse' }}>
+
+               {showCharLimit&& <Fade style={{flex:1,flexDirection: 'row-reverse' }}>
                     <StyledText  style={styles.char_limit}>{`${MAX_TITLE_CHARS-titleCharsLeft}/${MAX_TITLE_CHARS}`}</StyledText>
-                </View>}
+                </Fade>}
 
             </View>
         </View>
