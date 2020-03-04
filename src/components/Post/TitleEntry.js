@@ -15,12 +15,13 @@ import {
 // also needs a way to reload and show "Enter title..."
 const TitleEntry = ({placeholderText, onTitleChangeCallBack}) => {
     const [textValue, setTextValue] = React.useState('');
-    const [titleCharsLeft, setTitleCharsLeft] = React.useState(MAX_TITLE_CHARS);
+    const [titleCharsLeft, setTitleCharsLeft] = React.useState(10);
 
     const onChange = (text)=>{
-        setTitleCharsLeft(MAX_TITLE_CHARS - text.length);
-        setTextValue(text);
-        onTitleChangeCallBack(text);
+            setTitleCharsLeft(MAX_TITLE_CHARS - text.length);
+            setTextValue(text);
+            onTitleChangeCallBack(text);
+
     };
 
     return (
@@ -33,11 +34,13 @@ const TitleEntry = ({placeholderText, onTitleChangeCallBack}) => {
                     placeholder ={placeholderText}
                     style={{height: normalize(46), backgroundColor: colors.general.white}}
                     label={''}
-                    disabled={titleCharsLeft <= 0}
+                    error={titleCharsLeft < 5}
                     multiline={false}
-                    onChangeText={text => onChange(text)}
+                    onChangeText={text => {onChange(text)}}
+                    maxLength={MAX_TITLE_CHARS}
+                    value={textValue}
                 />
-              <StyledText>{titleCharsLeft} characters left</StyledText>
+              <StyledText  style={styles.char_limit}>{`${MAX_TITLE_CHARS-titleCharsLeft}/${MAX_TITLE_CHARS}`}</StyledText>
             </View>
         </View>
     )
@@ -45,6 +48,10 @@ const TitleEntry = ({placeholderText, onTitleChangeCallBack}) => {
 };
 
 const styles = StyleSheet.create({
+    char_limit:{
+        fontSize: sizes.mini.fontSize,
+        color: colors.text.secondary.light
+    },
     container: {
         width: '80%',
         height: '100%',
