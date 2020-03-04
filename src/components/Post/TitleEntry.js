@@ -36,16 +36,14 @@ const TitleEntry = ({placeholderText, onTitleChangeCallBack}) => {
                     placeholder ={placeholderText}
                     style={{height: normalize(46), backgroundColor: colors.general.white}}
                     label={''}
-                    error={titleCharsLeft < 5}
+                    error={showCharLimit&& titleCharsLeft < 5}
                     multiline={true}
                     onChangeText={text => {onChange(text)}}
                     maxLength={MAX_TITLE_CHARS}
                     value={textValue}
                     onBlur = {()=>setShowCharLimit(false)}
                     onFocus = {()=>setShowCharLimit(true)}
-                    textBreakStrategy={'simple'}
-                    numberOfLines ={2}
-                    maxHeight={60}
+                    blurOnSubmit={true}
                 />
 
                {showCharLimit&& <Fade style={{flex:1,flexDirection: 'row-reverse' }}>
