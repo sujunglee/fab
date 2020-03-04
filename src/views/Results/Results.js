@@ -105,16 +105,19 @@ const styles = StyleSheet.create({
   text_container: {
       alignItems: 'center',
       justifyContent: 'center',
-      paddingTop: 50
+      paddingTop: 30
   },
   title: {
-      color:'#414141',
+      color:"#1563af",
       fontSize: sizes.large.fontSize,
   },
   content: {
-      color: '#414141',
+      color: "#1563af",
       fontSize: sizes.large.fontSize,
   },
+  countdown_container: {
+    paddingTop: 10
+  }
 });
 
 const Results = ({ route }) => {
@@ -172,7 +175,9 @@ const Results = ({ route }) => {
             </View>
           )
         }
-        <CountDown isFinished={() => console.log("Finished!")} />
+        <View style={styles.countdown_container}>
+          <CountDown isFinished={() => console.log("Finished!")} />
+        </View>
       </View>
     </SafeAreaView>
   ) : (
