@@ -15,8 +15,24 @@ import Constants from 'expo-constants';
 const getTotalNumVoters = room => {
 
   const { numInfluencersA, numNormalA, numInfluencersB, numNormalB } = getNumberOfVoters(room);
-  return numInfluencersA + numNormalA + numInfluencersB + numNormalB
+  return numInfluencersA + numNormalA + numInfluencersB + numNormalB;
 };
+
+const noPreviousVote = ({ room, userID }) => {
+  if (("voters_normal" in room["optionA"]) && (userID in room["optionA"]["voters_normal"])) {
+    return false;
+  }
+  if (("voters_influencer" in room["optionA"]) && (userID in room["optionA"]["voters_influencer"])) {
+    return false;
+  }
+  if (("voters_normal" in room["optionB"]) && (userID in room["optionB"]["voters_normal"])) {
+    return false;
+  }
+  if (("voters_influencer" in room["optionB"]) && (userID in room["optionB"]["voters_influencer"])) {
+    return false;
+  }
+  return true;
+}
 
 const getActiveList = async () => {
   const snapshot = await db.ref("rooms/active/").once("value")
@@ -24,8 +40,9 @@ const getActiveList = async () => {
 
   for (var roomID of Object.keys(snapshot.val())) {
     getTotalNumVoters(snapshot.val()[roomID])
-    if (snapshot.val()[roomID]["meta_data"]["owner"] !== Constants.installationId) {
-      
+    if (snapshot.val()[roomID]["meta_data"]["owner"] !== Constants.installationId &&
+      noPreviousVote({ room: snapshot.val()[roomID], userID: Constants.installationId })) {
+
       const currRoom = {
         numVotes: getTotalNumVoters(snapshot.val()[roomID]),
         id: roomID,
@@ -112,7 +129,7 @@ const Vote = ({ navigation }) => {
   }*/
 
   const roomID = "room1"
-  console.log(roomID)
+  //console.log(roomID)
 
   /*
   currently loading
