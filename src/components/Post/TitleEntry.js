@@ -1,5 +1,5 @@
 import React from "react"
-import {View, StyleSheet, Keyboard, TouchableWithoutFeedback} from "react-native"
+import {View, StyleSheet, Keyboard, TouchableWithoutFeedback,Animated} from "react-native"
 import {colors, normalize, sizes} from "../../constants/styles";
 import {TextInput} from 'react-native-paper';
 import StyledText from "../StyledText/StyledText";
@@ -14,15 +14,17 @@ import {
 // Textbox needs a callback to update the `roomTitle` state in the PostPage component.
 // also needs a way to reload and show "Enter title..."
 const TitleEntry = ({placeholderText, onTitleChangeCallBack}) => {
-    const [textValue, setTextValue] = React.useState('');
-    const [titleCharsLeft, setTitleCharsLeft] = React.useState(10);
 
+    const [textValue, setTextValue] = React.useState('');
+    const [titleCharsLeft, setTitleCharsLeft] = React.useState(MAX_TITLE_CHARS);
+    const [showCharLimit, setShowCharLimit] = React.useState(false);
     const onChange = (text)=>{
             setTitleCharsLeft(MAX_TITLE_CHARS - text.length);
             setTextValue(text);
             onTitleChangeCallBack(text);
 
     };
+
 
     return (
         <View style={styles.container}>
@@ -39,8 +41,13 @@ const TitleEntry = ({placeholderText, onTitleChangeCallBack}) => {
                     onChangeText={text => {onChange(text)}}
                     maxLength={MAX_TITLE_CHARS}
                     value={textValue}
+                    onBlur = {()=>setShowCharLimit(false)}
+                    onFocus = {()=>setShowCharLimit(true)}
                 />
-              <StyledText  style={styles.char_limit}>{`${MAX_TITLE_CHARS-titleCharsLeft}/${MAX_TITLE_CHARS}`}</StyledText>
+                {showCharLimit&& <View style={{flex:1,flexDirection: 'row-reverse' }}>
+                    <StyledText  style={styles.char_limit}>{`${MAX_TITLE_CHARS-titleCharsLeft}/${MAX_TITLE_CHARS}`}</StyledText>
+                </View>}
+
             </View>
         </View>
     )
@@ -50,7 +57,7 @@ const TitleEntry = ({placeholderText, onTitleChangeCallBack}) => {
 const styles = StyleSheet.create({
     char_limit:{
         fontSize: sizes.mini.fontSize,
-        color: colors.text.secondary.light
+        color: colors.text.secondary.light,
     },
     container: {
         width: '80%',
