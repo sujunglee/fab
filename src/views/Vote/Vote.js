@@ -146,7 +146,7 @@ const Vote = ({ navigation }) => {
           <StyledText
             type="semibold"
             size={32}
-            style={{ color: colors.primary.main }}
+            style={{ color: colors.primary.main, textAlign: "center" }}
           >
             There's no more posts to vote on!
           </StyledText>

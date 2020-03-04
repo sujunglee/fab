@@ -45,11 +45,11 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
     */
 
     const delay = 3000
-    setTimeout(() => {
-      handleNextRoom()
-      setVoteState({})
-      setAreImagesLoaded(false)
-    }, delay)
+    // setTimeout(() => {
+    //   handleNextRoom()
+    //   setVoteState({})
+    //   setAreImagesLoaded(false)
+    // }, delay)
   }
 
   const handleSkip = () => {
@@ -109,6 +109,18 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
                   </StyledText>
                 </View>
               )}
+            <View style={{ flexDirection: "row", justifyContent: "center" }}>
+              <VotePercents
+                score="A"
+                voteResults={voteState.voteResults}
+                imageViewport={imageViewport}
+              />
+              <VotePercents
+                score="B "
+                voteResults={voteState.voteResults}
+                imageViewport={imageViewport}
+              />
+            </View>
             <YourVote selectedOption={voteState.selectedOption} />
           </>
         )}
@@ -158,6 +170,29 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
     </SafeAreaView>
   ) : (
     <Loader visible={true} />
+  )
+}
+
+const VotePercents = ({ score, voteResults, imageViewport }) => {
+  const textStyles = {
+    color: "white",
+    bottom: imageViewport.height / 2 + 20,
+    fontSize: 48
+  }
+  return score === "A" ? (
+    <StyledText style={{ ...textStyles, right: imageViewport.width / 8 }}>{`${(
+      (voteResults.scoreA / (voteResults.scoreA + voteResults.scoreB)) *
+      100
+    )
+      .toFixed()
+      .toString()}%`}</StyledText>
+  ) : (
+    <StyledText style={{ ...textStyles, left: imageViewport.width / 6 }}>{`${(
+      (voteResults.scoreB / (voteResults.scoreA + voteResults.scoreB)) *
+      100
+    )
+      .toFixed()
+      .toString()}%`}</StyledText>
   )
 }
 
