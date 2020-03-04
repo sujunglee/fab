@@ -5,6 +5,7 @@ import { screens } from "../../Navigation/constants"
 import getRoomData from "../../db/getRoomData"
 import { useNavigation } from "@react-navigation/native"
 import { StyledText } from "../StyledText"
+import {RoomTitle} from "../RoomTitle";
 
 const winnerPicture = ({postData}) =>{
   return (postData.scoreA >= postData.scoreB) ? postData.pictureA : postData.pictureB;
@@ -20,7 +21,7 @@ const PostPreview = ({ roomID, userInfo }) => {
   useEffect(() => {
     const getPostData = async () => {
       const data = await getRoomData({ roomID })
-      const createdAt = moment(data.timeCreated).format("dddd h:hh A")
+      const createdAt = moment(data.timeCreated).format("dddd h:mm A")
       setPostData({
         ...data,
         createdAt: createdAt
@@ -99,4 +100,3 @@ const styles = StyleSheet.create({
   }
 })
 export default PostPreview
-

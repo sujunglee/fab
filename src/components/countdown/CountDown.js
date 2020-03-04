@@ -4,19 +4,28 @@ import {StyleSheet, Text, View} from 'react-native';
 import {styles} from "./CountDownStyle";
 import PropTypes from 'prop-types';
 import StyledText from "../StyledText/StyledText";
+import {colors,sizes} from "../../constants/styles"
 
 /**
  * Displays the countdown clock of a outfit
  *
  * @param isFinished() - Callback when the room is done
- * @param finishTime - ISO formatted finish time
+ * @param startTime - ISO formatted finish time
  * @author jideanene2020@u.northwestern.edu
  */
 
-const CountDown = ({finishTime, isFinished}) => {
-    const outfitStartTime = useRef(moment(finishTime));
+const CountDown = ({startTime, isFinished}) => {
+    console.log(startTime);
+
+    let outfitStartTime = moment(startTime);
+    let outfitEndTime = moment(startTime).add(24, 'hours');
+    let outfitWarningTime =moment(startTime).add(24, 'hours').subtract(60, 'seconds');
+
     const [hasEnded, setHasEnded] = useState(false);
-    const [timeLeft, setTimeLeft] = useState(outfitStartTime.current.diff(moment(), 'seconds'));
+    const [timeLeft, setTimeLeft] = useState(moment(startTime).diff(moment(), 'seconds'));
+    const [isCloseToEnd, setIsCloseToEnd] = useState(false);
+
+    const [hasLoaded, setHasLoaded] = useState(false);
 
     /**
      * Indicates  if time has run out
@@ -24,23 +33,30 @@ const CountDown = ({finishTime, isFinished}) => {
      * @return {boolean}
      */
     const hasTimeRunOut = (now) => {
-        return (now.isAfter(outfitStartTime.current))
+        setIsCloseToEnd(now.isSameOrAfter(outfitWarningTime));
+        return (now.isAfter(outfitEndTime))
     };
 
 
     useEffect(() => {
-            if (hasTimeRunOut(moment())) {
+
+
+
+        if (hasTimeRunOut(moment())) {
                 isFinished();
                 setHasEnded(true);
+                setHasLoaded(true);
             } else {
                 const interval = setInterval(() => {
                     let now = moment();
                     if (hasTimeRunOut(now)) {
                         setHasEnded(true);
                         isFinished();
-                        clearInterval(interval)
+                        clearInterval(interval);
+                        setHasLoaded(true);
                     } else {
-                        setTimeLeft(outfitStartTime.current.diff(moment(), 'seconds'));
+                        setTimeLeft(outfitStartTime.diff(moment(), 'seconds'));
+                        setHasLoaded(true);
                     }
                 }, 500);
                 return () => clearInterval(interval);
@@ -49,12 +65,17 @@ const CountDown = ({finishTime, isFinished}) => {
     );
 
 
-    const formatted = moment.utc(timeLeft * 1000).format('HH:mm:ss');
     return (
-        <View style={styles.container}>
-            <StyledText style={styles.title}>TIME LEFT</StyledText>
-            <StyledText style={styles.content}>{hasEnded? 'COMPLETED' : formatted}</StyledText>
-        </View>
+        hasLoaded &&
+        (<View style={styles.container}>
+            <StyledText type="semibold" style={styles.title}>TIME LEFT</StyledText>
+            <StyledText type="bold" style={
+                {...styles.content,
+                    color:isCloseToEnd && !hasEnded? colors.general.hot_purple:'#414141',
+                    fontSize: isCloseToEnd && !hasEnded? sizes.xlarge.fontSize:sizes.large.fontSize
+                }
+            }>{hasEnded? 'COMPLETED' : moment.utc(timeLeft * 1000).format('HH:mm:ss')}</StyledText>
+        </View>)
     );
 };
 CountDown.defaultProps = {
@@ -66,4 +87,3 @@ CountDown.propTypes = {
 };
 
 export default CountDown;
-

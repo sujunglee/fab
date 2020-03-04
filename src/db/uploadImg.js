@@ -13,12 +13,13 @@ const dbStorage = fb.storage();
  * @see https://stackoverflow.com/questions/50257879/expo-camera-takepictureasync-imagemanipulator
  * @param uri
  */
-const compressImage = async ({uri}) => {
-    let originalInfo = await FileSystem.getInfoAsync(uri, {'size': true});
+const compressImage = async ({outfit}) => {
+
+    let originalInfo = await FileSystem.getInfoAsync(outfit.uri, {'size': true});
     console.log(`Original image size: ${originalInfo.size} bytes, or ${originalInfo.size / Math.pow(2, 20)} mb`);
 
     let resizedPhoto = await ImageManipulator.manipulateAsync(
-        uri,
+        outfit.uri,
         [],
         {compress: 0, format: "jpeg", base64: false}
     );
@@ -27,18 +28,18 @@ const compressImage = async ({uri}) => {
     console.log(`Percent reduction: ${((originalInfo.size - compressedInfo.size) / originalInfo.size * 100)}%`);
 
     const directoryName = FileSystem.documentDirectory + 'images';
-    const fileName = `${directoryName}/${shortid.generate()}.jpeg`;
+    const fileName = `${directoryName}/outfit${outfit.outfitOption}.jpeg`;
 
     await FileSystem.makeDirectoryAsync(directoryName,{'intermediates':true});
     await FileSystem.moveAsync({from: resizedPhoto.uri, to: fileName});
-    
+
     return fileName;
 };
 
-const uploadImage = async ({uri, uploadCallback}) => {
+const uploadImage = async ({outfit, uploadCallback}) => {
 
     // compress image
-    const compressedUri = await compressImage({uri});
+    const compressedUri = await compressImage({outfit});
 
     // Get the type of file. Either png or jpeg usually
     let splitUri = compressedUri.split('.');
@@ -49,7 +50,7 @@ const uploadImage = async ({uri, uploadCallback}) => {
     const blob = await response.blob();
 
     // Upload to fire storage
-    let filename = `${shortid.generate()}.${fileType}`;
+    let filename = `${shortid.generate()}${new Date().valueOf()}.${fileType}`;
     let ref = dbStorage.ref().child(filename);
     let uploadTask = ref.put(blob);
 

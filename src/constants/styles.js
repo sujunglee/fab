@@ -22,6 +22,8 @@ export const normalize = (size) => {
 /*****************************************************/
 /*****************************************************/
 
+export const MAX_TITLE_CHARS = 140;
+
 export const sizes = {
     mini: {
         fontSize: normalize(12),
@@ -61,6 +63,7 @@ export const colors = {
     },
     general: {
         white: '#F4F4F4',
-        black: '#323232'
+        black: '#323232',
+        hot_purple: '#9a0036'
     }
 };

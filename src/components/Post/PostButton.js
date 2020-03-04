@@ -7,6 +7,10 @@ import {colors, sizes, normalize} from "../../constants/styles";
 import React, {useState, useEffect} from "react"
 import uploadImage from "../../db/uploadImg";
 import { ActivityIndicator } from 'react-native-paper';
+import { screens } from "../../Navigation/constants"
+import { useNavigation } from "@react-navigation/native"
+import getRoomData from "../../db/getRoomData";
+
 
 /**
  * Checks if a parameter (or key) exists
@@ -19,10 +23,15 @@ const _uriExist = ({uri}) => {
 
 const PostButton = ({title, outfitA, outfitB, postFinishedCallback}) => {
 
+    const navigation = useNavigation()
+
     const [outfitA_url, setOutfitA_url] = useState(null);
     const [outfitB_url, setOutfitB_url] = useState(null);
     const [urlsLoaded, setUrlsLoaded] = useState(false);
     const [isPressed, setIsPressed] = useState(false);
+    const [roomID, setRoomID] = useState("");
+    const [postData, setPostData] = useState({});
+
     const deviceId = Constants.installationId;
 
     // ToDo: Navigate to the results room after room is created.
@@ -32,19 +41,37 @@ const PostButton = ({title, outfitA, outfitB, postFinishedCallback}) => {
 
             // upload data to Db
             const currInstant = moment().toISOString();
-            createRoom({userId: deviceId, time_created: currInstant, title, outfitA_url, outfitB_url})
-                .then(() => {
-                    // Navigate to the results room
-                    console.log('NAVIGATE TO RESULT ROOM!!!!!!!!');
 
+            createRoom({userId: deviceId, time_created: currInstant, title, outfitA_url, outfitB_url})
+                .then((result) => {
+                    // Navigate to the results room
                     // reset state variables
+
+                    setRoomID(result)
                     setOutfitA_url(null);
                     setOutfitB_url(null);
                     setUrlsLoaded(null);
                     setIsPressed(false);
                     postFinishedCallback();
                 })
+
         }
+
+        const getPostData = async () => {
+          const data = await getRoomData({ roomID })
+          const createdAt = moment(data.timeCreated).format("dddd h:hh A")
+          setPostData({
+            ...data,
+            createdAt: createdAt
+          })
+
+        }
+
+        if (roomID !== "") {
+          getPostData()
+        }
+
+
     }, [outfitA_url, outfitB_url]);
 
     const uploadCallback_A = ({url}) => {
@@ -65,9 +92,15 @@ const PostButton = ({title, outfitA, outfitB, postFinishedCallback}) => {
         } else {
             setIsPressed(true);
             // Upload the images to firebase storage and capture the urls
-            uploadImage({uri: outfitA.uri, uploadCallback: uploadCallback_A});
-            uploadImage({uri: outfitB.uri, uploadCallback: uploadCallback_B});
+            uploadImage({outfit:outfitA, uploadCallback: uploadCallback_A});
+            uploadImage({outfit:outfitB, uploadCallback: uploadCallback_B});
         }
+
+        navigation.navigate(screens.RESULTS, {
+          roomID: roomID,
+          roomData: postData
+        })
+
     };
 
     return (
