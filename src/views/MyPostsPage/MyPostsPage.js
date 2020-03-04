@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react"
-import { View, Text, SafeAreaView, ScrollView, Button } from "react-native"
+import { View, Text, SafeAreaView, ScrollView, Button, StyleSheet } from "react-native"
 import { PostPreview } from "../../components/PostPreview"
 import getUserInfo from "../../db/getUserInfo"
 import { StyledText } from "../../components/StyledText"
@@ -11,8 +11,9 @@ import Constants from "expo-constants"
 
 const MyPostsPage = () => {
   // const navigation = useNavigation()
-  const userID = Constants.installationId
-  const { user, isLoggedIn } = useContext(AppContext)
+  const userID = Constants.installationId;
+  console.log("USER ID: ", userID);
+  const { user, isLoggedIn } = useContext(AppContext);
   const [userInfo, setUserInfo] = useState(null)
   console.log(user)
 

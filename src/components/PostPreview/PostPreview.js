@@ -5,6 +5,7 @@ import { screens } from "../../Navigation/constants"
 import getRoomData from "../../db/getRoomData"
 import { useNavigation } from "@react-navigation/native"
 import { StyledText } from "../StyledText"
+import {RoomTitle} from "../RoomTitle";
 
 const winnerPicture = ({postData}) =>{
   return (postData.scoreA >= postData.scoreB) ? postData.pictureA : postData.pictureB;
@@ -99,4 +100,3 @@ const styles = StyleSheet.create({
   }
 })
 export default PostPreview
-

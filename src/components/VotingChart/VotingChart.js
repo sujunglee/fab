@@ -1,8 +1,25 @@
 import React from "react"
-import {Text, View} from "react-native"
+import {Text, View, StyleSheet} from "react-native"
 import {PieChart} from "react-native-svg-charts";
 import PropTypes from 'prop-types';
+import StyledText from "../StyledText/StyledText";
+import {sizes} from "../../constants/styles";
 
+styles = StyleSheet.create({
+    container: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    title: {
+        color:'#414141',
+        fontSize: sizes.mini.fontSize,
+    },
+    content: {
+        color: '#414141',
+        fontSize: sizes.large.fontSize
+
+    },
+});
 
 const createChartData = ({
                              influencer,
@@ -34,6 +51,9 @@ const createChartData = ({
 
 
 const VotingChart = ({voteResults}) =>{
+
+    const totalNumVoters = voteResults.scoreA + voteResults.scoreB
+
     return (
         <View style={{ display: "flex", flexDirection: "row" }}>
             <View style={{ alignItems: "center", textAlign: "center", justifyContent: "center", flex: 1 }}>
@@ -62,7 +82,11 @@ const VotingChart = ({voteResults}) =>{
                         color: "#dd8300"
                     }}
                 >
-                    {((voteResults.scoreB / (voteResults.scoreA + voteResults.scoreB))*100).toFixed()}%
+                  {(totalNumVoters === 0) ? (
+                    ""
+                  ) : (
+                    ((voteResults.scoreA / (voteResults.scoreA + voteResults.scoreB))*100).toFixed().toString() + "%"
+                  )}
                 </Text>
             </View>
             <View style={{ alignItems: "center", textAlign: "center", justifyContent: "center", flex: 1 }}>
@@ -92,9 +116,16 @@ const VotingChart = ({voteResults}) =>{
                         color: "#1563af"
                     }}
                 >
-                    {((voteResults.scoreA / (voteResults.scoreA + voteResults.scoreB))*100).toFixed()}%
+
+                    {(totalNumVoters === 0) ? (
+                      ""
+                    ) : (
+                      ((voteResults.scoreB / (voteResults.scoreA + voteResults.scoreB))*100).toFixed().toString() + "%"
+                    )}
                 </Text>
             </View>
+
+
         </View>
     );
 
@@ -106,4 +137,3 @@ VotingChart.propTypes = {
 
 
 export default VotingChart;
-
