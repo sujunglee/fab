@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
     },
     content: {
         color: '#414141',
-        fontSize: sizes.large.fontSize
-
+        fontSize: sizes.large.fontSize,
+        fontFamily:'source-sans-pro-semibold'
     },
 });

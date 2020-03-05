@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     height:'12%',
     width:'100%',
     alignItems:'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   loading_container:{
     alignItems: "center",
@@ -135,13 +135,14 @@ const Results = ({ route }) => {
   const deviceWidth = Dimensions.get("window").width
   const { roomData } = route.params
   const totalNumVoters = roomData.scoreA + roomData.scoreB
+  console.log(roomData)
 
   if (totalNumVoters === 0 ) {
     console.log("NOBODY VOTED YET!!!");
   }
 
   return scores ? (
-    <SafeAreaView>
+
       <View style={styles.container}>
         <View style={styles.title_container}>
           <RoomTitle title={roomData.title}/>
@@ -176,10 +177,9 @@ const Results = ({ route }) => {
           )
         }
         <View style={styles.countdown_container}>
-          <CountDown isFinished={() => console.log("Finished!")} />
+          <CountDown startTime={roomData.timeCreated}  isFinished={() => console.log("Finished!")} />
         </View>
       </View>
-    </SafeAreaView>
   ) : (
     <Text>Loading...</Text>
   )
