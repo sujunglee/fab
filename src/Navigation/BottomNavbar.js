@@ -9,11 +9,14 @@ import PostCamera from "./icons/PostCamera"
 import VoteIcon from "./icons/VoteIcon"
 const Tab = createBottomTabNavigator()
 
+
+
 const BottomNavbar = () => {
   return (
     <Tab.Navigator
       tabBarOptions={{
         inactiveTintColor: "#ffffff",
+          style: {backgroundColor:'#323232'},
         activeTintColor: "#ffffff",
         tabStyle: { backgroundColor: "#323232", color: "white" }
       }}

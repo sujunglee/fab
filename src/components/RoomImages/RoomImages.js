@@ -1,13 +1,11 @@
+import {View, Image, Modal, ImageBackground, StyleSheet, StatusBar, TouchableWithoutFeedback} from "react-native"
+import PropTypes from 'prop-types';
+import ImageViewer from "react-native-image-zoom-viewer";
+import CloseButton from "../CameraApp/components/CloseButton"
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React, { useState, useEffect, forwardRef } from "react"
-import {
-  View,
-  Image,
-  Modal,
-  StyleSheet,
-  TouchableWithoutFeedback
-} from "react-native"
-import PropTypes from "prop-types"
-import ImageViewer from "react-native-image-zoom-viewer"
+import {SafeAreaView} from "react-native-safe-area-context"
+import {colors} from "../../constants/styles";
 
 let x =
   "https://firebasestorage.googleapis.com/v0/b/fabapp-a1ea0.appspot.com/o/my-image.jpg?alt=media&token=995d6347-0435-41ac-96e1-91106786ab2c"
@@ -34,6 +32,25 @@ const RoomImages = props => {
     B: false
   })
 
+  const closeImage = () => {
+    StatusBar.setBarStyle('default',true);
+    setIsImageOpen({state:false});
+  }
+  const openImageB =() =>{
+    StatusBar.setBarStyle('light-content',true);
+    setIsImageOpen({
+        state: true,
+        url: roomData.room.optionB.picture
+    })
+  }
+  const openImageA = () => {
+    StatusBar.setBarStyle('light-content',true);
+    setIsImageOpen({
+        state: true,
+        url: roomData.room.optionA.picture
+    })
+  }
+
   useEffect(() => {
     if (areImagesLoaded.A === true && areImagesLoaded.B === true) {
       imageLoadCallback()
@@ -51,7 +68,14 @@ const RoomImages = props => {
       {/*Modal for image zoom-in + expansion*/}
       {isImageOpen.state && (
         <Modal visible={isImageOpen.state}>
-          <ImageViewer
+            <View style={{backgroundColor:colors.general.black}}>
+                <SafeAreaView>
+                      <ImageBackground source={{url:isImageOpen.url}} style={styles.container}>
+                                    <CloseButton closeCallBack={() => closeImage()}/>
+                      </ImageBackground>
+                </SafeAreaView>
+            </View>
+          {/* <ImageViewer
             enableImageZoom
             enableSwipeDown
             onSwipeDown={() => setIsImageOpen({ state: false })}
@@ -60,43 +84,37 @@ const RoomImages = props => {
                 url: isImageOpen.url
               }
             ]}
-          />
+          /> */}
         </Modal>
       )}
 
       <View style={styles.photo_option}>
-        <TouchableWithoutFeedback
-          onPress={() =>
-            setIsImageOpen({
-              state: true,
-              url: roomData.room.optionA.picture
-            })
-          }
-        >
-          <Image
-            source={{ uri: roomData.room.optionA.picture }}
-            style={styles.image}
-            onLoad={() => setAreImagesLoaded({ ...areImagesLoaded, A: true })}
-          />
-        </TouchableWithoutFeedback>
-      </View>
+            <TouchableWithoutFeedback
+                onPress={() =>
+                    openImageA()
+                }>
+                <ImageBackground source={{uri:roomData.room.optionA.picture}} style={styles.image} onLoad={() =>
+                    setAreImagesLoaded({...areImagesLoaded, A: true})}>
+                    <MaterialCommunityIcons name="arrow-expand" size={32} color="white" onPress={() =>
+                       openImageA()
+                    }/>    
+                </ImageBackground>
+            </TouchableWithoutFeedback>
+        </View>
 
-      <View style={styles.photo_option}>
-        <TouchableWithoutFeedback
-          onPress={() =>
-            setIsImageOpen({
-              state: true,
-              url: roomData.room.optionB.picture
-            })
-          }
-        >
-          <Image
-            source={{ uri: roomData.room.optionB.picture }}
-            style={styles.image}
-            onLoad={() => setAreImagesLoaded({ ...areImagesLoaded, B: true })}
-          />
-        </TouchableWithoutFeedback>
-      </View>
+        <View style={styles.photo_option}>
+            <TouchableWithoutFeedback
+                onPress={() =>
+                    openImageB()
+                }>
+                <ImageBackground source={{uri:roomData.room.optionB.picture}} style={styles.image} onLoad={() =>
+                        setAreImagesLoaded({...areImagesLoaded, B: true})}>
+                        <MaterialCommunityIcons name="arrow-expand" size={32} color="white" onPress={() =>
+                           openImageB()
+                        }/>    
+                </ImageBackground>
+            </TouchableWithoutFeedback>
+        </View>
     </View>
   )
 }
@@ -121,7 +139,8 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     justifyContent: "space-around",
-    flexDirection: "row"
+    flexDirection: "row",
+      backgroundColor: 'transparent'
   }
 })
 
