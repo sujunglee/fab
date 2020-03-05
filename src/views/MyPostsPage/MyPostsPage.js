@@ -6,8 +6,9 @@ import { StyledText } from "../../components/StyledText"
 import { AppContext } from "../../context/AppContext"
 import { colors, normalize, sizes } from "../../constants/styles"
 import fb from "../../db/init"
-const db = fb.database()
+import Loader from "../../components/FancyLoader/FancyLoader";
 import Constants from "expo-constants"
+const db = fb.database()
 
 const MyPostsPage = () => {
   // const navigation = useNavigation()
@@ -70,9 +71,9 @@ const MyPostsPage = () => {
       </View>
     </SafeAreaView>
   ) : (
-    <View style={{ alignItems: "center", justifyContent: "center" }}>
-      <StyledText> Loading...</StyledText>
-    </View>
+      <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+        <Loader visible={true} />
+      </View>
   )
 }
 
