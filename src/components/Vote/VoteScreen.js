@@ -45,11 +45,11 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
     */
 
     const delay = 3000
-    // setTimeout(() => {
-    //   handleNextRoom()
-    //   setVoteState({})
-    //   setAreImagesLoaded(false)
-    // }, delay)
+    setTimeout(() => {
+      handleNextRoom()
+      setVoteState({})
+      setAreImagesLoaded(false)
+    }, delay)
   }
 
   const handleSkip = () => {
