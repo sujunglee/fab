@@ -6,8 +6,8 @@ import { StyledText } from "../../components/StyledText"
 import { AppContext } from "../../context/AppContext"
 import { colors, normalize, sizes } from "../../constants/styles"
 import fb from "../../db/init"
-const db = fb.database()
 import Constants from "expo-constants"
+const db = fb.database()
 
 const MyPostsPage = () => {
   // const navigation = useNavigation()
@@ -28,9 +28,10 @@ const MyPostsPage = () => {
   }, [])
 
   return isLoggedIn && userInfo ? (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ backgroundColor: colors.general.white, flex: 1 }}>
-        <UserStats user={userInfo} />
+    <SafeAreaView style={{ flex: 1,backgroundColor: colors.general.white,width:'100%', height: '100%'}}>
+        <View style={{height: normalize(140)}}>
+            <UserStats user={userInfo} />
+        </View>
         <ScrollView>
           {userInfo.rooms_owned ? (
             Object.keys(userInfo.rooms_owned).map(roomID => (
@@ -67,7 +68,6 @@ const MyPostsPage = () => {
             </View>
           )}
         </ScrollView>
-      </View>
     </SafeAreaView>
   ) : (
     <View style={{ alignItems: "center", justifyContent: "center" }}>
