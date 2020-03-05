@@ -4,6 +4,8 @@ import ImageViewer from "react-native-image-zoom-viewer";
 import CloseButton from "../CameraApp/components/CloseButton"
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React, { useState, useEffect, forwardRef } from "react"
+import {SafeAreaView} from "react-native-safe-area-context"
+import {colors} from "../../constants/styles";
 
 let x =
   "https://firebasestorage.googleapis.com/v0/b/fabapp-a1ea0.appspot.com/o/my-image.jpg?alt=media&token=995d6347-0435-41ac-96e1-91106786ab2c"
@@ -66,9 +68,13 @@ const RoomImages = props => {
       {/*Modal for image zoom-in + expansion*/}
       {isImageOpen.state && (
         <Modal visible={isImageOpen.state}>
-          <ImageBackground source={{url:isImageOpen.url}} style={styles.container}>
-                        <CloseButton closeCallBack={() => closeImage()}/>
-          </ImageBackground>
+            <View style={{backgroundColor:colors.general.black}}>
+                <SafeAreaView>
+                      <ImageBackground source={{url:isImageOpen.url}} style={styles.container}>
+                                    <CloseButton closeCallBack={() => closeImage()}/>
+                      </ImageBackground>
+                </SafeAreaView>
+            </View>
           {/* <ImageViewer
             enableImageZoom
             enableSwipeDown
@@ -133,7 +139,8 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     justifyContent: "space-around",
-    flexDirection: "row"
+    flexDirection: "row",
+      backgroundColor: 'transparent'
   }
 })
 
