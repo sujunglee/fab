@@ -90,7 +90,7 @@ const VotingChart = ({voteResults}) =>{
                   {(totalNumVoters === 0) ? (
                     ""
                   ) : (
-                    voteA_percent.toString() + "%"
+                    voteA_percent.toFixed().toString() + "%"
                   )}
                 </Text>
             </View>
@@ -126,7 +126,7 @@ const VotingChart = ({voteResults}) =>{
                     {(totalNumVoters === 0) ? (
                       ""
                     ) : (
-                      voteB_percent.toString() + "%"
+                      voteB_percent.toFixed().toString() + "%"
                     )}
                 </Text>
             </View>

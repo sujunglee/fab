@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     height:'12%',
     width:'100%',
     alignItems:'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   loading_container:{
     alignItems: "center",
@@ -142,7 +142,7 @@ const Results = ({ route }) => {
   }
 
   return scores ? (
-    <SafeAreaView>
+
       <View style={styles.container}>
         <View style={styles.title_container}>
           <RoomTitle title={roomData.title}/>
@@ -180,7 +180,6 @@ const Results = ({ route }) => {
           <CountDown startTime={roomData.timeCreated}  isFinished={() => console.log("Finished!")} />
         </View>
       </View>
-    </SafeAreaView>
   ) : (
     <Text>Loading...</Text>
   )
