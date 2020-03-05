@@ -171,7 +171,9 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
       </View>
     </SafeAreaView>
   ) : (
-    <Loader visible={true} />
+      <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+        <Loader visible={true} />
+      </View>
   )
 };
 

@@ -126,7 +126,7 @@ const VotingChart = ({voteResults}) =>{
                     {(totalNumVoters === 0) ? (
                       ""
                     ) : (
-                      voteA_percent.toString() + "%"
+                      voteB_percent.toString() + "%"
                     )}
                 </Text>
             </View>

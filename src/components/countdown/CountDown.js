@@ -15,7 +15,6 @@ import {colors,sizes} from "../../constants/styles"
  */
 
 const CountDown = ({startTime, isFinished}) => {
-    console.log(startTime);
 
     let outfitStartTime = moment(startTime);
     let outfitEndTime = moment(startTime).add(24, 'hours');

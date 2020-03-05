@@ -44,15 +44,19 @@ const PostButton = ({title, outfitA, outfitB, postFinishedCallback}) => {
 
             createRoom({userId: deviceId, time_created: currInstant, title, outfitA_url, outfitB_url})
                 .then((result) => {
-                    // Navigate to the results room
-                    // reset state variables
 
+                    // reset state variables
                     setRoomID(result)
                     setOutfitA_url(null);
                     setOutfitB_url(null);
                     setUrlsLoaded(null);
                     setIsPressed(false);
                     postFinishedCallback();
+
+                    // Navigate to the results room
+                    navigation.navigate(screens.RESULTS, {
+                        roomID: roomID,
+                        roomData: postData});
                 })
 
         }
@@ -95,11 +99,6 @@ const PostButton = ({title, outfitA, outfitB, postFinishedCallback}) => {
             uploadImage({outfit:outfitA, uploadCallback: uploadCallback_A});
             uploadImage({outfit:outfitB, uploadCallback: uploadCallback_B});
         }
-
-        navigation.navigate(screens.RESULTS, {
-          roomID: roomID,
-          roomData: postData
-        })
 
     };
 
