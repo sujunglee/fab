@@ -62,10 +62,8 @@ const VoteScreen = ({ roomData, handleNextRoom }) => {
 
   const handleSkip = () => {
     setAreImagesLoaded(false);
-    setCurrentRoom(currentRoom+1);
     swiper.current.swipeRight();
-    console.log(currentRoom)
-  }
+  };
 
   const imageLoadCallback = () => {
     setAreImagesLoaded(true)
