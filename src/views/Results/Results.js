@@ -135,10 +135,10 @@ const Results = ({ route }) => {
   const deviceWidth = Dimensions.get("window").width
   const { roomData } = route.params
   const totalNumVoters = roomData.scoreA + roomData.scoreB
-  console.log(roomData)
+  //console.log(roomData)
 
   if (totalNumVoters === 0 ) {
-    console.log("NOBODY VOTED YET!!!");
+    //console.log("NOBODY VOTED YET!!!");
   }
 
   return scores ? (

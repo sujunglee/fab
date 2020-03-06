@@ -33,7 +33,7 @@ const AppContextProvider = ({ children }) => {
         return () => { db.off('value', handleData); };
     }, []);
     */
-    console.log('deviceid', Constants.installationId);
+    //console.log('deviceid', Constants.installationId);
 
     useEffect(() => {
         // load data with hardcoded userId
