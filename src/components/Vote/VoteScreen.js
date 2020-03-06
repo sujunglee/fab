@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useLayoutEffect } from "react"
+import React, { useState, useRef, useEffect, useLayoutEffect,useContext } from "react"
 import { View, Text, Dimensions, StyleSheet } from "react-native"
 import { VoteButton, SkipButton } from "./VoteButton"
 import { SafeAreaView } from "react-native-safe-area-context"
@@ -11,19 +11,20 @@ import { VotingChart } from "../VotingChart"
 import { RoomImages } from "../RoomImages"
 import { RoomTitle } from "../RoomTitle"
 import Loader from "../FancyLoader/FancyLoader"
-
+import {AppContext} from "../../context/AppContext";
+import {Surface} from "react-native-paper";
 /*
 function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min)) + min
 }
 */
 
-const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
+const VoteScreen = ({ roomData, handleNextRoom }) => {
   const [voteState, setVoteState] = useState({})
   const deviceWidth = Dimensions.get("window").width
   const [areImagesLoaded, setAreImagesLoaded] = useState(false)
   const [imageViewport, setImageViewport] = useState({})
-
+  const { user, userID,isLoggedIn} = useContext(AppContext);
 
   useEffect(() => {
     console.log(imageViewport)
@@ -35,7 +36,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
       roomID: roomID,
       selection: selection,
       userID: userID,
-      badge: badge
+      badge: user.meta_data.badge
     })
     setVoteState({
       ...voteState,
@@ -65,8 +66,9 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
   }
 
 
-  return roomData ? (
-    <SafeAreaView>
+  return roomData && isLoggedIn ? (
+      <Surface style={{borderRadius:10,borderWidth:.5, borderColor:'rgba(0,0,0,.5)'}}>
+    <SafeAreaView >
       <View style={styles.container}>
         {/*
         black screen overlay and vote results over images
@@ -170,6 +172,7 @@ const VoteScreen = ({ roomData, userID, badge, handleNextRoom }) => {
         </View>
       </View>
     </SafeAreaView>
+      </Surface>
   ) : (
       <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
         <Loader visible={true} />

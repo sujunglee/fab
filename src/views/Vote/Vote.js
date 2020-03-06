@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react"
-import { View, Text } from "react-native"
+import { View, Text,StyleSheet } from "react-native"
 import VoteScreen from "../../components/Vote/VoteScreen"
 import { SafeAreaView } from "react-native-safe-area-context"
 import fb from "../../db/init"
@@ -9,8 +9,10 @@ import { colors } from "../../constants/styles"
 import { getNumberOfVoters } from "../../db/Utility"
 import { AppContext } from "../../context/AppContext"
 import { CountDown } from "../../components/countdown/"
-const db = fb.database()
 import Constants from "expo-constants"
+import Swiper from 'react-native-deck-swiper';
+import Button from "react-native-paper/src/components/Button";
+const db = fb.database()
 
 const getTotalNumVoters = room => {
   const {
@@ -173,13 +175,45 @@ const Vote = ({ navigation }) => {
   }
 
   return (
-    <VoteScreen
-      roomData={roomlist[currentRoom]}
-      userID={userID}
-      badge={badge}
-      handleNextRoom={handleNextRoom}
-    />
+    <View style={styles.container}>
+        <Swiper
+            cards={roomlist}
+            renderCard={(card)=>{return <VoteScreen roomData={card}/>}}
+            onSwiped={(cardIndex) => {console.log(cardIndex)}}
+            onSwipedAll={() => {console.log('onSwipedAll')}}
+            cardIndex={0}
+            backgroundColor={colors.general.white}
+            stackSize= {3}>
+        </Swiper>
+    </View>
+
+
   )
 }
+
+
+
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#F5FCFF"
+  },
+  card: {
+    flex: 1,
+    borderRadius: 4,
+    borderWidth: 2,
+    borderColor: "#E8E8E8",
+    justifyContent: "center",
+    backgroundColor: "white"
+  },
+  text: {
+    textAlign: "center",
+    fontSize: 50,
+    backgroundColor: "transparent"
+  }
+});
+
 
 export default Vote
