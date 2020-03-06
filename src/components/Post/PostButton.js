@@ -22,6 +22,7 @@ const _uriExist = ({uri}) => {
 
 
 const PostButton = ({title, outfitA, outfitB, postFinishedCallback}) => {
+    const defaultTitle='Which one should I choose?';
 
     const navigation = useNavigation();
 
@@ -41,7 +42,7 @@ const PostButton = ({title, outfitA, outfitB, postFinishedCallback}) => {
             // upload data to Db
             const currInstant = moment().toISOString();
 
-            createRoom({userId: deviceId, time_created: currInstant, title, outfitA_url, outfitB_url})
+            createRoom({userId: deviceId, time_created: currInstant, title:(title===''?defaultTitle:title), outfitA_url, outfitB_url})
                 .then((result) => {
 
                     // reset state variables

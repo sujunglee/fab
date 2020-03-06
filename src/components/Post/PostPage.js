@@ -12,7 +12,7 @@ const PostPage = ({route, navigation}) => {
     const placeHolderText = 'Enter title here';
     const [outfitA, setOutfitA] = useState({uri: undefined, outfitOption: 'A'});
     const [outfitB, setOutfitB] = useState({uri: undefined, outfitOption: 'B'});
-    const [roomTitle, setRoomTitle] = useState(placeHolderText);
+    const [roomTitle, setRoomTitle] = useState('');
     //const navigation = useNavigation();
 
 
@@ -50,11 +50,7 @@ const PostPage = ({route, navigation}) => {
     };
 
     const onTitleChangeCallBack = (text)=>{
-        if (text===''){
-            setRoomTitle(placeHolderText)
-        }else{
-            setRoomTitle(text)
-        }
+        setRoomTitle(text)
     };
 
     /**
