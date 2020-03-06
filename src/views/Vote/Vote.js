@@ -15,8 +15,6 @@ import Swiper from 'react-native-deck-swiper';
 import Constants from 'expo-constants';
 import Button from "react-native-paper/src/components/Button";
 import {VoteContextProvider,VoteContext} from "../../components/Vote/VoteContext/VoteContext";
-
-import Constants from 'expo-constants';
 const db = fb.database()
 
 
