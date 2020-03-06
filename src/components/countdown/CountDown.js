@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import StyledText from "../StyledText/StyledText";
 import {colors,sizes} from "../../constants/styles"
 
+
 /**
  * Displays the countdown clock of a outfit
  *

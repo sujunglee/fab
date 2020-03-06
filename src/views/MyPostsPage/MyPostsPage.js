@@ -6,17 +6,17 @@ import { StyledText } from "../../components/StyledText"
 import { AppContext } from "../../context/AppContext"
 import { colors, normalize, sizes } from "../../constants/styles"
 import fb from "../../db/init"
+import closeRoom from "../../db/closeRoom"
 import Loader from "../../components/FancyLoader/FancyLoader";
 import Constants from "expo-constants"
+import moment from "moment"
 const db = fb.database()
 
 const MyPostsPage = () => {
   // const navigation = useNavigation()
   const userID = Constants.installationId;
-  console.log("USER ID: ", userID);
   const { user, isLoggedIn } = useContext(AppContext);
   const [userInfo, setUserInfo] = useState(null)
-  console.log(user)
 
   useEffect(() => {
     const handleData = snap => {
@@ -29,53 +29,57 @@ const MyPostsPage = () => {
   }, [])
 
   return isLoggedIn && userInfo ? (
-    <SafeAreaView style={{ flex: 1,backgroundColor: colors.general.white,width:'100%', height: '100%'}}>
-        <View style={{height: normalize(140)}}>
-            <UserStats user={userInfo} />
-        </View>
-        <ScrollView>
-          {userInfo.rooms_owned ? (
-            Object.keys(userInfo.rooms_owned).map(roomID => (
-              <PostPreview roomID={roomID} user={user} key={roomID} />
-            ))
-          ) : (
-            <View
-              style={{
-                width: "100%",
-                marginTop: 24,
-                paddingHorizontal: 32
-              }}
-            >
-              <StyledText
-                type="semibold"
-                style={{
-                  textAlign: "center"
-                }}
-                size={normalize(26)}
-                color={colors.primary.main}
-              >
-                No posts yet
-              </StyledText>
-              <StyledText
-                style={{
-                  textAlign: "center",
-                  marginTop: 32
-                }}
-                size={normalize(26)}
-                color={colors.primary.main}
-              >
-                Head to the Post page to submit a new post!
-              </StyledText>
-            </View>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.general.white, width: '100%', height: '100%' }}>
+      <View style={{ height: normalize(140) }}>
+        <UserStats user={userInfo} />
+      </View>
+      <ScrollView>
+        {userInfo.rooms_owned ? (
+          Object.keys(userInfo.rooms_owned).map(roomID => (
+            <PostPreview roomID={roomID} user={user} key={roomID} />
+          ))
+        ) : (
+            <NoPostMessage />
           )}
-        </ScrollView>
+      </ScrollView>
     </SafeAreaView>
   ) : (
-      <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Loader visible={true} />
       </View>
-  )
+    )
 }
+
+const NoPostMessage = () => (
+  <View
+    style={{
+      width: "100%",
+      marginTop: 24,
+      paddingHorizontal: 32
+    }}
+  >
+    <StyledText
+      type="semibold"
+      style={{
+        textAlign: "center"
+      }}
+      size={normalize(26)}
+      color={colors.primary.main}
+    >
+      No posts yet
+              </StyledText>
+    <StyledText
+      style={{
+        textAlign: "center",
+        marginTop: 32
+      }}
+      size={normalize(26)}
+      color={colors.primary.main}
+    >
+      Head to the Post page to submit a new post!
+    </StyledText>
+  </View>
+)
 
 const UserStats = ({ user }) => (
   <View

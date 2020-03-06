@@ -19,9 +19,6 @@ const RoomImages = props => {
     imageLoadCallback,
     setImageViewport
   } = props
-  console.log(props)
-  console.log(selectedOption)
-  console.log(roomData)
 
   //roomData.room.optionA.picture = testPictures;
   //roomData.room.optionB.picture = testPictures;

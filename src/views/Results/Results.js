@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import getVoteData from "../../db/getVoteData"
+import closeRoom from "../../db/closeRoom"
 import { Image, View, Text, StyleSheet, Dimensions } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { PieChart } from "react-native-svg-charts"
@@ -135,11 +136,6 @@ const Results = ({ route }) => {
   const deviceWidth = Dimensions.get("window").width
   const { roomData } = route.params
   const totalNumVoters = roomData.scoreA + roomData.scoreB
-  console.log(roomData)
-
-  if (totalNumVoters === 0 ) {
-    console.log("NOBODY VOTED YET!!!");
-  }
 
   return scores ? (
 
@@ -177,7 +173,7 @@ const Results = ({ route }) => {
           )
         }
         <View style={styles.countdown_container}>
-          <CountDown startTime={roomData.timeCreated}  isFinished={() => console.log("Finished!")} />
+          <CountDown startTime={roomData.timeCreated}  isFinished={() => closeRoom({roomID:roomID})} />
         </View>
       </View>
   ) : (
