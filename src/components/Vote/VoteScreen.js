@@ -21,7 +21,7 @@ function getRndInteger(min, max) {
 }
 */
 
-const VoteScreen = ({ roomData, handleNextRoom }) => {
+const VoteScreen = ({ roomData }) => {
   const [voteState, setVoteState] = useState({})
   const deviceWidth = Dimensions.get("window").width
   const [areImagesLoaded, setAreImagesLoaded] = useState(false)
@@ -54,7 +54,7 @@ const VoteScreen = ({ roomData, handleNextRoom }) => {
 
     const delay = 3000
     setTimeout(() => {
-      handleNextRoom()
+      swiper.current.swipeRight();
       setVoteState({})
       setAreImagesLoaded(false)
     }, delay)
