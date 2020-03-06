@@ -13,6 +13,7 @@ import { CountDown } from "../../components/countdown/"
 import moment from "moment"
 import Swiper from 'react-native-deck-swiper';
 import Button from "react-native-paper/src/components/Button";
+import Constants from 'expo-constants';
 const db = fb.database()
 
 
