@@ -23,7 +23,7 @@ const _uriExist = ({uri}) => {
 
 const PostButton = ({title, outfitA, outfitB, postFinishedCallback}) => {
 
-    const navigation = useNavigation()
+    const navigation = useNavigation();
 
     const [outfitA_url, setOutfitA_url] = useState(null);
     const [outfitB_url, setOutfitB_url] = useState(null);
@@ -34,7 +34,6 @@ const PostButton = ({title, outfitA, outfitB, postFinishedCallback}) => {
 
     const deviceId = Constants.installationId;
 
-    // ToDo: Navigate to the results room after room is created.
     useEffect(() => {
         if ((outfitA_url !== null && outfitB_url !== null) && (!urlsLoaded)) {
             setUrlsLoaded(true);
