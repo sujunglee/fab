@@ -3006,6 +3006,11 @@ expo-font@~8.0.0:
   dependencies:
     fontfaceobserver "^2.1.0"
 
+expo-image-manipulator@~8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/expo-image-manipulator/-/expo-image-manipulator-8.0.0.tgz#d7a8ba836a417f7fd1f07db5cde4eb7c0611d608"
+  integrity sha512-7KaQca4szyNllM30ZAnyL7ww83/YJFDl4Yr/4/WglXAKas96WOBztsF7/CPrboEVh/LzfqtSFW0PtyYgrC2o9Q==
+
 expo-image-picker@^8.0.2:
   version "8.0.2"
   resolved "https://registry.yarnpkg.com/expo-image-picker/-/expo-image-picker-8.0.2.tgz#14139f1d73793ae7fba6fe3cf34e1dc91baf402a"
@@ -5297,6 +5302,14 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
+prop-types@15.5.10:
+  version "15.5.10"
+  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.10.tgz#2797dfc3126182e3a95e3dfbb2e893ddd7456154"
+  integrity sha1-J5ffwxJhguOpXj37suiT3ddFYVQ=
+  dependencies:
+    fbjs "^0.8.9"
+    loose-envify "^1.3.1"
+
 prop-types@^15.5.10, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
@@ -5415,12 +5428,12 @@ react-moment@^0.9.7:
   resolved "https://registry.yarnpkg.com/react-moment/-/react-moment-0.9.7.tgz#ca570466595b1aa4f7619e62da18b3bb2de8b6f3"
   integrity sha512-ifzUrUGF6KRsUN2pRG5k56kO0mJBr8kRkWb0wNvtFIsBIxOuPxhUpL1YlXwpbQCbHq23hUu6A0VEk64HsFxk9g==
 
-react-native-animated-loader@^0.0.8:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/react-native-animated-loader/-/react-native-animated-loader-0.0.8.tgz#5475166c2185da641c6a20477fc93819144383e8"
-  integrity sha512-NFdAbMABoS1Gfv4BGYmVKAAK++y1cAPjooJefRAAOVC0ehUGsWpzu+AwvgJPmbTCAJ6xwXGzpDdvP1n/Bw/6ZA==
+react-native-deck-swiper@^1.6.7:
+  version "1.6.7"
+  resolved "https://registry.yarnpkg.com/react-native-deck-swiper/-/react-native-deck-swiper-1.6.7.tgz#598e4835c0f14b505a1fb0534ae8d667307e693b"
+  integrity sha512-oWPdCFq/RCQ5i0adkiIXO3fEwKTQaF1i08FvrfZx0s2yjvwE2LN9T6iJtvU7eokvsqwoIAmJw/xg8BQyueSmVA==
   dependencies:
-    prop-types "^15.6.2"
+    prop-types "15.5.10"
 
 react-native-gesture-handler@~1.5.0:
   version "1.5.6"
@@ -5523,6 +5536,11 @@ react-native-swipe-gestures@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/react-native-swipe-gestures/-/react-native-swipe-gestures-1.0.4.tgz#6a9c6613bfe06cd9014a36a2c4a09f719ff62451"
   integrity sha512-C/vz0KPHNyqHk3uF4Cz/jzd/0N8z34ZgsjAZUh/RsXPH2FtJJf3Fw73pQDWJSoCMtvVadlztb8xQ+/aEQrll7w==
+
+react-native-view-overflow@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-view-overflow/-/react-native-view-overflow-0.0.5.tgz#56c49f0f7cdb9fd145de241d6f6bf4cfe5660915"
+  integrity sha512-p/peyU3IC7M84bZEz2K7hpLrKBPUT3W7/+wnXjGw40hX/Iaj0OmOqJI6mJcBUlpcHJvGYbx2OOpPZa4+hwJC6w==
 
 react-native-view-shot@3.0.2:
   version "3.0.2"
