@@ -159,7 +159,7 @@ const CameraApp = ({route}) => {
 
     return (
 
-        <SafeAreaView style={{flex: 1, borderRadius: 20, backgroundColor: colors.general.black, overflow: 'hidden'}}>
+        <SafeAreaView style={{flex: 1, backgroundColor: colors.general.black, overflow: 'hidden'}}>
 
 
                 <View style={{height: '94%', width: '100%'}}>
