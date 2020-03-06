@@ -12,6 +12,7 @@ import { AppContext } from "../../context/AppContext"
 import { CountDown } from "../../components/countdown/"
 import moment from "moment"
 import Swiper from 'react-native-deck-swiper';
+import Constants from 'expo-constants';
 import Button from "react-native-paper/src/components/Button";
 const db = fb.database()
 
