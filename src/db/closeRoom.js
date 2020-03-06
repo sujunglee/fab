@@ -57,17 +57,18 @@ const awardB = ({ room }) => {
 const closeRoom = async ({ roomID }) => {
     console.log('closeroom')
     var snapshot = await db.ref("rooms/active/" + roomID).once("value")
-    getWinners({ room: snapshot.val() })
-    await db.ref(`rooms/inactive`)
-        .child(roomID)
-        .set(snapshot.val())
-        .catch(error => alert(error));
-    let dbRef = db.ref("rooms/active/" + roomID);
-    dbRef.remove()
-        .catch((error) => {
-            console.log("remove failed: " + error.message)
-        });
-
+    if (snapshot.val()) {
+        getWinners({ room: snapshot.val() })
+        await db.ref(`rooms/inactive`)
+            .child(roomID)
+            .set(snapshot.val())
+            .catch(error => alert(error));
+        let dbRef = db.ref("rooms/active/" + roomID);
+        dbRef.remove()
+            .catch((error) => {
+                console.log("remove failed: " + error.message)
+            });
+    }
 };
 
 
