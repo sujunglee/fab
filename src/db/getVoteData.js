@@ -5,7 +5,10 @@ const db = fb.database();
 
 ///might want to delete and just use getRoomData
 const getVoteData = async ({roomID}) => {
-    const snapshot = await db.ref("rooms/active/" + roomID).once("value");
+    var snapshot = await db.ref("rooms/active/" + roomID).once("value")
+    if (!snapshot.val()) {
+        snapshot = await db.ref("rooms/inactive/" + roomID).once("value")
+    }
     console.log("SNAPSHOT: ", snapshot.val());
 
     const {numInfluencersA,numNormalA,numInfluencersB,numNormalB} = getNumberOfVoters(snapshot.val());
