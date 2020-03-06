@@ -9,10 +9,10 @@ import TitleEntry from "./TitleEntry";
 
 // The actual post page
 const PostPage = ({route, navigation}) => {
-    const placeHolderText = 'Which one should I choose?';
+    const placeHolderText = 'Enter title here';
     const [outfitA, setOutfitA] = useState({uri: undefined, outfitOption: 'A'});
     const [outfitB, setOutfitB] = useState({uri: undefined, outfitOption: 'B'});
-    const [roomTitle, setRoomTitle] = useState('Which one should I choose?');
+    const [roomTitle, setRoomTitle] = useState('Enter title here');
     //const navigation = useNavigation();
 
 
