@@ -185,7 +185,7 @@ const Vote = ({ navigation }) => {
             size={32}
             style={{ color: colors.primary.main, textAlign: "center" }}
           >
-            There's no more posts to vote on!
+            There are no more posts to vote on!
           </StyledText>
         </View>
       </SafeAreaView>
