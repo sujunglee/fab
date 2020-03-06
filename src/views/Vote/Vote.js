@@ -12,10 +12,9 @@ import { AppContext} from "../../context/AppContext"
 import { CountDown } from "../../components/countdown/"
 import moment from "moment"
 import Swiper from 'react-native-deck-swiper';
+import Constants from 'expo-constants';
 import Button from "react-native-paper/src/components/Button";
 import {VoteContextProvider,VoteContext} from "../../components/Vote/VoteContext/VoteContext";
-
-import Constants from 'expo-constants';
 const db = fb.database()
 
 
@@ -185,7 +184,7 @@ const Vote = ({ navigation }) => {
             size={32}
             style={{ color: colors.primary.main, textAlign: "center" }}
           >
-            There's no more posts to vote on!
+            There are no more posts to vote on!
           </StyledText>
         </View>
       </SafeAreaView>
