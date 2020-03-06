@@ -30,7 +30,7 @@ const MyPostsPage = () => {
 
   return isLoggedIn && userInfo ? (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.general.white, width: '100%', height: '100%' }}>
-      <View style={{ height: normalize(140) }}>
+      <View style={{ height: normalize(110),borderBottomWidth:5, borderColor:colors.text.secondary.light }}>
         <UserStats user={userInfo} />
       </View>
       <ScrollView>
@@ -84,12 +84,11 @@ const NoPostMessage = () => (
 const UserStats = ({ user }) => (
   <View
     style={{
-      flexDirection: "row",
-      backgroundColor: colors.general.white,
-      paddingTop: "15%",
-      paddingBottom: 10,
-      paddingLeft: "8%",
-      paddingRight: "8%"
+        flexDirection: "row",
+        backgroundColor: colors.general.white,
+        paddingTop: normalize(15),
+        paddingLeft: "8%",
+        paddingRight: "8%"
     }}
   >
     <View style={{ flex: 1 }}>
@@ -137,9 +136,10 @@ const Badge = ({ badge }) => {
 const PostCount = ({ count }) => (
   <View
     style={{
-      flexDirection: "row",
-      borderBottomColor: colors.text.secondary.light,
-      borderBottomWidth: 1
+        flexDirection: "row",
+        borderBottomColor: colors.text.secondary.light,
+        borderBottomWidth: 1,
+        alignItems:'center'
     }}
   >
     <View style={{ width: "50%" }}>
@@ -164,7 +164,7 @@ const PostCount = ({ count }) => (
 )
 
 const VoteCount = ({ count }) => (
-  <View style={{ flexDirection: "row", paddingTop: 5 }}>
+  <View style={{ flexDirection: "row", paddingTop: 5, alignItems:'center' }}>
     <View style={{ width: "50%" }}>
       <StyledText
         size={sizes.medium.fontSize}
@@ -189,7 +189,7 @@ const VoteCount = ({ count }) => (
 const PercentCorrect = ({ percent, numVotes }) => {
   if (numVotes !== 0) {
     return (
-      <View style={{ flexDirection: "row" }}>
+      <View style={{ flexDirection: "row",alignItems:'center' }}>
         <View style={{ width: "50%" }}>
           <StyledText
             size={sizes.medium.fontSize}
