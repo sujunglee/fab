@@ -4,6 +4,7 @@ import { VoteButton, SkipButton } from "./VoteButton"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { StyledText } from "../StyledText"
 import updateVotes from "../../db/updateVotes"
+import closeRoom from "../../db/closeRoom"
 import { colors, normalize, sizes } from "../../constants/styles"
 import CountDown from "../countdown/CountDown"
 import moment from "moment"
@@ -52,11 +53,11 @@ const VoteScreen = ({ roomData, handleNextRoom }) => {
     */
 
     const delay = 3000
-    // setTimeout(() => {
-    //   handleNextRoom()
-    //   setVoteState({})
-    //   setAreImagesLoaded(false)
-    // }, delay)
+    setTimeout(() => {
+      handleNextRoom()
+      setVoteState({})
+      setAreImagesLoaded(false)
+    }, delay)
   }
 
   const handleSkip = () => {
@@ -166,7 +167,7 @@ const VoteScreen = ({ roomData, handleNextRoom }) => {
               <SkipButton onPress={handleSkip} style={styles.skip_button} />
               <CountDown
                   startTime={roomData.room.meta_data.time_created}
-                isFinished={() => console.log("Finished!")}
+                isFinished={() => closeRoom({roomID:roomData.id})}
               />
             </View>
           ) : (

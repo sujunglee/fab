@@ -21,8 +21,6 @@ const _createRoom = async ({userId, time_created, title, outfitA_url, outfitB_ur
     let newPostRef = await db.ref("rooms/active/").push();
     await newPostRef.set({meta_data, optionA, optionB});
 
-    console.log("NEW ROOM ID 1: ", newPostRef)
-
     return newPostRef.key;
 };
 
@@ -40,21 +38,6 @@ const _addUserRoom = async ({userId, roomId, time_created}) => {
         .child(roomId)
         .set({time_created: time_created})
         .catch(error => alert(error));
-    /*
-    let dbRef = db.ref('users').child(userId);
-    await dbRef.transaction((userInfo) => {
-        // if user exists
-        if (userInfo) {
-            userInfo['rooms_owned'][roomId] = {time_created: time_created};
-            return userInfo;
-            // if user does not exist
-        } else {
-            let meta_data = {badge: BADGES.NORMAL, number_correct: 0, number_voted: 0, time_created};
-            let rooms_owned = {[roomId]: time_created};
-            return {meta_data, rooms_owned}
-        }
-    })
-    */
 };
 
 
@@ -62,8 +45,6 @@ const createRoom = async ({userId, time_created, title, outfitA_url, outfitB_url
 
     let roomId = await _createRoom({userId, time_created, title, outfitA_url, outfitB_url});
     await _addUserRoom({userId, time_created, roomId});
-
-    //console.log("NEW ROOM ID 2:", roomId)
 
     return roomId;
 };

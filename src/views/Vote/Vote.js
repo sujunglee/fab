@@ -4,17 +4,20 @@ import VoteScreen from "../../components/Vote/VoteScreen"
 import { SafeAreaView } from "react-native-safe-area-context"
 import fb from "../../db/init"
 import { getUserBadge } from "../../db/userBadge"
+import closeRoom from "../../db/closeRoom"
 import { StyledText } from "../../components/StyledText"
 import { colors } from "../../constants/styles"
 import { getNumberOfVoters } from "../../db/Utility"
 import { AppContext} from "../../context/AppContext"
 import { CountDown } from "../../components/countdown/"
-import Constants from "expo-constants"
+import moment from "moment"
 import Swiper from 'react-native-deck-swiper';
 import Button from "react-native-paper/src/components/Button";
 import {VoteContextProvider,VoteContext} from "../../components/Vote/VoteContext/VoteContext";
 
+import Constants from 'expo-constants';
 const db = fb.database()
+
 
 const getTotalNumVoters = room => {
   const {
@@ -43,21 +46,31 @@ const noPreviousVote = ({ room, userID }) => {
   return true;
 }
 
+const roomStillActive = ({ room, roomID }) => {
+  if (moment(room["meta_data"]["time_created"]).isBefore(moment().subtract(1, 'days'))) {
+    closeRoom({ roomID: roomID });
+    return false;
+  }
+  return true;
+}
+
 const getActiveList = async () => {
   const snapshot = await db.ref("rooms/active/").once("value")
   let activeRooms = []
 
   for (var roomID of Object.keys(snapshot.val())) {
-    getTotalNumVoters(snapshot.val()[roomID])
+    if (roomStillActive({roomID:roomID, room: snapshot.val()[roomID]})) {
+      getTotalNumVoters(snapshot.val()[roomID])
 
-    if (snapshot.val()[roomID]["meta_data"]["owner"] !== Constants.installationId &&
-      noPreviousVote({ room: snapshot.val()[roomID], userID: Constants.installationId })) {
-      const currRoom = {
-        numVotes: getTotalNumVoters(snapshot.val()[roomID]),
-        id: roomID,
-        room: snapshot.val()[roomID]
+      if (snapshot.val()[roomID]["meta_data"]["owner"] !== Constants.installationId &&
+        noPreviousVote({ room: snapshot.val()[roomID], userID: Constants.installationId })) {
+        const currRoom = {
+          numVotes: getTotalNumVoters(snapshot.val()[roomID]),
+          id: roomID,
+          room: snapshot.val()[roomID]
+        }
+        activeRooms.push(currRoom)
       }
-      activeRooms.push(currRoom)
     }
   }
 

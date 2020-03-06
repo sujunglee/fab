@@ -16,7 +16,6 @@ const dbStorage = fb.storage();
 const compressImage = async ({outfit}) => {
 
     let originalInfo = await FileSystem.getInfoAsync(outfit.uri, {'size': true});
-    console.log(`Original image size: ${originalInfo.size} bytes, or ${originalInfo.size / Math.pow(2, 20)} mb`);
 
     let resizedPhoto = await ImageManipulator.manipulateAsync(
         outfit.uri,
@@ -24,8 +23,6 @@ const compressImage = async ({outfit}) => {
         {compress: 0, format: "jpeg", base64: false}
     );
     let compressedInfo = await FileSystem.getInfoAsync(resizedPhoto.uri, {'size': true});
-    console.log(`Compressed image size: ${compressedInfo.size} or ${compressedInfo.size / Math.pow(2, 20)} mb`);
-    console.log(`Percent reduction: ${((originalInfo.size - compressedInfo.size) / originalInfo.size * 100)}%`);
 
     const directoryName = FileSystem.documentDirectory + 'images';
     const fileName = `${directoryName}/outfit${outfit.outfitOption}.jpeg`;
