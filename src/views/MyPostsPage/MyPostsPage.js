@@ -30,7 +30,7 @@ const MyPostsPage = () => {
 
   return isLoggedIn && userInfo ? (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.general.white, width: '100%', height: '100%' }}>
-      <View style={{ height: normalize(110),borderBottomWidth:5, borderColor:colors.text.secondary.light }}>
+      <View style={{ height: normalize(120),borderBottomWidth:5, borderColor:colors.text.secondary.light }}>
         <UserStats user={userInfo} />
       </View>
       <ScrollView>
@@ -86,7 +86,7 @@ const UserStats = ({ user }) => (
     style={{
         flexDirection: "row",
         backgroundColor: colors.general.white,
-        paddingTop: normalize(15),
+        paddingTop: '8%',
         paddingLeft: "8%",
         paddingRight: "8%"
     }}
