@@ -6,8 +6,10 @@ import { StyledText } from "../../components/StyledText"
 import { AppContext } from "../../context/AppContext"
 import { colors, normalize, sizes } from "../../constants/styles"
 import fb from "../../db/init"
+import closeRoom from "../../db/closeRoom"
 import Loader from "../../components/FancyLoader/FancyLoader";
 import Constants from "expo-constants"
+import moment from "moment"
 const db = fb.database()
 
 const MyPostsPage = () => {
@@ -48,7 +50,7 @@ const MyPostsPage = () => {
     )
 }
 
-const NoPostMessage = () => {
+const NoPostMessage = () => (
   <View
     style={{
       width: "100%",
@@ -77,7 +79,7 @@ const NoPostMessage = () => {
       Head to the Post page to submit a new post!
     </StyledText>
   </View>
-}
+)
 
 const UserStats = ({ user }) => (
   <View
