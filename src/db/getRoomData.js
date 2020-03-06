@@ -3,7 +3,10 @@ import {getNumberOfVoters} from './Utility'
 const db = fb.database();
 
 const getRoomData = async ({roomID}) => {
-    const snapshot = await db.ref("rooms/active/" + roomID).once("value")
+    var snapshot = await db.ref("rooms/active/" + roomID).once("value")
+    if (!snapshot.val()) {
+        snapshot = await db.ref("rooms/inactive/" + roomID).once("value")
+    }
     const title = snapshot.val().meta_data.title;
     const timeCreated = snapshot.val().meta_data.time_created;
     const pictureA = snapshot.val().optionA.picture;
