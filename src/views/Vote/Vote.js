@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react"
-import { View, Text,StyleSheet } from "react-native"
+import { View, Text,StyleSheet,Platform } from "react-native"
 import VoteScreen from "../../components/Vote/VoteScreen"
 import { SafeAreaView } from "react-native-safe-area-context"
 import fb from "../../db/init"
@@ -157,7 +157,7 @@ const Vote = ({ navigation }) => {
   currently loading
   */
   if (!roomlist || !badge) {
-    return <StyledText>Loading...</StyledText>
+    return <StyledText>Loading..knm.</StyledText>
   }
 
   /*
@@ -204,6 +204,7 @@ const Vote = ({ navigation }) => {
             backgroundColor={colors.general.white}
             stackSize= {3}
             ref={swiper}
+            useViewOverflow={Platform.OS === 'ios'}
         >
         </Swiper>
     </View>
