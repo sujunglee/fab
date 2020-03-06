@@ -12,7 +12,7 @@ const PostPage = ({route, navigation}) => {
     const placeHolderText = 'Enter title here';
     const [outfitA, setOutfitA] = useState({uri: undefined, outfitOption: 'A'});
     const [outfitB, setOutfitB] = useState({uri: undefined, outfitOption: 'B'});
-    const [roomTitle, setRoomTitle] = useState('Enter title here');
+    const [roomTitle, setRoomTitle] = useState(placeHolderText);
     //const navigation = useNavigation();
 
 
@@ -63,7 +63,7 @@ const PostPage = ({route, navigation}) => {
     const onPostFinished = () => {
         setOutfitA({uri: undefined, outfitOption: 'A'});
         setOutfitB({uri: undefined, outfitOption: 'B'});
-        setRoomTitle(placeHolderText);
+        setRoomTitle('');
     };
 
     return (
@@ -72,7 +72,7 @@ const PostPage = ({route, navigation}) => {
             <SafeAreaView style={styles.container}>
 
                 <View style={styles.title_container}>
-                    <TitleEntry onTitleChangeCallBack={onTitleChangeCallBack} placeholderText={placeHolderText}/>
+                    <TitleEntry onTitleChangeCallBack={onTitleChangeCallBack} placeholderText={placeHolderText} roomTitle={roomTitle}/>
                 </View>
 
                 <View style={styles.photos_container}>

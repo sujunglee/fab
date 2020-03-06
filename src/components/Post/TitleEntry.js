@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect} from "react"
 import {View, StyleSheet, Keyboard, TouchableWithoutFeedback,Animated} from "react-native"
 import {colors, normalize, sizes} from "../../constants/styles";
 import {TextInput} from 'react-native-paper';
@@ -13,18 +13,21 @@ import {
 
 // Textbox needs a callback to update the `roomTitle` state in the PostPage component.
 // also needs a way to reload and show "Enter title..."
-const TitleEntry = ({placeholderText, onTitleChangeCallBack}) => {
+const TitleEntry = ({placeholderText, roomTitle, onTitleChangeCallBack}) => {
 
-    const [textValue, setTextValue] = React.useState('');
     const [titleCharsLeft, setTitleCharsLeft] = React.useState(MAX_TITLE_CHARS);
     const [showCharLimit, setShowCharLimit] = React.useState(false);
+
     const onChange = (text)=>{
             setTitleCharsLeft(MAX_TITLE_CHARS - text.length);
-            setTextValue(text);
             onTitleChangeCallBack(text);
-
     };
 
+    useEffect(()=>{
+            if (roomTitle ===''){
+                setTitleCharsLeft(MAX_TITLE_CHARS)
+            }
+        }, []);
 
     return (
         <View style={styles.container}>
@@ -40,7 +43,7 @@ const TitleEntry = ({placeholderText, onTitleChangeCallBack}) => {
                     multiline={true}
                     onChangeText={text => {onChange(text)}}
                     maxLength={MAX_TITLE_CHARS}
-                    value={textValue}
+                    value={roomTitle}
                     onBlur = {()=>setShowCharLimit(false)}
                     onFocus = {()=>setShowCharLimit(true)}
                     blurOnSubmit={true}
