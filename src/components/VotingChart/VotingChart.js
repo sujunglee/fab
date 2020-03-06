@@ -61,77 +61,9 @@ const VotingChart = ({voteResults}) =>{
     return (
         <View style={{ display: "flex", flexDirection: "row" }}>
             <View style={{ alignItems: "center", textAlign: "center", justifyContent: "center", flex: 1 }}>
-                <PieChart
-                    padAngle={0}
-                    style={{ width: 160, height: 160 }}
-                    valueAccessor={({ item }) => item.amount}
-                    data={createChartData({
-                        influencer: voteResults.numInfluencersA,
-                        normal: voteResults.numNormalA,
-                        competitor: voteResults.scoreB,
-                        totalNumVoters:
-                            voteResults.numInfluencersA +
-                            voteResults.numNormalA +
-                            voteResults.scoreB
-                    })}
-                    outerRadius={"95%"}
-                />
-                <Text
-                    style={{
-                        position: 'absolute',
-                        left: 70,
-                        textAlign: 'center',
-                        fontSize: 30,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        color: (voteA_percent ===voteB_percent? "#1563af":  (voteA_percent>voteB_percent?"#dd8300":"#1563af"))
-                    }}
-                >
-                  {(totalNumVoters === 0) ? (
-                    ""
-                  ) : (
-                    voteA_percent.toFixed().toString() + "%"
-                  )}
-                </Text>
             </View>
             <View style={{ alignItems: "center", textAlign: "center", justifyContent: "center", flex: 1 }}>
-                {/*TODO: Factor this out into a clean, separate Chart component*/}
-                <PieChart
-                     padAngle={0}
-                    style={{ width: 160, height: 160 }}
-                    valueAccessor={({ item }) => item.amount}
-                    data={createChartData({
-                        influencer: voteResults.numInfluencersB,
-                        normal: voteResults.numNormalB,
-                        competitor: voteResults.scoreA,
-                        totalNumVoters:
-                            voteResults.numInfluencersA +
-                            voteResults.numNormalA +
-                            voteResults.scoreB
-                    })}
-                    outerRadius={"95%"}
-                />
-                <Text
-                    style={{
-                        position: 'absolute',
-                        left: 70,
-                        textAlign: 'center',
-                        fontSize: 30,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        color: (voteA_percent ===voteB_percent? "#1563af":  (voteB_percent>voteA_percent?"#dd8300":"#1563af"))
-                    }}
-                >
-
-                    {(totalNumVoters === 0) ? (
-                      ""
-                    ) : (
-                      voteB_percent.toFixed().toString() + "%"
-                    )}
-                </Text>
             </View>
-
-
         </View>
     );
 
