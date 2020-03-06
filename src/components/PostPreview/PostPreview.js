@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import { View, TouchableHighlight, Text, StyleSheet, Image } from "react-native"
 import moment from "moment"
 import { screens } from "../../Navigation/constants"
-import getRoomData from "../../db/getRoomData"
+import getMyPostData from "../../db/getMyPostData"
 import { useNavigation } from "@react-navigation/native"
 import { StyledText } from "../StyledText"
 import {RoomTitle} from "../RoomTitle";
@@ -20,7 +20,7 @@ const PostPreview = ({ roomID, userInfo }) => {
 
   useEffect(() => {
     const getPostData = async () => {
-      const data = await getRoomData({ roomID })
+      const data = await getMyPostData({ roomID })
       const createdAt = moment(data.timeCreated).format("dddd h:mm A")
       setPostData({
         ...data,
