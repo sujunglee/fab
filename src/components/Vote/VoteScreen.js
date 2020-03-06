@@ -137,7 +137,7 @@ const VoteScreen = ({ roomData }) => {
 
         <View style={{ width: "100%", height: "48%" }}>
           {voteState.voteResults ? (
-            <VotingChart voteResults={voteState.voteResults} />
+            <></>
           ) : areImagesLoaded ? (
             <View style={styles.buttons_and_timer_container}>
               <View style={styles.buttons_container}>
