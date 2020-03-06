@@ -174,7 +174,7 @@ const Results = ({ route }) => {
           )
         }
         <View style={styles.countdown_container}>
-          <CountDown startTime={roomData.timeCreated}  isFinished={() => closeRoom({roomID:route.params})} />
+          <CountDown startTime={roomData.timeCreated}  isFinished={() => closeRoom({roomID:route.params.roomID})} />
         </View>
       </View>
   ) : (
