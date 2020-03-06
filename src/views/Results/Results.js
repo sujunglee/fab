@@ -137,6 +137,7 @@ const Results = ({ route }) => {
   const { roomData } = route.params
   const totalNumVoters = roomData.scoreA + roomData.scoreB
 
+
   return scores ? (
 
       <View style={styles.container}>

@@ -14,6 +14,7 @@ import { RoomTitle } from "../RoomTitle"
 import Loader from "../FancyLoader/FancyLoader"
 import {AppContext} from "../../context/AppContext";
 import {Surface} from "react-native-paper";
+import {VoteContext} from "./VoteContext/VoteContext";
 /*
 function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min)) + min
@@ -26,9 +27,11 @@ const VoteScreen = ({ roomData, handleNextRoom }) => {
   const [areImagesLoaded, setAreImagesLoaded] = useState(false)
   const [imageViewport, setImageViewport] = useState({})
   const { user, userID,isLoggedIn} = useContext(AppContext);
+  const {currentRoom,setCurrentRoom,swiper} = useContext(VoteContext);
+
 
   useEffect(() => {
-    console.log(imageViewport)
+    //console.log(imageViewport)
   }, [imageViewport])
 
   const handlePress = async selection => {
@@ -58,9 +61,9 @@ const VoteScreen = ({ roomData, handleNextRoom }) => {
   }
 
   const handleSkip = () => {
-    setAreImagesLoaded(false)
-    handleNextRoom()
-  }
+    setAreImagesLoaded(false);
+    swiper.current.swipeRight();
+  };
 
   const imageLoadCallback = () => {
     setAreImagesLoaded(true)

@@ -20,6 +20,7 @@ const RoomImages = props => {
     setImageViewport
   } = props
 
+
   //roomData.room.optionA.picture = testPictures;
   //roomData.room.optionB.picture = testPictures;
 

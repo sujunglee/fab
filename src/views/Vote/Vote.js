@@ -8,11 +8,13 @@ import closeRoom from "../../db/closeRoom"
 import { StyledText } from "../../components/StyledText"
 import { colors } from "../../constants/styles"
 import { getNumberOfVoters } from "../../db/Utility"
-import { AppContext } from "../../context/AppContext"
+import { AppContext} from "../../context/AppContext"
 import { CountDown } from "../../components/countdown/"
 import moment from "moment"
 import Swiper from 'react-native-deck-swiper';
 import Button from "react-native-paper/src/components/Button";
+import {VoteContextProvider,VoteContext} from "../../components/Vote/VoteContext/VoteContext";
+
 import Constants from 'expo-constants';
 const db = fb.database()
 
@@ -79,14 +81,17 @@ const getActiveList = async () => {
 
 const Vote = ({ navigation }) => {
   const userID = Constants.installationId
-  const [roomlist, setRoomList] = useState(null)
-  const [badge, setBadge] = useState(null)
+  //const [roomlist, setRoomList] = useState(null)
+  const [badge, setBadge] = useState(null);
+  const [hasSwipedAll, setHasSwipedAll] = useState(false);
+  //const [currentRoom, setCurrentRoom] = useState(0)
+  const {roomlist,setRoomList,currentRoom,setCurrentRoom,swiper} = useContext(VoteContext);
 
-  const [currentRoom, setCurrentRoom] = useState(0)
   useEffect(() => {
     const getRooms = async () => {
       const activeList = await getActiveList()
       setRoomList(activeList)
+      setCurrentRoom(0)
     }
     getRooms()
   }, [])
@@ -158,7 +163,7 @@ const Vote = ({ navigation }) => {
   /*
   no more rooms 
   */
-  if (currentRoom >= roomlist.length) {
+  if (hasSwipedAll) {
     return (
       <SafeAreaView
         style={{
@@ -187,25 +192,31 @@ const Vote = ({ navigation }) => {
     )
   }
 
+
   return (
     <View style={styles.container}>
         <Swiper
             cards={roomlist}
             renderCard={(card)=>{return <VoteScreen roomData={card}/>}}
-            onSwiped={(cardIndex) => {console.log(cardIndex)}}
-            onSwipedAll={() => {console.log('onSwipedAll')}}
-            cardIndex={0}
+            onSwiped={(cardIndex) => {setCurrentRoom(cardIndex)}}
+            onSwipedAll={() => {setHasSwipedAll(true)}}
+            cardIndex={currentRoom}
             backgroundColor={colors.general.white}
-            stackSize= {3}>
+            stackSize= {3}
+            ref={swiper}
+        >
         </Swiper>
     </View>
-
-
   )
 }
 
 
-
+// So Vote has access to the context!!!
+const _Vote = ()=>(
+    <VoteContextProvider>
+      <Vote/>
+    </VoteContextProvider>
+);
 
 
 const styles = StyleSheet.create({
@@ -229,4 +240,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default Vote
+export default _Vote

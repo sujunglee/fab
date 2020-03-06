@@ -34,6 +34,7 @@ const AppContextProvider = ({ children }) => {
     }, []);
     */
 
+
     useEffect(() => {
         // load data with hardcoded userId
         getUserInfo({ userID: Constants.installationId }).then((user) => {
