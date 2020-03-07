@@ -71,15 +71,15 @@ const MyPostsPage = () => {
             <PostPreview roomID={roomID} user={user} key={roomID} />
           ))
         ) : (
-          <NoPostMessage />
-        )}
+            <NoPostMessage />
+          )}
       </ScrollView>
     </SafeAreaView>
   ) : (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Loader visible={true} />
-    </View>
-  )
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <Loader visible={true} />
+      </View>
+    )
 }
 
 const NoPostMessage = () => (
@@ -157,7 +157,8 @@ const Badge = ({ badge }) => {
     return (
       <StyledText
         size={sizes.large.fontSize}
-        style={{ color: colors.text.secondary.main }}
+        type="bold"
+        style={{ color: colors.secondary.main }}
       >
         INFLUENCER
       </StyledText>
