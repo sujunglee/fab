@@ -142,9 +142,9 @@ const VoteScreen = ({ roomData }) => {
             <View style={styles.buttons_and_timer_container}>
               <View style={styles.buttons_container}>
                 <View style={styles.options_container_text}>
-                  <StyledText size={normalize(18)} style={styles.option_text}>
-                    Option A
-                  </StyledText>
+                  <View size={normalize(18)} style={styles.option_text}>
+
+                  </View>
                   <VoteButton
                     content="A"
                     onPress={() => handlePress("optionA")}
@@ -152,9 +152,9 @@ const VoteScreen = ({ roomData }) => {
                 </View>
 
                 <View style={styles.options_container_text}>
-                  <StyledText size={normalize(18)} style={styles.option_text}>
-                    Option B
-                  </StyledText>
+                  <View size={normalize(18)} style={styles.option_text}>
+
+                  </View>
                   <VoteButton
                     content="B"
                     onPress={() => handlePress("optionB")}
@@ -276,8 +276,9 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   option_text: {
-    paddingTop: 5,
-    color: colors.text.secondary.main
+    paddingTop: normalize(5),
+    color: colors.text.secondary.main,
+    paddingBottom: normalize(20),
   },
   skip_button: {
     marginTop: normalize(8),
