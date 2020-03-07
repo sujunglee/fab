@@ -71,8 +71,8 @@ const VoteScreen = ({ roomData }) => {
 
 
   return roomData && isLoggedIn ? (
-      <Surface style={{borderRadius:10,borderWidth:.5, borderColor:'rgba(0,0,0,.5)'}}>
-    <SafeAreaView >
+      <Surface style={{height:normalize(550),borderRadius:30,borderWidth:.5, borderColor:'rgba(0,0,0,.5)'}}>
+    <View >
       <View style={styles.container}>
         {/*
         black screen overlay and vote results over images
@@ -175,7 +175,7 @@ const VoteScreen = ({ roomData }) => {
           )}
         </View>
       </View>
-    </SafeAreaView>
+    </View>
       </Surface>
   ) : (
       <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
@@ -264,7 +264,7 @@ const styles = StyleSheet.create({
     height: "12%",
     width: "100%",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   loading_container: {
     alignItems: "center",
