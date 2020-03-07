@@ -1,5 +1,12 @@
 import React, { useEffect, useState, useContext } from "react"
-import { View, Text, SafeAreaView, ScrollView, Button, StyleSheet } from "react-native"
+import {
+  View,
+  Text,
+  SafeAreaView,
+  ScrollView,
+  Button,
+  StyleSheet
+} from "react-native"
 import { PostPreview } from "../../components/PostPreview"
 import getUserInfo from "../../db/getUserInfo"
 import { StyledText } from "../../components/StyledText"
@@ -7,20 +14,32 @@ import { AppContext } from "../../context/AppContext"
 import { colors, normalize, sizes } from "../../constants/styles"
 import fb from "../../db/init"
 import closeRoom from "../../db/closeRoom"
-import Loader from "../../components/FancyLoader/FancyLoader";
+import Loader from "../../components/FancyLoader/FancyLoader"
 import Constants from "expo-constants"
 import moment from "moment"
 const db = fb.database()
 
 const MyPostsPage = () => {
   // const navigation = useNavigation()
-  const userID = Constants.installationId;
-  const { user, isLoggedIn } = useContext(AppContext);
+  const userID = Constants.installationId
+  const { user, isLoggedIn } = useContext(AppContext)
   const [userInfo, setUserInfo] = useState(null)
 
   useEffect(() => {
     const handleData = snap => {
-      if (snap.val()) setUserInfo(snap.val())
+      if (snap.val()) {
+        let user = snap.val()
+        const rooms = Object.entries(snap.val().rooms_owned)
+        const sortedRooms = rooms.sort(([a_key, a_val], [b_key, b_val]) => {
+          return moment(a_val.time_created).isBefore(moment(b_val.time_created))
+        })
+        const roomsOwned = sortedRooms.reduce((acc, curr) => {
+          acc[curr[0]] = curr[1]
+          return acc
+        }, {})
+        user.rooms_owned = roomsOwned
+        setUserInfo(user)
+      }
     }
     db.ref("users/" + userID).on("value", handleData, error => alert(error))
     return () => {
@@ -29,8 +48,21 @@ const MyPostsPage = () => {
   }, [])
 
   return isLoggedIn && userInfo ? (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.general.white, width: '100%', height: '100%' }}>
-      <View style={{ height: normalize(120),borderBottomWidth:5, borderColor:colors.text.secondary.light }}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: colors.general.white,
+        width: "100%",
+        height: "100%"
+      }}
+    >
+      <View
+        style={{
+          height: normalize(120),
+          borderBottomWidth: 5,
+          borderColor: colors.text.secondary.light
+        }}
+      >
         <UserStats user={userInfo} />
       </View>
       <ScrollView>
@@ -39,15 +71,15 @@ const MyPostsPage = () => {
             <PostPreview roomID={roomID} user={user} key={roomID} />
           ))
         ) : (
-            <NoPostMessage />
-          )}
+          <NoPostMessage />
+        )}
       </ScrollView>
     </SafeAreaView>
   ) : (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Loader visible={true} />
-      </View>
-    )
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <Loader visible={true} />
+    </View>
+  )
 }
 
 const NoPostMessage = () => (
@@ -67,7 +99,7 @@ const NoPostMessage = () => (
       color={colors.primary.main}
     >
       No posts yet
-              </StyledText>
+    </StyledText>
     <StyledText
       style={{
         textAlign: "center",
@@ -84,11 +116,11 @@ const NoPostMessage = () => (
 const UserStats = ({ user }) => (
   <View
     style={{
-        flexDirection: "row",
-        backgroundColor: colors.general.white,
-        paddingTop: '8%',
-        paddingLeft: "8%",
-        paddingRight: "8%"
+      flexDirection: "row",
+      backgroundColor: colors.general.white,
+      paddingTop: "8%",
+      paddingLeft: "8%",
+      paddingRight: "8%"
     }}
   >
     <View style={{ flex: 1 }}>
@@ -136,10 +168,10 @@ const Badge = ({ badge }) => {
 const PostCount = ({ count }) => (
   <View
     style={{
-        flexDirection: "row",
-        borderBottomColor: colors.text.secondary.light,
-        borderBottomWidth: 1,
-        alignItems:'center'
+      flexDirection: "row",
+      borderBottomColor: colors.text.secondary.light,
+      borderBottomWidth: 1,
+      alignItems: "center"
     }}
   >
     <View style={{ width: "50%" }}>
@@ -164,7 +196,7 @@ const PostCount = ({ count }) => (
 )
 
 const VoteCount = ({ count }) => (
-  <View style={{ flexDirection: "row", paddingTop: 5, alignItems:'center' }}>
+  <View style={{ flexDirection: "row", paddingTop: 5, alignItems: "center" }}>
     <View style={{ width: "50%" }}>
       <StyledText
         size={sizes.medium.fontSize}
@@ -189,7 +221,7 @@ const VoteCount = ({ count }) => (
 const PercentCorrect = ({ percent, numVotes }) => {
   if (numVotes !== 0) {
     return (
-      <View style={{ flexDirection: "row",alignItems:'center' }}>
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
         <View style={{ width: "50%" }}>
           <StyledText
             size={sizes.medium.fontSize}
