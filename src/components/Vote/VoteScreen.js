@@ -119,7 +119,7 @@ const VoteScreen = ({ roomData }) => {
                   </StyledText>
                   </View>
                 )}
-              <View style={{ flexDirection: "row", alignItems: "center" , justifyContent: 'center'}}>
+              <View style={{ flexDirection: "row", alignItems: "center", justifyContent: 'center' }}>
                 <View style={{ width: "50%" }}>
                   <VotePercents
                     score="A"
@@ -194,21 +194,26 @@ const VotePercents = ({ score, voteResults, imageViewport }) => {
     bottom: imageViewport.height / 2 + 20,
     fontSize: 48
   }
-  const borderColors = (voteResults.scoreA > voteResults.scoreB) ? { borderA: colors.secondary.main, borderB: "transparent" } : { borderB: colors.secondary.main, borderA: "transparent" }
+  const borderStyles = {
+    borderWidth: 10,
+    textAlign: "center",
+    height: 70,
+    padding: 5,
+    marginRight: 10,
+    marginLeft: 10
+  }
+  var borderColors = (voteResults.scoreA > voteResults.scoreB) ? { borderA: colors.secondary.main, borderB: "transparent" } : { borderB: colors.secondary.main, borderA: "transparent" }
+  if (voteResults.scoreA == voteResults.scoreB){
+    borderColors = { borderA: "transparent", borderB: "transparent" }
+  }
   return score === "A" ? (
-    <StyledText style={{ ...textStyles, borderWidth: 10, borderColor: borderColors.borderA, textAlign: "center", height: 70, padding: 5, marginRight: 10, marginLeft:10 }}>{`${(
-      (voteResults.scoreA / (voteResults.scoreA + voteResults.scoreB)) *
-      100
-    )
-      .toFixed()
-      .toString()}%`}</StyledText>
+    <StyledText style={{ ...textStyles, ...borderStyles, borderColor: borderColors.borderA }}>
+      {((voteResults.scoreA / (voteResults.scoreA + voteResults.scoreB)) * 100).toFixed()}%
+    </StyledText>
   ) : (
-      <StyledText style={{ ...textStyles, borderWidth: 10, borderColor: borderColors.borderB, textAlign: "center", height: 70, padding: 5 , marginRight: 10, marginLeft:10}}>{`${(
-        (voteResults.scoreB / (voteResults.scoreA + voteResults.scoreB)) *
-        100
-      )
-        .toFixed()
-        .toString()}%`}</StyledText>
+      <StyledText style={{ ...textStyles, ...borderStyles, borderColor: borderColors.borderB}}>
+        {((voteResults.scoreB / (voteResults.scoreA + voteResults.scoreB)) * 100).toFixed()}%
+        </StyledText>
     )
 }
 
