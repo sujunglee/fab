@@ -18,6 +18,7 @@ import Loader from "../../components/FancyLoader/FancyLoader"
 import Constants from "expo-constants"
 import moment from "moment"
 const db = fb.database()
+import MyPosts from '../../Navigation/icons/MyPosts';
 
 const MyPostsPage = () => {
   // const navigation = useNavigation()
@@ -132,7 +133,7 @@ const UserStats = ({ user }) => (
       </StyledText>
       <StyledText
         size={sizes.xlarge.fontSize}
-        style={{ color: colors.text.secondary.main }}
+        style={{paddingTop: "8%", color: colors.text.secondary.main }}
       >
         <Badge badge={user.meta_data.badge} />
       </StyledText>
@@ -156,11 +157,14 @@ const Badge = ({ badge }) => {
   if (badge === "influencer")
     return (
       <StyledText
-        size={sizes.large.fontSize}
+        size={sizes.medium.fontSize}
         type="bold"
         style={{ color: colors.secondary.main }}
       >
         INFLUENCER
+        <MyPosts
+            color={colors.secondary.main}
+        />
       </StyledText>
     )
   return null
