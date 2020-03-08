@@ -1,12 +1,14 @@
-import {View, Image, Modal, ImageBackground, StyleSheet, StatusBar, TouchableWithoutFeedback} from "react-native"
+import {View, Image, Modal, ImageBackground, StyleSheet, StatusBar, TouchableWithoutFeedback,TouchableOpacity} from "react-native"
 import PropTypes from 'prop-types';
 import ImageViewer from "react-native-image-zoom-viewer";
 import CloseButton from "../CameraApp/components/CloseButton"
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React, { useState, useEffect, forwardRef } from "react"
 import {SafeAreaView} from "react-native-safe-area-context"
-import {colors} from "../../constants/styles";
-
+import {colors, normalize} from "../../constants/styles";
+import StyledText from "../StyledText/StyledText";
+import { Ionicons } from '@expo/vector-icons';
+import Fade from "../Animations/Fade";
 let x =
   "https://firebasestorage.googleapis.com/v0/b/fabapp-a1ea0.appspot.com/o/my-image.jpg?alt=media&token=995d6347-0435-41ac-96e1-91106786ab2c"
 
@@ -31,6 +33,7 @@ const RoomImages = props => {
   })
 
   const closeImage = () => {
+      StatusBar.setHidden(false,'slide');
     StatusBar.setBarStyle('default',true);
     setIsImageOpen({state:false});
   }
@@ -55,6 +58,18 @@ const RoomImages = props => {
     }
   }, [areImagesLoaded])
 
+    // sets hides or shows the status bar depending on if the image expander is open
+    useEffect(()=>{
+        if (isImageOpen.state){
+            StatusBar.setHidden(true,'none');
+        }else{
+            StatusBar.setHidden(false,'slide');
+            StatusBar.setBarStyle('default',true);
+        }
+
+    },[isImageOpen.state]);
+
+    //<CloseButton closeCallBack={() => closeImage()}/>
   return (
     <View
       style={styles.container}
@@ -65,24 +80,33 @@ const RoomImages = props => {
     >
       {/*Modal for image zoom-in + expansion*/}
       {isImageOpen.state && (
-        <Modal visible={isImageOpen.state}>
-            <View style={{backgroundColor:colors.general.black}}>
-                <SafeAreaView>
-                      <ImageBackground source={{url:isImageOpen.url}} style={styles.container}>
-                                    <CloseButton closeCallBack={() => closeImage()}/>
-                      </ImageBackground>
-                </SafeAreaView>
+
+          <Modal visible={isImageOpen.state}>
+            <View style={{width:'100%',height:'100%',backgroundColor:'black'}}>
+                <TouchableOpacity
+                    onPress={closeImage}
+                    style={{
+                        height: normalize(40),
+                        width:normalize(40),
+                        marginLeft:normalize(0),
+                        marginTop:0,
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}>
+                     <Ionicons name="md-close" size={32} color="white" />
+                </TouchableOpacity>
+                <ImageViewer
+                            renderIndicator={()=>{}}
+                            enableImageZoom
+                            enableSwipeDown
+                            onSwipeDown={() => setIsImageOpen({ state: false })}
+                            imageUrls={[
+                              {
+                                url: isImageOpen.url
+                              }
+                            ]}
+                          />
             </View>
-          {/* <ImageViewer
-            enableImageZoom
-            enableSwipeDown
-            onSwipeDown={() => setIsImageOpen({ state: false })}
-            imageUrls={[
-              {
-                url: isImageOpen.url
-              }
-            ]}
-          /> */}
         </Modal>
       )}
 
