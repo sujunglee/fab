@@ -15,13 +15,16 @@ import Loader from "../FancyLoader/FancyLoader"
 import { AppContext } from "../../context/AppContext";
 import { Surface } from "react-native-paper";
 import { VoteContext } from "./VoteContext/VoteContext";
+import fb from "../../db/init"
+const db = fb.database();
+
 /*
 function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min)) + min
 }
 */
 
-const VoteScreen = ({ roomData }) => {
+const VoteScreen = ({ roomInfo }) => {
   const [voteState, setVoteState] = useState({})
   const deviceWidth = Dimensions.get("window").width
   const [areImagesLoaded, setAreImagesLoaded] = useState(false)
@@ -29,13 +32,23 @@ const VoteScreen = ({ roomData }) => {
   const { user, userID, isLoggedIn } = useContext(AppContext);
   const { currentRoom, setCurrentRoom, swiper } = useContext(VoteContext);
 
+  const [roomData, setRoomData] = useState(null);
 
+  // continuously get data
   useEffect(() => {
-    //console.log(imageViewport)
-  }, [imageViewport])
+    const handleData = snap =>{
+      if (snap.val()) {
+        setRoomData(snap.val());
+      }
+    };
+    let dbRef  = db.ref('rooms/active/').child(roomInfo.id);
+    dbRef.on('value',handleData,error => alert(error));
+    return ()=> {dbRef.off('value',handleData)}
+  }, []);
+
 
   const handlePress = async selection => {
-    const roomID = roomData.id
+    const roomID = roomInfo.id
     const voteResults = await updateVotes({
       roomID: roomID,
       selection: selection,
@@ -80,7 +93,7 @@ const VoteScreen = ({ roomData }) => {
 
           {/*Room Title*/}
           <View style={styles.title_container}>
-            <RoomTitle title={roomData.room.meta_data.title} />
+            <RoomTitle title={roomData.meta_data.title} />
           </View>
           {/*Room Images*/}
 
@@ -164,8 +177,8 @@ const VoteScreen = ({ roomData }) => {
 
                 <SkipButton onPress={handleSkip} style={styles.skip_button} />
                 <CountDown
-                  startTime={roomData.room.meta_data.time_created}
-                  isFinished={() => closeRoom({ roomID: roomData.id })}
+                  startTime={roomData.meta_data.time_created}
+                  isFinished={() => closeRoom({ roomID: roomInfo.id })}
                 />
               </View>
             ) : (

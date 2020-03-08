@@ -64,8 +64,7 @@ const getActiveList = async () => {
         noPreviousVote({ room: snapshot.val()[roomID], userID: Constants.installationId })) {
         const currRoom = {
           numVotes: getTotalNumVoters(snapshot.val()[roomID]),
-          id: roomID,
-          room: snapshot.val()[roomID]
+          id: roomID
         };
         activeRooms.push(currRoom)
       }
@@ -152,7 +151,7 @@ const Vote = ({ navigation }) => {
     <View style={styles.container}>
         <Swiper
             cards={roomlist}
-            renderCard={(card)=>{return <VoteScreen roomData={card}/>}}
+            renderCard={(card)=>{return <VoteScreen roomInfo={card}/>}}
             onSwiped={(cardIndex) => {setCurrentRoom(cardIndex)}}
             onSwipedAll={() => {setHasSwipedAll(true)}}
             cardIndex={currentRoom}

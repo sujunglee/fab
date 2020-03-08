@@ -23,8 +23,8 @@ const RoomImages = props => {
   } = props
 
 
-  //roomData.room.optionA.picture = testPictures;
-  //roomData.room.optionB.picture = testPictures;
+  //roomData.optionA.picture = testPictures;
+  //roomData.optionB.picture = testPictures;
 
   const [isImageOpen, setIsImageOpen] = useState(false)
   const [areImagesLoaded, setAreImagesLoaded] = useState({
@@ -41,14 +41,14 @@ const RoomImages = props => {
     StatusBar.setBarStyle('light-content',true);
     setIsImageOpen({
         state: true,
-        url: roomData.room.optionB.picture
+        url: roomData.optionB.picture
     })
   }
   const openImageA = () => {
     StatusBar.setBarStyle('light-content',true);
     setIsImageOpen({
         state: true,
-        url: roomData.room.optionA.picture
+        url: roomData.optionA.picture
     })
   }
 
@@ -115,7 +115,7 @@ const RoomImages = props => {
                 onPress={() =>
                     openImageA()
                 }>
-                <ImageBackground source={{uri:roomData.room.optionA.picture}} style={styles.image} onLoad={() =>
+                <ImageBackground source={{uri:roomData.optionA.picture}} style={styles.image} onLoad={() =>
                     setAreImagesLoaded({...areImagesLoaded, A: true})}>
                     <MaterialCommunityIcons name="arrow-expand" size={32} color="white" onPress={() =>
                        openImageA()
@@ -129,7 +129,7 @@ const RoomImages = props => {
                 onPress={() =>
                     openImageB()
                 }>
-                <ImageBackground source={{uri:roomData.room.optionB.picture}} style={styles.image} onLoad={() =>
+                <ImageBackground source={{uri:roomData.optionB.picture}} style={styles.image} onLoad={() =>
                         setAreImagesLoaded({...areImagesLoaded, B: true})}>
                         <MaterialCommunityIcons name="arrow-expand" size={32} color="white" onPress={() =>
                            openImageB()
