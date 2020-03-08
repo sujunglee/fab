@@ -53,6 +53,7 @@ const createChartData = ({
 
 
 const VotingChart = ({voteResults}) =>{
+    console.log(voteResults)
 
     console.log("HELLO VOTING CHART SHOULD BE DISPLAYING")
 

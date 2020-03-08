@@ -36,14 +36,13 @@ const VoteScreen = ({ roomInfo }) => {
 
   // continuously get data
   useEffect(() => {
-    const handleData = snap =>{
-      if (snap.val()) {
-        setRoomData(snap.val());
-      }
+
+    const handleData = snapshot =>{
+        snapshot.val() && setRoomData(snapshot.val())
     };
+
     let dbRef  = db.ref('rooms/active/').child(roomInfo.id);
-    dbRef.on('value',handleData,error => alert(error));
-    return ()=> {dbRef.off('value',handleData)}
+    dbRef.on('value', handleData, (error) => alert(`[VoteScreen]${error}`));
   }, []);
 
 

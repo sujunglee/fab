@@ -17,7 +17,6 @@ let x =
 const RoomImages = props => {
   const {
     roomData,
-    selectedOption,
     imageLoadCallback,
     setImageViewport
   } = props
