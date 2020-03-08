@@ -26,24 +26,28 @@ const MyPostsPage = () => {
   const [userInfo, setUserInfo] = useState(null)
 
   useEffect(() => {
-    const handleData = snap => {
+    const _handleData = snap => {
       if (snap.val()) {
-        let user = snap.val()
-        const rooms = Object.entries(snap.val().rooms_owned)
-        const sortedRooms = rooms.sort(([a_key, a_val], [b_key, b_val]) => {
-          return moment(a_val.time_created).isBefore(moment(b_val.time_created))
-        })
-        const roomsOwned = sortedRooms.reduce((acc, curr) => {
-          acc[curr[0]] = curr[1]
-          return acc
-        }, {})
-        user.rooms_owned = roomsOwned
+        let user = snap.val();
+        let roomsOwned = null;
+        if ('rooms_owned' in user){
+            const rooms = Object.entries(user.rooms_owned)
+            const sortedRooms = rooms.sort(([a_key, a_val], [b_key, b_val]) => {
+                  return moment(a_val.time_created).isBefore(moment(b_val.time_created))
+            })
+            roomsOwned = sortedRooms.reduce((acc, curr) => {
+                acc[curr[0]] = curr[1]
+                return acc
+            }, {})
+          }
+
+        user.rooms_owned = roomsOwned;
         setUserInfo(user)
       }
-    }
-    db.ref("users/" + userID).on("value", handleData, error => alert(error))
+    };
+    db.ref("users/").child(userID).on("value", _handleData, error => alert(error))
     return () => {
-      db.ref("users/" + userID).off("value", handleData)
+      db.ref("users/").child(userID).off("value", _handleData)
     }
   }, [])
 
@@ -139,7 +143,7 @@ const UserStats = ({ user }) => (
     </View>
     <View style={{ flex: 1 }}>
       <PostCount
-        count={"rooms_owned" in user ? Object.keys(user.rooms_owned).length : 0}
+        count={user.rooms_owned ? Object.keys(user.rooms_owned).length : 0}
       />
       <VoteCount count={user.meta_data.number_voted} />
       <PercentCorrect
