@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react"
-import { View,StyleSheet,Platform } from "react-native"
+import { View, StyleSheet, Platform } from "react-native"
 import VoteScreen from "./VoteScreen"
 import { SafeAreaView } from "react-native-safe-area-context"
 import fb from "../../db/init"
@@ -11,7 +11,7 @@ import { getNumberOfVoters } from "../../db/Utility"
 import moment from "moment"
 import Swiper from 'react-native-deck-swiper';
 import Constants from 'expo-constants';
-import {VoteContext} from "./VoteContext/VoteContext";
+import { VoteContext } from "./VoteContext/VoteContext";
 import Loader from "../FancyLoader/FancyLoader";
 const db = fb.database();
 
@@ -57,7 +57,7 @@ const getActiveList = async () => {
   let activeRooms = [];
 
   for (var roomID of Object.keys(snapshot.val())) {
-    if (roomStillActive({roomID:roomID, room: snapshot.val()[roomID]})) {
+    if (roomStillActive({ roomID: roomID, room: snapshot.val()[roomID] })) {
       getTotalNumVoters(snapshot.val()[roomID]);
 
       if (snapshot.val()[roomID]["meta_data"]["owner"] !== Constants.installationId &&
@@ -82,7 +82,7 @@ const Vote = ({ navigation }) => {
   const [badge, setBadge] = useState(null);
   const [hasSwipedAll, setHasSwipedAll] = useState(false);
   //const [currentRoom, setCurrentRoom] = useState(0)
-  const {roomlist,setRoomList,currentRoom,setCurrentRoom,swiper} = useContext(VoteContext);
+  const { roomlist, setRoomList, currentRoom, setCurrentRoom, swiper } = useContext(VoteContext);
 
   useEffect(() => {
     const getRooms = async () => {
@@ -105,62 +105,79 @@ const Vote = ({ navigation }) => {
     setCurrentRoom(currentRoom + 1)
   };
 
+  const getNewRooms = async () => {
+    const activeList = await getActiveList();
+    console.log(activeList)
+    if (activeList.length !== 0) {
+      setRoomList(activeList)
+      setCurrentRoom(0)
+      setHasSwipedAll(false)
+    }
+    else {
+      return (
+
+        <SafeAreaView
+          style={{
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            margin: 16
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: colors.general.white,
+              padding: 32,
+              borderRadius: 20
+            }}
+          >
+            <StyledText
+              type="semibold"
+              size={32}
+              style={{ color: colors.primary.main, textAlign: "center" }}
+            >
+              There are no more posts to vote on!
+          </StyledText>
+          </View>
+        </SafeAreaView>
+      )
+    }
+  }
+
   /*
   currently loading
   */
   if (!roomlist || !badge) {
-    return <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
-            <Loader visible={true} />
-          </View>
+    return <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Loader visible={true} />
+    </View>
   }
+
+
 
   /*
   no more rooms 
   */
   if (hasSwipedAll) {
-    return (
-      <SafeAreaView
-        style={{
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-          margin: 16
-        }}
-      >
-        <View
-          style={{
-            backgroundColor: colors.general.white,
-            padding: 32,
-            borderRadius: 20
-          }}
-        >
-          <StyledText
-            type="semibold"
-            size={32}
-            style={{ color: colors.primary.main, textAlign: "center" }}
-          >
-            There are no more posts to vote on!
-          </StyledText>
-        </View>
-      </SafeAreaView>
-    )
+    getNewRooms()
+    return <StyledText>loading</StyledText>
   }
 
 
   return (
     <View style={styles.container}>
-        <Swiper
-            cards={roomlist}
-            renderCard={(card)=>{return <VoteScreen roomInfo={card}/>}}
-            onSwiped={(cardIndex) => {setCurrentRoom(cardIndex)}}
-            onSwipedAll={() => {setHasSwipedAll(true)}}
-            cardIndex={currentRoom}
-            backgroundColor={colors.general.white}
-            stackSize= {3}
-            ref={swiper}
-            useViewOverflow={Platform.OS === 'ios'}
-        >
-        </Swiper>
+      <Swiper
+        cards={roomlist}
+        renderCard={(card) => { return <VoteScreen roomInfo={card} /> }}
+        onSwiped={(cardIndex) => { setCurrentRoom(cardIndex) }}
+        onSwipedAll={() => { setHasSwipedAll(true) }}
+        cardIndex={currentRoom}
+        backgroundColor={colors.general.white}
+        stackSize={3}
+        ref={swiper}
+        useViewOverflow={Platform.OS === 'ios'}
+      >
+      </Swiper>
     </View>
   )
 }
