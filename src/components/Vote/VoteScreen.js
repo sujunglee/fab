@@ -41,8 +41,11 @@ const VoteScreen = ({ roomInfo }) => {
         snapshot.val() && setRoomData(snapshot.val())
     };
 
-    let dbRef  = db.ref('rooms/active/').child(roomInfo.id);
-    dbRef.on('value', handleData, (error) => alert(`[VoteScreen]${error}`));
+    db.ref('rooms/active/')
+        .child(roomInfo.id)
+        .on('value', handleData, (error) => alert(`[VoteScreen]${error}`));
+
+    return ()=> db.ref('rooms/active/').child(roomInfo.id).off('value',handleData)
   }, []);
 
 
