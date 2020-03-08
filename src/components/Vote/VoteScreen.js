@@ -248,7 +248,9 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
     width: "100%",
-    height: "100%"
+    height: "100%",
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   photo_container: {
     width: "100%",
@@ -268,7 +270,7 @@ const styles = StyleSheet.create({
   },
   title_container: {
     height: "12%",
-    width: "100%",
+    width: "95%",
     alignItems: "center",
     justifyContent: "center",
   },
