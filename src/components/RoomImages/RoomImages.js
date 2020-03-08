@@ -142,7 +142,7 @@ const RoomImages = props => {
 
 const styles = StyleSheet.create({
   photo_option: {
-    width: "48.5%",
+    width: "49%",
     height: "100%",
     borderColor: "#A9A9A9",
     borderWidth: 0.5,
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: "100%",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     flexDirection: "row",
       backgroundColor: 'transparent'
   }
