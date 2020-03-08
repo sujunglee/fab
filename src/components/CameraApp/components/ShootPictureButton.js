@@ -14,8 +14,8 @@ const ShootPictureButton = ({camera, shootPictureCallBack}) =>{
     return (
         <TouchableWithoutFeedback
             onPress={handleShortCapture}>
-            <View style={[styles.captureBtn, false && styles.captureBtnActive]}>
-                {false && <View style={styles.captureBtnInternal}/>}
+            <View style={[styles.captureBtn,  styles.captureBtnActive]}>
+                <View style={styles.captureBtnInternal}/>
             </View>
         </TouchableWithoutFeedback>
     )
