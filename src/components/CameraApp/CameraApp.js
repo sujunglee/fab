@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {useState, useEffect, useRef} from 'react';
-import {View, Text, StatusBar, TouchableOpacity, ImageBackground, StyleSheet} from 'react-native';
+import {View, Text, StatusBar, TouchableOpacity, ImageBackground, StyleSheet,Platform} from 'react-native';
 import {Camera} from 'expo-camera';
 import * as Permissions from 'expo-permissions';
 import {useNavigation} from '@react-navigation/native';
@@ -10,6 +10,8 @@ import {colors, sizes} from "../../constants/styles"
 import CloseButton from "./components/CloseButton";
 import * as MediaLibrary from 'expo-media-library';
 import StyledText from "../StyledText/StyledText";
+import * as FaceDetector from 'expo-face-detector';
+import ZoomView from "./components/ZoomView";
 import FlashButton from "./components/FlashButton";
 import ImgLibraryButton from "./components/ImgLibraryButton";
 import ShootPictureButton from "./components/ShootPictureButton";
@@ -24,6 +26,7 @@ import {
 } from '@expo/vector-icons';
 
 
+const ZOOM_F = Platform.OS === 'ios' ? 0.01 : 0.1;
 
 const CameraApp = ({route}) => {
     const navigation = useNavigation();
@@ -33,6 +36,7 @@ const CameraApp = ({route}) => {
     const camera = useRef(null);
 
     const parentNavbar = useRef(null);
+    const _prevPinch = useRef(1);
 
     const [hasPermission, setPermission] = useState(null);
     const [cameraTypeIdx, setCameraTypeIdx] = useState(0);
@@ -41,6 +45,8 @@ const CameraApp = ({route}) => {
     const [pictureTaken, setPictureTaken] = useState(null);
     const [imgPreview, setImgPreview] = useState(null);
     const [isLibraryImg, setIsLibraryImg] = useState(false);
+    const [zoom, setZoom] = useState(0);
+
 
     useEffect(()=>{
         // set the status bar at the top to white
@@ -129,6 +135,30 @@ const CameraApp = ({route}) => {
     };
 
 
+    const onPinchStart = () => {
+        _prevPinch.current = 1;
+    };
+
+
+    const onPinchEnd = () => {
+        _prevPinch.current = 1;
+     };
+
+
+    const onPinchProgress = (p) => {
+        let p2 = p - _prevPinch.current;
+
+        if(p2 > 0 && p2 > ZOOM_F){
+          _prevPinch.current = p;
+          setZoom(Math.min(zoom + ZOOM_F, 1))
+        }
+        else if (p2 < 0 && p2 < -ZOOM_F){
+          _prevPinch.current = p;
+          setZoom(Math.max(zoom - ZOOM_F, 0));
+        }
+    };
+
+
     const imgPickedCallback = (photoData)=>{
          setPictureTaken(photoData);
          setIsLibraryImg(true);
@@ -174,7 +204,8 @@ const CameraApp = ({route}) => {
                     <Camera
                         ratio={'4:3'}
                         autoFocus={Camera.Constants.AutoFocus.on}
-                        zoom={0}
+                        zoom={zoom}
+                        faceDetectorSettings={{mode: FaceDetector.Constants.Mode.fastMode}}
                         flashMode={CAMERA_FLASH_MODES[cameraFlashModeIdx]}
                         type={CAMERA_TYPES[cameraTypeIdx]}
                         style={styles.preview}
@@ -182,25 +213,27 @@ const CameraApp = ({route}) => {
                     >
 
 
-                        <FlashButton cameraFlashModeIdx={cameraFlashModeIdx} cameraFlashModeCallBack={cameraFlashModeCallBack}/>
-                        <CloseButton closeCallBack={handleClose} />
+                        <ZoomView onPinchProgress={onPinchProgress} onPinchStart={onPinchStart} onPinchEnd={onPinchEnd} style={styles.preview}>
+                            <FlashButton cameraFlashModeIdx={cameraFlashModeIdx} cameraFlashModeCallBack={cameraFlashModeCallBack}/>
+                            <CloseButton closeCallBack={handleClose} />
 
 
-                        <View style={{
-                            flex: 1,
-                            justifyContent: 'space-between',
-                            flexDirection: 'row',
-                            alignSelf: 'flex-end',
-                            width: '100%',
-                            height: 100,
-                            alignItems: 'center'
-                        }}>
+                            <View style={{
+                                flex: 1,
+                                justifyContent: 'space-between',
+                                flexDirection: 'row',
+                                alignSelf: 'flex-end',
+                                width: '100%',
+                                height: 100,
+                                alignItems: 'center'
+                            }}>
 
-                            <ImgLibraryButton imgPreview={imgPreview} imgPickedCallback={imgPickedCallback} outfitOption={outfitOption}/>
-                            <ShootPictureButton camera={camera} shootPictureCallBack={shootPictureCallBack}/>
-                            <FlipCameraButton cameraFlipCallBack={cameraFlipCallBack}/>
+                                <ImgLibraryButton imgPreview={imgPreview} imgPickedCallback={imgPickedCallback} outfitOption={outfitOption}/>
+                                <ShootPictureButton camera={camera} shootPictureCallBack={shootPictureCallBack}/>
+                                <FlipCameraButton cameraFlipCallBack={cameraFlipCallBack}/>
 
-                        </View>
+                            </View>
+                        </ZoomView>
                     </Camera>}
                 </View>
 
@@ -235,8 +268,8 @@ const styles =  StyleSheet.create({
         width: '100%',
         borderRadius:20,
         overflow:'hidden',
-        flexDirection: 'row'
-    }
+        flexDirection: 'row',
+    },
 });
 
 
