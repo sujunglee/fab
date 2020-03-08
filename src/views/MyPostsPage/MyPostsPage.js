@@ -242,7 +242,7 @@ const PercentCorrect = ({ percent, numVotes }) => {
           </StyledText>
         </View>
         <View style={{ flexDirection: "row", position: "relative" }}>
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: "row" ,alignItems: "center" }}>
             <StyledText
               size={sizes.large.fontSize}
               style={{ color: colors.primary.light, paddingLeft: 5 }}
