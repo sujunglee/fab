@@ -69,7 +69,7 @@ const VoteScreen = ({ roomInfo }) => {
 
     const delay = 3000
     setTimeout(() => {
-      swiper.current.swipeRight();
+      swiper.current.swipeTop();
       setVoteState({})
       setAreImagesLoaded(false)
     }, delay)
@@ -77,7 +77,7 @@ const VoteScreen = ({ roomInfo }) => {
 
   const handleSkip = () => {
     setAreImagesLoaded(false);
-    swiper.current.swipeRight();
+    swiper.current.swipeTop();
   };
 
   const imageLoadCallback = () => {
