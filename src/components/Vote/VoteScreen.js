@@ -71,7 +71,7 @@ const VoteScreen = ({ roomData }) => {
 
 
   return roomData && isLoggedIn ? (
-    <Surface style={{ height: normalize(550), borderRadius: 30, borderWidth: .5, borderColor: 'rgba(0,0,0,.5)' }}>
+    <Surface style={{ height: "100%", borderRadius: 30, borderWidth: .5, borderColor: 'rgba(0,0,0,.5)' }}>
       <View >
         <View style={styles.container}>
           {/*
@@ -146,9 +146,7 @@ const VoteScreen = ({ roomData }) => {
               <View style={styles.buttons_and_timer_container}>
                 <View style={styles.buttons_container}>
                   <View style={styles.options_container_text}>
-                    <View size={normalize(18)} style={styles.option_text}>
-
-                    </View>
+                    <View size={normalize(18)} style={styles.option_text}></View>
                     <VoteButton
                       content="A"
                       onPress={() => handlePress("optionA")}
@@ -156,9 +154,7 @@ const VoteScreen = ({ roomData }) => {
                   </View>
 
                   <View style={styles.options_container_text}>
-                    <View size={normalize(18)} style={styles.option_text}>
-
-                    </View>
+                    <View size={normalize(18)} style={styles.option_text}></View>
                     <VoteButton
                       content="B"
                       onPress={() => handlePress("optionB")}
