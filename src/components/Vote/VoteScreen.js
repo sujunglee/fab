@@ -71,7 +71,7 @@ const VoteScreen = ({ roomData }) => {
 
 
   return roomData && isLoggedIn ? (
-    <Surface style={{ height: "100%", borderRadius: 30, borderWidth: .5, borderColor: 'rgba(0,0,0,.5)' }}>
+    <Surface style={{ height: "96%", borderRadius: 30, borderWidth: .5, borderColor: 'rgba(0,0,0,.5)' }}>
       <View >
         <View style={styles.container}>
           {/*
@@ -139,7 +139,7 @@ const VoteScreen = ({ roomData }) => {
             </>
           )}
 
-          <View style={{ width: "100%", height: "48%" }}>
+          <View style={{ width: "100%", height: "48%", flexDirection:'row', alignItems:'center',justifyContent:'center' }}>
             {voteState.voteResults ? (
               <></>
             ) : areImagesLoaded ? (
@@ -261,7 +261,9 @@ const styles = StyleSheet.create({
 
   buttons_and_timer_container: {
     alignItems: "center",
-    flexDirection: "column"
+    flexDirection: "column",
+    height: normalize(220),
+    width: '100%'
   },
   buttons_container: {
     flexDirection: "row",
