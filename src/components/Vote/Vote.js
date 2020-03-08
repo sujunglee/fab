@@ -16,99 +16,15 @@ import Loader from "../FancyLoader/FancyLoader";
 const db = fb.database();
 
 
-const getTotalNumVoters = room => {
-  const {
-    numInfluencersA,
-    numNormalA,
-    numInfluencersB,
-    numNormalB
-  } = getNumberOfVoters(room)
-  return numInfluencersA + numNormalA + numInfluencersB + numNormalB
-}
-
-
-const noPreviousVote = ({ room, userID }) => {
-  if (("voters_normal" in room["optionA"]) && (userID in room["optionA"]["voters_normal"])) {
-    return false;
-  }
-  if (("voters_influencer" in room["optionA"]) && (userID in room["optionA"]["voters_influencer"])) {
-    return false;
-  }
-  if (("voters_normal" in room["optionB"]) && (userID in room["optionB"]["voters_normal"])) {
-    return false;
-  }
-  if (("voters_influencer" in room["optionB"]) && (userID in room["optionB"]["voters_influencer"])) {
-    return false;
-  }
-  return true;
-}
-
-const roomStillActive = ({ room, roomID }) => {
-  if (moment(room["meta_data"]["time_created"]).isBefore(moment().subtract(1, 'days'))) {
-    closeRoom({ roomID: roomID });
-    return false;
-  }
-  return true;
-};
-
-
-const getActiveList = async () => {
-  const snapshot = await db.ref("rooms/active/").once("value");
-  let activeRooms = [];
-
-  for (var roomID of Object.keys(snapshot.val())) {
-    if (roomStillActive({roomID:roomID, room: snapshot.val()[roomID]})) {
-      getTotalNumVoters(snapshot.val()[roomID]);
-
-      if (snapshot.val()[roomID]["meta_data"]["owner"] !== Constants.installationId &&
-        noPreviousVote({ room: snapshot.val()[roomID], userID: Constants.installationId })) {
-        const currRoom = {
-          numVotes: getTotalNumVoters(snapshot.val()[roomID]),
-          id: roomID
-        };
-        activeRooms.push(currRoom)
-      }
-    }
-  }
-
-  activeRooms.sort((a, b) => (a.numVotes > b.numVotes ? 1 : -1))
-
-  return activeRooms
-};
-
-const Vote = ({ navigation }) => {
-  const userID = Constants.installationId;
-  //const [roomlist, setRoomList] = useState(null)
-  const [badge, setBadge] = useState(null);
+const Vote = () => {
   const [hasSwipedAll, setHasSwipedAll] = useState(false);
-  //const [currentRoom, setCurrentRoom] = useState(0)
   const {roomlist,setRoomList,currentRoom,setCurrentRoom,swiper} = useContext(VoteContext);
 
-  useEffect(() => {
-    const getRooms = async () => {
-      const activeList = await getActiveList();
-      setRoomList(activeList);
-      setCurrentRoom(0)
-    };
-    getRooms()
-  }, []);
-
-  useEffect(() => {
-    const getBadge = async () => {
-      const dbbadge = await getUserBadge({ userID: userID })
-      setBadge(dbbadge)
-    };
-    getBadge()
-  }, []);
-
-  const handleNextRoom = () => {
-    setCurrentRoom(currentRoom + 1)
-  };
 
   /*
   currently loading
   */
-  if (!roomlist || !badge) {
+  if (!roomlist) {
     return <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
             <Loader visible={true} />
           </View>

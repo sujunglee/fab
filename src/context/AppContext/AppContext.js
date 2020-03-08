@@ -17,22 +17,6 @@ const AppContext = createContext(initialState);
 
 const AppContextProvider = ({ children }) => {
     const [state, setState] = useState(initialState);
-    /*
-    //does not work
-    useEffect(() => {
-        const handleData = snap => {
-            if (snap.val()) {
-                setState({
-                    ...state,
-                    isLoggedIn: true,
-                    user
-                })
-            }
-        }
-        db.ref("users/" + SAMPLE_USERID).on('value', handleData, error => alert(error));
-        return () => { db.off('value', handleData); };
-    }, []);
-    */
 
 
     useEffect(() => {
