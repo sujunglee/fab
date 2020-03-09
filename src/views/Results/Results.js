@@ -165,7 +165,7 @@ const Results = ({ route }) => {
         }).catch((e)=>alert(`[Results]${e}`));
 
 
-    return ()=> isActive && dbRef_active.off('value',handleData)
+    return ()=> db.ref('rooms/active/').child(roomID).off('value',handleData)
 
   },[]);
 

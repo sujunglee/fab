@@ -86,7 +86,7 @@ const VoteScreen = ({ roomInfo }) => {
 
 
   return roomData && isLoggedIn ? (
-    <Surface style={{ height: "96%", borderRadius: 30, borderWidth: .5, borderColor: 'rgba(0,0,0,.1)' }}>
+    <Surface style={{ height: "96%", width:normalize(310), marginLeft: '-4%',borderRadius: 30, borderWidth: .5, borderColor: 'rgba(0,0,0,.1)' }}>
       <View >
         <View style={styles.container}>
           {/*
