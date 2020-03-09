@@ -1,11 +1,8 @@
 import React, { useEffect, useState, useContext, useRef } from "react"
 import { View, StyleSheet, Platform } from "react-native"
 import VoteScreen from "./VoteScreen"
-import { SafeAreaView } from "react-native-safe-area-context"
 import fb from "../../db/init"
-import { getUserBadge } from "../../db/userBadge"
 import closeRoom from "../../db/closeRoom"
-import { StyledText } from "../StyledText"
 import { colors } from "../../constants/styles"
 import { getNumberOfVoters } from "../../db/Utility"
 import moment from "moment"
@@ -14,7 +11,6 @@ import Constants from 'expo-constants';
 import { VoteContext } from "./VoteContext/VoteContext";
 import Loader from "../FancyLoader/FancyLoader";
 import NoMoreRooms from "./NoMoreRooms";
-//const AsyncLock = require('async-lock');
 const db = fb.database();
 
 
@@ -145,7 +141,7 @@ const Vote = () => {
     </View>
   }
 
-  // We want the loading to show instead of NoMoreRooms.
+  // swiped all but new rooms are available
   if ((Object.keys(roomsNext).length!==0) && hasSwipedAll){
     return <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Loader visible={true} />

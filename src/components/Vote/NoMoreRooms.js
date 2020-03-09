@@ -1,6 +1,6 @@
 import React from "react"
 import { SafeAreaView } from "react-native-safe-area-context"
-import {View, StyleSheet, Platform} from "react-native"
+import {View } from "react-native"
 import StyledText from "../StyledText/StyledText";
 import {colors} from "../../constants/styles";
 
