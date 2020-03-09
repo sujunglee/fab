@@ -14,7 +14,7 @@ const ShootPictureButton = ({camera, shootPictureCallBack}) =>{
     return (
         <TouchableWithoutFeedback
             onPress={handleShortCapture}>
-            <View style={[styles.captureBtn,  styles.captureBtnActive]}>
+            <View style={[styles.captureBtn,  styles.captureBtnActive, styles.icon]}>
                 <View style={styles.captureBtnInternal}/>
             </View>
         </TouchableWithoutFeedback>
@@ -40,6 +40,17 @@ const styles =  StyleSheet.create({
         borderRadius: 76,
         backgroundColor: "white",
         borderColor: "black",
+    },
+    icon:{
+        shadowOpacity: .2,
+        shadowRadius: 1,
+       shadowColor:'#000000',
+        textShadowOffset:{width: 5,height: 2},
+        textShadowRadius: 10,
+        shadowOffset: {
+            width: 2.5,            // Same rules apply from above
+            height: 2,           // Can't both be 0
+        }
     }
 });
 

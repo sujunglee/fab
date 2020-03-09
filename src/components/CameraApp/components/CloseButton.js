@@ -14,7 +14,7 @@ const CloseButton =({style, closeCallBack})=>{
         <TouchableOpacity
             onPress={closeCallBack}
             style={isObjectNull(style)? styles.container: style}>
-            <Ionicons name="md-close" size={32} color="white" />
+            <Ionicons name="md-close" size={32} color="white" style={styles.icon}/>
         </TouchableOpacity>
 
     );
@@ -29,6 +29,17 @@ const styles =  StyleSheet.create({
         height:50,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    icon:{
+        shadowOpacity: .2,
+        shadowRadius: 1,
+       shadowColor:'#000000',
+        textShadowOffset:{width: 5,height: 2},
+        textShadowRadius: 10,
+        shadowOffset: {
+            width: 2.5,            // Same rules apply from above
+            height: 2,           // Can't both be 0
+        }
     }
 });
 

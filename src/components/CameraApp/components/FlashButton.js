@@ -16,7 +16,7 @@ const FlashButton = ({cameraFlashModeIdx,cameraFlashModeCallBack})=>{
             name={(CAMERA_FLASH_MODES[cameraFlashModeIdx] === Camera.Constants.FlashMode.on) ? "md-flash" : 'md-flash-off'}
             color="white"
             size={30}
-            style={styles.flashButton}
+            style={styles.icon}
             />
         </TouchableOpacity>
     )
@@ -32,7 +32,16 @@ const styles =  StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    flashButton:{
+   icon:{
+        shadowOpacity: .2,
+        shadowRadius: 1,
+       shadowColor:'#000000',
+        textShadowOffset:{width: 5,height: 2},
+        textShadowRadius: 10,
+        shadowOffset: {
+            width: 2.5,            // Same rules apply from above
+            height: 2,           // Can't both be 0
+        }
     }
 });
 

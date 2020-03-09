@@ -40,6 +40,15 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
         borderWidth: .1,
+        shadowOpacity: .2,
+        shadowRadius: 1,
+       shadowColor:'#000000',
+        textShadowOffset:{width: 5,height: 2},
+        textShadowRadius: 10,
+        shadowOffset: {
+            width: 2.5,            // Same rules apply from above
+            height: 2,           // Can't both be 0
+        }
     },
     imgPreview: {
         // Setting up image width.
