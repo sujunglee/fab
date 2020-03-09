@@ -4,7 +4,7 @@ const VoteContext = createContext();
 
 const useVote = ()=>{
       const swiper = useRef(null);
-      const [roomlist, setRoomList] = useState([]);
+      const [roomlist, setRoomList] = useState(null);
       const [currentRoom, setCurrentRoom] = useState(0);
       return {
           roomlist,
