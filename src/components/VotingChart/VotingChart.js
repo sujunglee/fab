@@ -3,7 +3,7 @@ import {Text, View, StyleSheet} from "react-native"
 import {PieChart} from "react-native-svg-charts";
 import PropTypes from 'prop-types';
 import StyledText from "../StyledText/StyledText";
-import {sizes} from "../../constants/styles";
+import {sizes,normalize} from "../../constants/styles";
 
 const styles = StyleSheet.create({
     container: {
@@ -65,6 +65,7 @@ const VotingChart = ({voteResults}) =>{
         <View style={{ display: "flex", flexDirection: "row" }}>
             <View style={{ alignItems: "center", textAlign: "center", justifyContent: "center", flex: 1 }}>
               <PieChart
+                  innerRadius={"65%"}
                   padAngle={0}
                   style={{ width: 160, height: 160 }}
                   valueAccessor={({ item }) => item.amount}
@@ -80,14 +81,18 @@ const VotingChart = ({voteResults}) =>{
                   outerRadius={"95%"}
               />
 
-                <Text
-                  style={{
-                      position: 'absolute',
-                      left: 70,
+              <View style={{position: 'absolute',
+                      left: normalize(50),
+                      width: 80,
+                      height: 80,
                       textAlign: 'center',
                       fontSize: 30,
                       alignItems: 'center',
-                      justifyContent: 'center',
+                      justifyContent: 'center'}}>
+                <Text
+                  style={{
+                      textAlign: 'center',
+                      fontSize: 30,
                       color: (voteA_percent ===voteB_percent? "#1563af":  (voteA_percent>voteB_percent?"#dd8300":"#1563af"))
                   }}
               >
@@ -96,10 +101,12 @@ const VotingChart = ({voteResults}) =>{
                 ) : (
                   voteA_percent.toFixed().toString() + "%"
                 )}
-              </Text>
+                </Text>
+              </View>
             </View>
             <View style={{ alignItems: "center", textAlign: "center", justifyContent: "center", flex: 1 }}>
               <PieChart
+                  innerRadius={"65%"}
                    padAngle={0}
                   style={{ width: 160, height: 160 }}
                   valueAccessor={({ item }) => item.amount}
@@ -114,24 +121,31 @@ const VotingChart = ({voteResults}) =>{
                   })}
                   outerRadius={"95%"}
               />
-              <Text
-                  style={{
-                      position: 'absolute',
-                      left: 70,
+              <View style={{position: 'absolute',
+                      left: normalize(50),
+                      width: 80,
+                      height: 80,
                       textAlign: 'center',
                       fontSize: 30,
                       alignItems: 'center',
-                      justifyContent: 'center',
-                      color: (voteA_percent ===voteB_percent? "#1563af":  (voteB_percent>voteA_percent?"#dd8300":"#1563af"))
-                  }}
-              >
+                      justifyContent: 'center'}}>
+                  <Text
+                      style={{
+                          textAlign: 'center',
+                          fontSize: 30,
+                          color: (voteA_percent ===voteB_percent? "#1563af":  (voteB_percent>voteA_percent?"#dd8300":"#1563af"))
+                      }}
+                  >
 
-                  {(totalNumVoters === 0) ? (
-                    ""
-                  ) : (
-                    voteB_percent.toFixed().toString() + "%"
-                  )}
-              </Text>
+                      {(totalNumVoters === 0) ? (
+                        ""
+                      ) : (
+                        voteB_percent.toFixed().toString() + "%"
+                      )}
+                  </Text>
+              </View>
+
+
             </View>
         </View>
     );
