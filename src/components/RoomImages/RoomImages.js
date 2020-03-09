@@ -99,7 +99,6 @@ const RoomImages = props => {
                             enableImageZoom
                             enableSwipeDown
                             enablePreload
-                            swipeDownThreshold={1}
                             onSwipeDown={() => setIsImageOpen({ state: false })}
                             imageUrls={[
                               {
