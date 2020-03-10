@@ -8,6 +8,7 @@ import { StyledText } from "../StyledText"
 import {RoomTitle} from "../RoomTitle";
 import { Ionicons } from '@expo/vector-icons';
 import CountDown from "../../components/countdown/CountDown"
+import {normalize} from "../../constants/styles";
 
 const winnerPicture = ({postData}) =>{
   return (postData.scoreA >= postData.scoreB) ? postData.pictureA : postData.pictureB;
@@ -85,11 +86,13 @@ const styles = StyleSheet.create({
   },
   innerContainer: {
     display: "flex",
-    flexDirection: "row"
+    flexDirection: "row",
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start'
   },
   textWrapper: {
-    flex: 1,
-    marginLeft: 16
+    marginLeft: normalize(5),
+    width:normalize(155 )
   },
   timeText: {
     fontFamily: "source-sans-pro-regular",
@@ -111,20 +114,28 @@ const styles = StyleSheet.create({
     aspectRatio: 2 / 3,
     height: 75,
     width: 75,
-    borderRadius:3
+    borderRadius:3,
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,.1)'
   },
   icon: {
-    paddingTop: 40
+    paddingTop: 40,
   },
   titleWrapper: {
     width: windowWidth/2.1
   },
   iconWrapper: {
-    paddingLeft: 20
+    paddingLeft: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection:'row',
+    width: normalize(80)
   },
   countDownWrapper: {
+    alignItems: 'center',
+    justifyContent: 'center',
     paddingTop: 40,
-    paddingLeft: 5
+    width: normalize(80),
   }
 })
 export default PostPreview
