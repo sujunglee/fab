@@ -69,11 +69,14 @@ const PostButton = ({title, outfitA, outfitB, postFinishedCallback}) => {
             createdAt: createdAt
           })
 
+          console.log("!!!THE POST DATA: ", postData)
+
         }
 
         if (roomID !== "") {
           getPostData()
         }
+
 
 
     }, [outfitA_url, outfitB_url]);

@@ -6,6 +6,7 @@ import getMyPostData from "../../db/getMyPostData"
 import { useNavigation } from "@react-navigation/native"
 import { StyledText } from "../StyledText"
 import {RoomTitle} from "../RoomTitle";
+import { Ionicons } from '@expo/vector-icons';
 
 const winnerPicture = ({postData}) =>{
   return (postData.scoreA >= postData.scoreB) ? postData.pictureA : postData.pictureB;
@@ -27,9 +28,12 @@ const PostPreview = ({ roomID, userInfo }) => {
         createdAt: createdAt
       })
 
+      console.log("***POST DATA: ", postData)
+
     }
 
     getPostData()
+
   }, [])
 
   return postData ? (
@@ -46,11 +50,14 @@ const PostPreview = ({ roomID, userInfo }) => {
       <View style={styles.innerContainer}>
         <Image source={{ uri: winnerPicture({postData:postData})}} style={styles.image} />
         <View style={styles.textWrapper}>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.timeText}>{postData.createdAt}</Text>
-            {/* <Text style={styles.timeText}>{time}</Text> */}
+          <View style={{flexDirection: 'row'}}>
+            <View>
+              <Text style={styles.timeText}>{postData.createdAt}</Text>
+              <Text style={styles.text}> {postData.title} </Text>
+            </View>
+            <Ionicons name="md-checkmark-circle" size={32} color="#DD8300" />
           </View>
-          <Text style={styles.text}> {postData.title} </Text>
+
         </View>
       </View>
     </TouchableHighlight>

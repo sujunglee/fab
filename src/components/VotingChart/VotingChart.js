@@ -53,10 +53,6 @@ const createChartData = ({
 
 
 const VotingChart = ({voteResults}) =>{
-    console.log(voteResults)
-
-    console.log("HELLO VOTING CHART SHOULD BE DISPLAYING")
-
     const voteA_percent = ((voteResults.scoreA / (voteResults.scoreA + voteResults.scoreB))*100);
     const voteB_percent = ((voteResults.scoreB / (voteResults.scoreA + voteResults.scoreB))*100);
     const totalNumVoters = voteResults.scoreA + voteResults.scoreB;
