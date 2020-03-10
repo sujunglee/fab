@@ -7,6 +7,7 @@ import { useNavigation } from "@react-navigation/native"
 import { StyledText } from "../StyledText"
 import {RoomTitle} from "../RoomTitle";
 import { Ionicons } from '@expo/vector-icons';
+import CountDown from "../../components/countdown/CountDown"
 
 const winnerPicture = ({postData}) =>{
   return (postData.scoreA >= postData.scoreB) ? postData.pictureA : postData.pictureB;
@@ -31,6 +32,23 @@ const PostPreview = ({ roomID, userInfo }) => {
     }
 
     getPostData()
+    const currentTime = moment()
+    const postCreatedAt = moment(postData.timeCreated)
+    let difference = 0
+
+    const calculateTime = () => {
+      if (currentTime !== postCreatedAt) {
+        console.log("CURRENT TIME: ", currentTime)
+        console.log("POST WAS MADE AT: ", postCreatedAt)
+        difference = moment.duration(currentTime.diff(postCreatedAt)).asHours()
+        console.log("DIFFERENCE: ", difference)
+      }
+    }
+
+    if (currentTime !== postCreatedAt) {
+      calculateTime()
+    }
+
 
   }, [])
 
