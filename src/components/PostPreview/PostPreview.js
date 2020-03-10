@@ -28,7 +28,6 @@ const PostPreview = ({ roomID, userInfo }) => {
         createdAt: createdAt
       })
 
-      console.log("***POST DATA: ", postData)
 
     }
 

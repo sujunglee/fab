@@ -51,12 +51,11 @@ const PostButton = ({title, outfitA, outfitB, postFinishedCallback}) => {
                     postFinishedCallback();
 
 
-                    // Navigate to the results room
-                    navigation.navigate(screens.POSTS_PAGE);
-
+                    // Navigate to MyPosts
+                    navigation.navigate(screens.RESULTS, { screen: screens.POSTS_PAGE });
 
         });
-            
+
         }
     }, [outfitA_url, outfitB_url]);
 
