@@ -42,6 +42,7 @@ const VoteScreen = ({ roomInfo }) => {
   const { currentRoom, setCurrentRoom, swiper } = useContext(VoteContext)
   const [hasFinished, setHasFinished] = useState(false)
   const [roomData, setRoomData] = useState(null)
+  const autoMoveNextTimeout = useRef();
 
   // continuously get data
   useEffect(() => {
@@ -54,10 +55,12 @@ const VoteScreen = ({ roomInfo }) => {
       .on("value", handleData, error => alert(`[VoteScreen]${error}`))
 
     return () =>
-      db
-        .ref("rooms/active/")
-        .child(roomInfo.id)
-        .off("value", handleData)
+      {
+        db.ref("rooms/active/").child(roomInfo.id).off("value", handleData)
+        if (autoMoveNextTimeout.current){
+          clearTimeout(autoMoveNextTimeout.current);
+        }
+      }
   }, [])
 
   const handlePress = async selection => {
@@ -78,8 +81,9 @@ const VoteScreen = ({ roomInfo }) => {
         Janky settimeout to show results for 1.5 seconds
     */
 
-    const delay = 3000
-    setTimeout(() => {
+    const delay = 3000;
+    autoMoveNextTimeout.current = setTimeout(() => {
+      //!(hasSwiped.current) && swiper.current.swipeTop();
       swiper.current.swipeTop()
       setVoteState({})
       setAreImagesLoaded(false)
