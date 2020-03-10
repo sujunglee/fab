@@ -4,6 +4,8 @@ import { VoteButton, SkipButton } from "./VoteButton"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { StyledText } from "../StyledText"
 import updateVotes from "../../db/updateVotes"
+import getVoteData from "../../db/getVoteData";
+import getRoomData from "../../db/getRoomData";
 import closeRoom from "../../db/closeRoom"
 import { colors, normalize, sizes } from "../../constants/styles"
 import CountDown from "../countdown/CountDown"
@@ -28,11 +30,11 @@ function getRndInteger(min, max) {
 const VoteScreen = ({ roomInfo }) => {
   const [voteState, setVoteState] = useState({})
   const deviceWidth = Dimensions.get("window").width
-  const [areImagesLoaded, setAreImagesLoaded] = useState(false)
+  const [areImagesLoaded, setAreImagesLoaded] = useState(false);
   const [imageViewport, setImageViewport] = useState({})
   const { user, userID, isLoggedIn } = useContext(AppContext);
   const { currentRoom, setCurrentRoom, swiper } = useContext(VoteContext);
-
+  const [hasFinished, setHasFinished] = useState(false);
   const [roomData, setRoomData] = useState(null);
 
   // continuously get data
@@ -83,8 +85,21 @@ const VoteScreen = ({ roomInfo }) => {
 
   const imageLoadCallback = () => {
     setAreImagesLoaded(true)
-  }
+  };
 
+  const isFinishedCallback = () => {
+    const roomID = roomInfo.id;
+    closeRoom({ roomID}).then(()=>{
+          getRoomData({roomID}).then((roomData)=> {
+            const voteResults = getVoteData(roomData);
+            setVoteState({
+              ...voteState,
+              selectedOption: null,
+              voteResults
+              });
+            })
+    });
+  };
 
   return roomData && isLoggedIn ? (
     <Surface style={{ height: "96%", width:normalize(310), alignSelf:'center',borderRadius: 30, borderWidth: .5, borderColor: 'rgba(0,0,0,.1)' }}>
@@ -143,7 +158,7 @@ const VoteScreen = ({ roomInfo }) => {
                 <SkipButton onPress={handleSkip} style={styles.skip_button} />
                 <CountDown
                   startTime={roomData.meta_data.time_created}
-                  isFinished={() => closeRoom({ roomID: roomInfo.id })}
+                  isFinished={isFinishedCallback}
                 />
               </View>
             ) : (

@@ -60,10 +60,10 @@ const VoteResults = (props) => {
           />
         </View>
       </View>
-      <YourVote selectedOption={props.selectedOption} />
+      {props.selectedOption && <YourVote selectedOption={props.selectedOption} />}
       </View>
   )
-}
+};
 
 const VotePercents = (props) => {
     const textStyles = {
