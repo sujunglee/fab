@@ -47,11 +47,22 @@ const PostButton = ({title, outfitA, outfitB, postFinishedCallback}) => {
 
                     // reset state variables
                     setRoomID(result)
+                    if (roomID !== "") {
+                      getPostData()
+                    }
+
+                    console.log("*** THE CURRENT POST DATA: ", postData)
+                    postFinishedCallback(roomID, postData);
+                    
                     setOutfitA_url(null);
                     setOutfitB_url(null);
                     setUrlsLoaded(null);
                     setIsPressed(false);
-                    postFinishedCallback();
+
+                    // navigation.navigate(screens.RESULTS, {
+                    //   roomID: roomID,
+                    //   roomData: postData
+                    // })
 
                 })
 
@@ -64,6 +75,8 @@ const PostButton = ({title, outfitA, outfitB, postFinishedCallback}) => {
             ...data,
             createdAt: createdAt
           })
+
+          console.log("!!!THE POST DATA: ", postData)
 
         }
 
@@ -101,8 +114,7 @@ const PostButton = ({title, outfitA, outfitB, postFinishedCallback}) => {
     return (
         isPressed ?
             <View style={styles.container}>
-                 {/*<ActivityIndicator animating={true} color={colors.general.white} />*/}
-                 <Text>We submitted a post!</Text>
+                 <ActivityIndicator animating={true} color={colors.general.white} />
             </View>
             :
             <TouchableOpacity onPress={handlePress}>

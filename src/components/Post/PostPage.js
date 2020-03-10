@@ -7,6 +7,8 @@ import {colors, normalize} from "../../constants/styles";
 import PostPhoto from "./PostPhoto";
 import TitleEntry from "./TitleEntry";
 import { PostPreview } from "../PostPreview";
+import { screens } from "../../Navigation/constants"
+
 
 // The actual post page
 const PostPage = ({route, navigation}) => {
@@ -14,7 +16,6 @@ const PostPage = ({route, navigation}) => {
     const [outfitA, setOutfitA] = useState({uri: undefined, outfitOption: 'A'});
     const [outfitB, setOutfitB] = useState({uri: undefined, outfitOption: 'B'});
     const [roomTitle, setRoomTitle] = useState('');
-    const [isPressed, setIsPressed] = useState(false);
     //const navigation = useNavigation();
 
 
@@ -23,6 +24,7 @@ const PostPage = ({route, navigation}) => {
         navigation.setOptions({
             tabBarVisible: true
         });
+
 
         // get data for the options
         // use the `uri' to display data
@@ -58,11 +60,21 @@ const PostPage = ({route, navigation}) => {
     /**
      * Called after user hits the post button - clean up state
      */
-    const onPostFinished = () => {
+    const onPostFinished = (roomID, postData) => {
         setOutfitA({uri: undefined, outfitOption: 'A'});
         setOutfitB({uri: undefined, outfitOption: 'B'});
         setRoomTitle('');
-        setIsPressed(true);
+
+        console.log("!!! THE CURRENT POST DATA: ", postData)
+
+        if (postData !== {}) {
+          console.log("We should navigate NOW")
+          navigation.navigate(screens.RESULTS, {
+            roomID: roomID,
+            roomData: postData
+          })
+        }
+
     };
 
     return (
@@ -78,13 +90,6 @@ const PostPage = ({route, navigation}) => {
                     <PostPhoto outfit={outfitA} onCloseCallback={onPictureCloseCallback} />
                     <PostPhoto outfit={outfitB} onCloseCallback={onPictureCloseCallback}/>
                 </View>
-
-                {isPressed ? (
-                  <Text>We created a post!</Text>
-                ) : (
-                  <Text>We did NOT create a post yet.</Text>
-                )}
-
 
                 <PostButton title={roomTitle} outfitA={outfitA} outfitB={outfitB}
                             postFinishedCallback={onPostFinished}/>

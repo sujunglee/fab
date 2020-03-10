@@ -12,7 +12,7 @@ const winnerPicture = ({postData}) =>{
 }
 
 
-const PostPreview = ({ roomID, userInfo }) => {
+const PostPreview = ({ roomID, roomData, userInfo }) => {
   const navigation = useNavigation()
 
   const [postData, setPostData] = useState({})
@@ -26,6 +26,7 @@ const PostPreview = ({ roomID, userInfo }) => {
         ...data,
         createdAt: createdAt
       })
+
 
     }
 

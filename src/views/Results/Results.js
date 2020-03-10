@@ -139,6 +139,7 @@ const getTotalNumVoters = roomData =>{
 
 const Results = ({ route }) => {
   const [roomData, setRoomData] = useState(null);
+  const [postData, setPostData] = useState({});
 
   useEffect(()=>{
     const { roomID } = route.params;
@@ -148,6 +149,8 @@ const Results = ({ route }) => {
     const handleData = snapshot =>{
         snapshot.val() && setRoomData(snapshot.val())
     };
+
+    setPostData(route.params.postData);
 
     db.ref('rooms/active/').child(roomID).once('value')
         .then((_snap)=>{
@@ -169,8 +172,10 @@ const Results = ({ route }) => {
 
   },[]);
 
+  console.log("TEST: ", {} == {})
 
-  console.log(roomData)
+  console.log("ROOM DATA PULLED: ", roomData)
+  console.log("POST DATA PASSED: ", postData)
   return roomData ? (
 
       <View style={styles.container}>
