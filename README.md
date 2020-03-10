@@ -9,3 +9,6 @@ Team Red's Client Project for CS 394. A mobile web app where users can post pict
 # Styling Standard
 
 [Use Material Design for React Native as the styling framework.](https://callstack.github.io/react-native-paper/index.html)
+
+# Syncing a Fork
+https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/syncing-a-fork
