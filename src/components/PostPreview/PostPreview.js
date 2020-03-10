@@ -74,17 +74,19 @@ const PostPreview = ({ roomID, userInfo }) => {
               <Text style={styles.timeText}>{postData.createdAt}</Text>
               <Text style={styles.text}> {postData.title} </Text>
             </View>
-            <View style={styles.iconWrapper}>
             {(timeElapsed > 24) ? (
-              <Ionicons style={styles.icon} name="md-checkmark-circle" size={45} color="#DD8300" />
+              <View style={styles.iconWrapper}>
+                <Ionicons style={styles.icon} name="md-checkmark-circle" size={45} color="#DD8300" />
+              </View>
             ) : (
-              <CountDown
-                startTime={postData.timeCreated}
-                isFinished={() => console.log()}
-                seconds={true}
-              />
+              <View style={styles.countDownWrapper}>
+                <CountDown
+                  startTime={postData.timeCreated}
+                  isFinished={() => console.log()}
+                  seconds={true}
+                />
+              </View>
             )}
-            </View>
           </View>
         </View>
       </View>
@@ -101,8 +103,6 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "white",
     marginBottom: 2,
-    // borderColor: "grey",
-    // borderWidth: 1,
     padding: 16
   },
   innerContainer: {
@@ -139,10 +139,14 @@ const styles = StyleSheet.create({
     paddingTop: 40
   },
   titleWrapper: {
-    width: windowWidth/2
+    width: windowWidth/2.1
   },
   iconWrapper: {
-    paddingLeft: 10
+    paddingLeft: 20
+  },
+  countDownWrapper: {
+    paddingTop: 40,
+    paddingLeft: 5
   }
 })
 export default PostPreview
