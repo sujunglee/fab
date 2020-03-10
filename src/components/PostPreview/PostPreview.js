@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     paddingTop: 40,
   },
   titleWrapper: {
-    width: windowWidth/2.1
+    width: windowWidth/2.3
   },
   iconWrapper: {
     paddingLeft: 20,
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 40,
-    width: normalize(80),
+    width: normalize(80)
   }
 })
 export default PostPreview
