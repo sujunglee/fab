@@ -170,7 +170,6 @@ const Results = ({ route }) => {
   },[]);
 
 
-  console.log(roomData)
   return roomData ? (
 
       <View style={styles.container}>

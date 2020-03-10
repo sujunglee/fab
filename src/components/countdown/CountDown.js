@@ -18,16 +18,8 @@ import {colors,sizes} from "../../constants/styles"
 const CountDown = ({startTime, isFinished, seconds, remainingHours}) => {
 
     let outfitStartTime = moment(startTime);
-    let outfitEndTime;
-
-    if (remainingHours > 0) {
-      // console.log("do NOT set it to 24 hours ", remainingTime)
-      outfitEndTime = moment(startTime).add(3, 'hours')
-    }
-    else {
-      outfitEndTime = moment(startTime).add(24, 'hours');
-    }
-    let outfitWarningTime =moment(startTime).add(24, 'hours').subtract(60, 'seconds');
+    let outfitEndTime = moment(startTime).add(24, 'hours');
+    let outfitWarningTime = moment(startTime).add(24, 'hours').subtract(60, 'seconds');
 
     const [hasEnded, setHasEnded] = useState(false);
     const [timeLeft, setTimeLeft] = useState(moment(startTime).diff(moment(), 'seconds'));
