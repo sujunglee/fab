@@ -18,6 +18,7 @@ const PostPreview = ({ roomID, userInfo }) => {
   const navigation = useNavigation()
   const [postData, setPostData] = useState({})
   const [timeElapsed, setTimeElapsed] = useState(0)
+  const [timeLeft, setTimeLeft] = useState([])
 
   useEffect(() => {
     const getPostData = async () => {
@@ -28,15 +29,19 @@ const PostPreview = ({ roomID, userInfo }) => {
         createdAt: createdAt
       })
 
+      console.log("***POST DATA: ", postData.timeCreated)
+
 
     }
 
     getPostData()
-    const currentTime = moment()
-    const postCreatedAt = moment(postData.timeCreated)
+
     let difference = 0
 
     const calculateTime = () => {
+      const currentTime = moment()
+      const postCreatedAt = postData.timeCreated
+
       if (currentTime !== postCreatedAt) {
         difference = moment.duration(currentTime.diff(postCreatedAt)).asHours()
         setTimeElapsed(difference)
@@ -44,12 +49,37 @@ const PostPreview = ({ roomID, userInfo }) => {
         if (timeElapsed > 24) {
           console.log("Should see a checkmark for this post.")
         }
+        else {
+          console.log("CURRENT TIME: ", currentTime)
+          // console.log("CREATED TIME: ", postCreatedAt)
+          console.log("CREATED TIME ", moment(postCreatedAt))
+
+          var duration = moment.duration(currentTime.diff(postCreatedAt));
+
+          // const diff = moment.duration(currentTime.diff(postCreatedAt));
+          // const diff = moment(currentTime.diff(postCreatedAt))
+          console.log("The difference: ", duration)
+          let days = duration.asDays()
+          let hours = duration.asHours()
+          let mins = duration.asMinutes()
+          console.log("DAYS: ", days, "HOURS: ", hours, "MIN: ", mins)
+          // const final_diff = [hours, min]
+
+          console.log("ISO? ", duration.toISOString())
+
+          // var diff = postCreatedAt.subtract(currentTime);
+          setTimeLeft([hours])
+          // console.log("*THE DIFF: ", timeLeft)
+        }
       }
     }
 
-    if (currentTime !== postCreatedAt) {
+    // if (postCreatedAt !== undefined) {
+
+    if (postData) {
       calculateTime()
     }
+    // }
 
 
   }, [])
@@ -78,13 +108,16 @@ const PostPreview = ({ roomID, userInfo }) => {
                 <Ionicons style={styles.icon} name="md-checkmark-circle" size={45} color="#DD8300" />
               </View>
             ) : (
+
               <View style={styles.countDownWrapper}>
                 <CountDown
-                  startTime={postData.timeCreated}
+                  startTime={moment()}
                   isFinished={() => console.log()}
                   seconds={true}
+                  remainingHours={timeLeft[0]}
                 />
               </View>
+
             )}
           </View>
         </View>
