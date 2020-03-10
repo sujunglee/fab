@@ -15,6 +15,7 @@ import Loader from "../FancyLoader/FancyLoader"
 import { AppContext } from "../../context/AppContext";
 import { Surface } from "react-native-paper";
 import { VoteContext } from "./VoteContext/VoteContext";
+import VoteResults from "./VoteResults";
 import fb from "../../db/init"
 const db = fb.database();
 
@@ -109,49 +110,11 @@ const VoteScreen = ({ roomInfo }) => {
           </View>
 
           {voteState.voteResults && (
-            <>
-              <View
-                style={{
-                  ...StyleSheet.absoluteFillObject,
-                  backgroundColor: "rgba(0, 0, 0, 0.7)"
-                }}
-              />
-              {voteState.voteResults.scoreA === 0 &&
-                voteState.voteResults.scoreB === 0 && (
-                  <View
-                    style={{
-                      width: "100%",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      bottom: imageViewport.height / 2 + 10
-                    }}
-                  >
-                    <StyledText type="bold" style={{ color: "white" }}>
-                      You've made the first vote.
-                  </StyledText>
-                    <StyledText style={{ color: "white" }}>
-                      So far you are 100%!
-                  </StyledText>
-                  </View>
-                )}
-              <View style={{ flexDirection: "row", alignItems: "center", justifyContent: 'center' }}>
-                <View style={{ width: "50%" }}>
-                  <VotePercents
-                    score="A"
-                    voteResults={voteState.voteResults}
-                    imageViewport={imageViewport}
-                  />
-                </View>
-                <View style={{ width: "50%" }}>
-                  <VotePercents
-                    score="B "
-                    voteResults={voteState.voteResults}
-                    imageViewport={imageViewport}
-                  />
-                </View>
-              </View>
-              <YourVote selectedOption={voteState.selectedOption} />
-            </>
+            <VoteResults scoreA={voteState.voteResults.scoreA}
+                         scoreB={voteState.voteResults.scoreB} 
+                         viewport={imageViewport}
+                         selectedOption={voteState.selectedOption}
+            />
           )}
 
           <View style={{ width: "100%", height: "48%", flexDirection:'row', alignItems:'center',justifyContent:'center' }}>
@@ -198,63 +161,6 @@ const VoteScreen = ({ roomInfo }) => {
       </View>
     )
 };
-
-const VotePercents = ({ score, voteResults, imageViewport }) => {
-  const textStyles = {
-    color: "white",
-    bottom: imageViewport.height / 2 + 20,
-    fontSize: 48
-  }
-  const borderStyles = {
-    borderWidth: 10,
-    textAlign: "center",
-    height: 70,
-    padding: 5,
-    marginRight: 10,
-    marginLeft: 10
-  }
-  var borderColors = (voteResults.scoreA > voteResults.scoreB) ? { borderA: colors.secondary.main, borderB: "transparent" } : { borderB: colors.secondary.main, borderA: "transparent" }
-  if (voteResults.scoreA == voteResults.scoreB){
-    borderColors = { borderA: "transparent", borderB: "transparent" }
-  }
-  return score === "A" ? (
-    <StyledText style={{ ...textStyles, ...borderStyles, borderColor: borderColors.borderA }}>
-      {((voteResults.scoreA / (voteResults.scoreA + voteResults.scoreB)) * 100).toFixed()}%
-    </StyledText>
-  ) : (
-      <StyledText style={{ ...textStyles, ...borderStyles, borderColor: borderColors.borderB}}>
-        {((voteResults.scoreB / (voteResults.scoreA + voteResults.scoreB)) * 100).toFixed()}%
-        </StyledText>
-    )
-}
-
-const YourVote = ({ selectedOption }) => {
-  const [height, setHeight] = useState(null)
-
-  useEffect(() => console.log("hegiht", height), [height])
-
-  return (
-    <View
-      onLayout={e => setHeight(e.nativeEvent.layout.height)}
-      style={{
-        backgroundColor: colors.secondary.main,
-        width: "48.5%",
-        left: selectedOption === "optionB" ? "51%" : "1%",
-        top: height ? -height : 0,
-        alignItems: "center",
-        paddingVertical: 8
-      }}
-    >
-      <StyledText
-        size={sizes.medium.fontSize}
-        type={"regular"}
-        style={{ color: colors.general.white }}
-      >
-        YOUR VOTE
-      </StyledText>
-    </View>
-  )
-}
 
 {
   /*<Loader />*/
