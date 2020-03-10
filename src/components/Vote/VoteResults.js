@@ -5,13 +5,13 @@ import { colors, normalize, sizes } from "../../constants/styles"
 
 const VoteResults = (props) => {
   return (
-    <>
       <View
         style={{
           ...StyleSheet.absoluteFillObject,
-          backgroundColor: "rgba(0, 0, 0, 0.7)"
+          backgroundColor: "rgba(0, 0, 0, 0.7)",
+            borderRadius: 30
         }}
-      />
+      >
       {props.scoreA === 0 &&
         props.scoreB === 0 && (
           <View
@@ -30,7 +30,19 @@ const VoteResults = (props) => {
           </StyledText>
           </View>
         )}
-      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: 'center' }}>
+
+          {/*Get the container from for title from VoteScreen to align container below - hack */}
+        <View style={styles.title_container}/>
+
+        <View style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: 'center',
+            borderWidth: 1 ,
+            height: props.viewport.height,
+            width: props.viewport.width
+        }}>
+
         <View style={{ width: "50%" }}>
           <VotePercents
             score="A"
@@ -49,14 +61,13 @@ const VoteResults = (props) => {
         </View>
       </View>
       <YourVote selectedOption={props.selectedOption} />
-    </>
+      </View>
   )
 }
 
 const VotePercents = (props) => {
-  const textStyles = {
+    const textStyles = {
     color: "white",
-    bottom: props.imageViewport.height / 2 + 20,
     fontSize: 48
   }
   const borderStyles = {
@@ -109,5 +120,15 @@ const YourVote = ({ selectedOption }) => {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  title_container: {
+    height: "12%",
+    width: "95%",
+    alignItems: "center",
+    justifyContent: "center",
+  }
+});
+
 
 export default VoteResults
