@@ -124,8 +124,7 @@ const YourVote = ({ selectedOption }) => {
       onLayout={e => setHeight(e.nativeEvent.layout.height)}
       style={{
         backgroundColor: colors.secondary.main,
-        width: "48.5%",
-        left: selectedOption === "optionB" ? "51%" : "1%",
+        width: "49%",
         top: height ? -height : 0,
         alignItems: "center",
         paddingVertical: 8
