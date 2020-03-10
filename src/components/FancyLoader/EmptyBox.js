@@ -24,7 +24,7 @@ export default class EmptyBox extends React.Component {
                 if (this._isMounted) {
                     this.setState({loadLoader: true})
                 }
-            }, 500);
+            }, 0);
         }
 
     }
