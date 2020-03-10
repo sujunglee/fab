@@ -39,11 +39,12 @@ const PostPreview = ({ roomID, userInfo }) => {
 
     const calculateTime = () => {
       if (currentTime !== postCreatedAt) {
-        console.log("CURRENT TIME: ", currentTime)
-        console.log("POST WAS MADE AT: ", postCreatedAt)
         difference = moment.duration(currentTime.diff(postCreatedAt)).asHours()
-        console.log("DIFFERENCE: ", difference)
         setTimeElapsed(difference)
+
+        if (timeElapsed > 24) {
+          console.log("Should see a checkmark for this post.")
+        }
       }
     }
 
@@ -79,7 +80,8 @@ const PostPreview = ({ roomID, userInfo }) => {
             ) : (
               <CountDown
                 startTime={postData.timeCreated}
-                isFinished={() => console.log("Hello there")}
+                isFinished={() => console.log()}
+                seconds={true}
               />
             )}
             </View>

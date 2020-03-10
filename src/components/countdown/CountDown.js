@@ -15,7 +15,7 @@ import {colors,sizes} from "../../constants/styles"
  * @author jideanene2020@u.northwestern.edu
  */
 
-const CountDown = ({startTime, isFinished}) => {
+const CountDown = ({startTime, isFinished, seconds}) => {
 
     let outfitStartTime = moment(startTime);
     let outfitEndTime = moment(startTime).add(24, 'hours');
@@ -26,6 +26,11 @@ const CountDown = ({startTime, isFinished}) => {
     const [isCloseToEnd, setIsCloseToEnd] = useState(false);
 
     const [hasLoaded, setHasLoaded] = useState(false);
+
+    let format = 'HH:mm:ss'
+    if (seconds) {
+      format = 'HH:mm'
+    }
 
     /**
      * Indicates  if time has run out
@@ -74,7 +79,7 @@ const CountDown = ({startTime, isFinished}) => {
                     color:isCloseToEnd && !hasEnded? colors.general.hot_purple:'#414141',
                     fontSize: isCloseToEnd && !hasEnded? sizes.xlarge.fontSize:sizes.large.fontSize
                 }
-            }>{hasEnded? 'COMPLETED' : moment.utc(timeLeft * 1000).format('HH:mm:ss')}</StyledText>
+            }>{hasEnded? 'COMPLETED' : moment.utc(timeLeft * 1000).format(format)}</StyledText>
         </View>)
     );
 };
