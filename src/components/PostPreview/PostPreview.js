@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { View, TouchableHighlight, Text, StyleSheet, Image } from "react-native"
+import { View, TouchableHighlight, Text, StyleSheet, Image, Dimensions } from "react-native"
 import moment from "moment"
 import { screens } from "../../Navigation/constants"
 import getMyPostData from "../../db/getMyPostData"
@@ -15,9 +15,7 @@ const winnerPicture = ({postData}) =>{
 
 const PostPreview = ({ roomID, userInfo }) => {
   const navigation = useNavigation()
-
   const [postData, setPostData] = useState({})
-
 
   useEffect(() => {
     const getPostData = async () => {
@@ -51,13 +49,14 @@ const PostPreview = ({ roomID, userInfo }) => {
         <Image source={{ uri: winnerPicture({postData:postData})}} style={styles.image} />
         <View style={styles.textWrapper}>
           <View style={{flexDirection: 'row'}}>
-            <View>
+            <View style={styles.titleWrapper}>
               <Text style={styles.timeText}>{postData.createdAt}</Text>
               <Text style={styles.text}> {postData.title} </Text>
             </View>
-            <Ionicons name="md-checkmark-circle" size={32} color="#DD8300" />
+            <View style={styles.iconWrapper}>
+              <Ionicons style={styles.icon} name="md-checkmark-circle" size={45} color="#DD8300" />
+            </View>
           </View>
-
         </View>
       </View>
     </TouchableHighlight>
@@ -65,6 +64,8 @@ const PostPreview = ({ roomID, userInfo }) => {
     <StyledText>Loading...</StyledText>
   )
 }
+
+const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   container: {
@@ -104,6 +105,15 @@ const styles = StyleSheet.create({
     height: 75,
     width: 75,
     borderRadius:3
+  },
+  icon: {
+    paddingTop: 40
+  },
+  titleWrapper: {
+    width: windowWidth/2
+  },
+  iconWrapper: {
+    paddingLeft: 10
   }
 })
 export default PostPreview
