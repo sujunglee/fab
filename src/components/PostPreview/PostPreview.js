@@ -16,73 +16,20 @@ const winnerPicture = ({postData}) =>{
 
 const PostPreview = ({ roomID, userInfo }) => {
   const navigation = useNavigation()
-  const [postData, setPostData] = useState({})
-  const [timeElapsed, setTimeElapsed] = useState(0)
-  const [timeLeft, setTimeLeft] = useState([])
+  const [postData, setPostData] = useState(null)
+  const [isFinished, setIsFinished] = useState(false)
 
   useEffect(() => {
     const getPostData = async () => {
-      const data = await getMyPostData({ roomID })
-      const createdAt = moment(data.timeCreated).format("dddd h:mm A")
-      setPostData({
-        ...data,
-        createdAt: createdAt
-      })
-
-      console.log("***POST DATA: ", postData.timeCreated)
-
-
-    }
-
+      const data = await getMyPostData({ roomID });
+      setPostData(data);
+    };
     getPostData()
+  }, []);
 
-    let difference = 0
-
-    const calculateTime = () => {
-      const currentTime = moment()
-      const postCreatedAt = postData.timeCreated
-
-      if (currentTime !== postCreatedAt) {
-        difference = moment.duration(currentTime.diff(postCreatedAt)).asHours()
-        setTimeElapsed(difference)
-
-        if (timeElapsed > 24) {
-          console.log("Should see a checkmark for this post.")
-        }
-        else {
-          console.log("CURRENT TIME: ", currentTime)
-          // console.log("CREATED TIME: ", postCreatedAt)
-          console.log("CREATED TIME ", moment(postCreatedAt))
-
-          var duration = moment.duration(currentTime.diff(postCreatedAt));
-
-          // const diff = moment.duration(currentTime.diff(postCreatedAt));
-          // const diff = moment(currentTime.diff(postCreatedAt))
-          console.log("The difference: ", duration)
-          let days = duration.asDays()
-          let hours = duration.asHours()
-          let mins = duration.asMinutes()
-          console.log("DAYS: ", days, "HOURS: ", hours, "MIN: ", mins)
-          // const final_diff = [hours, min]
-
-          console.log("ISO? ", duration.toISOString())
-
-          // var diff = postCreatedAt.subtract(currentTime);
-          setTimeLeft([hours])
-          // console.log("*THE DIFF: ", timeLeft)
-        }
-      }
-    }
-
-    // if (postCreatedAt !== undefined) {
-
-    if (postData) {
-      calculateTime()
-    }
-    // }
-
-
-  }, [])
+  const isFinishedCallback = ()=>{
+    setIsFinished(true)
+  };
 
   return postData ? (
     <TouchableHighlight
@@ -103,7 +50,7 @@ const PostPreview = ({ roomID, userInfo }) => {
               <Text style={styles.timeText}>{postData.createdAt}</Text>
               <Text style={styles.text}> {postData.title} </Text>
             </View>
-            {(timeElapsed > 24) ? (
+            {(isFinished) ? (
               <View style={styles.iconWrapper}>
                 <Ionicons style={styles.icon} name="md-checkmark-circle" size={45} color="#DD8300" />
               </View>
@@ -111,10 +58,9 @@ const PostPreview = ({ roomID, userInfo }) => {
 
               <View style={styles.countDownWrapper}>
                 <CountDown
-                  startTime={moment()}
-                  isFinished={() => console.log()}
-                  seconds={true}
-                  remainingHours={timeLeft[0]}
+                  startTime={postData.timeCreated}
+                  isFinished={isFinishedCallback}
+                  prettyFormat={true}
                 />
               </View>
 

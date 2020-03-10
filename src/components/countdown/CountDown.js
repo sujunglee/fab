@@ -12,21 +12,14 @@ import {colors,sizes} from "../../constants/styles"
  *
  * @param isFinished() - Callback when the room is done
  * @param startTime - ISO formatted finish time
+ * @param prettyFormat - set to true if want something more human readable
  * @author jideanene2020@u.northwestern.edu
  */
 
-const CountDown = ({startTime, isFinished, seconds, remainingHours}) => {
+const CountDown = ({startTime, isFinished,prettyFormat}) => {
 
     let outfitStartTime = moment(startTime);
-    let outfitEndTime;
-
-    if (remainingHours > 0) {
-      // console.log("do NOT set it to 24 hours ", remainingTime)
-      outfitEndTime = moment(startTime).add(3, 'hours')
-    }
-    else {
-      outfitEndTime = moment(startTime).add(24, 'hours');
-    }
+    let outfitEndTime = moment(startTime).add(24, 'hours');
     let outfitWarningTime =moment(startTime).add(24, 'hours').subtract(60, 'seconds');
 
     const [hasEnded, setHasEnded] = useState(false);
@@ -34,11 +27,6 @@ const CountDown = ({startTime, isFinished, seconds, remainingHours}) => {
     const [isCloseToEnd, setIsCloseToEnd] = useState(false);
 
     const [hasLoaded, setHasLoaded] = useState(false);
-
-    let format = 'HH:mm:ss'
-    if (seconds) {
-      format = 'HH:mm:ss'
-    }
 
     /**
      * Indicates  if time has run out
@@ -48,6 +36,19 @@ const CountDown = ({startTime, isFinished, seconds, remainingHours}) => {
     const hasTimeRunOut = (now) => {
         setIsCloseToEnd(now.isSameOrAfter(outfitWarningTime));
         return (now.isAfter(outfitEndTime))
+    };
+
+    let anHourBefore = moment(startTime).add(23, 'hours');
+
+    const getPrettyFormat = ()=>{
+        let now = moment();
+        if (now.isBefore(anHourBefore)){
+            return `${moment.utc(timeLeft * 1000).format('HH')} hrs`
+        }else if  (now.isSame(anHourBefore)){
+            return `${moment.utc(timeLeft * 1000).format('HH')} hr`
+        }else if ((now.isAfter(anHourBefore)) && (now.isBefore(outfitWarningTime))){
+            return `${moment.utc(timeLeft * 1000).format('m')} min`
+        }
     };
 
 
@@ -87,7 +88,8 @@ const CountDown = ({startTime, isFinished, seconds, remainingHours}) => {
                     color:isCloseToEnd && !hasEnded? colors.general.hot_purple:'#414141',
                     fontSize: isCloseToEnd && !hasEnded? sizes.xlarge.fontSize:sizes.large.fontSize
                 }
-            }>{hasEnded? 'COMPLETED' : moment.utc(timeLeft * 1000).format(format)}</StyledText>
+
+            }>{hasEnded? 'COMPLETED' : (prettyFormat && !isCloseToEnd? getPrettyFormat(): moment.utc(timeLeft * 1000).format('HH:mm:ss'))}</StyledText>
         </View>)
     );
 };
