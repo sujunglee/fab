@@ -43,9 +43,9 @@ const CountDown = ({startTime, isFinished,prettyFormat}) => {
     const getPrettyFormat = ()=>{
         let now = moment();
         if (now.isBefore(anHourBefore)){
-            return `${moment.utc(timeLeft * 1000).format('HH')} hrs`
+            return `${moment.utc(timeLeft * 1000).format('HH')} hours`
         }else if  (now.isSame(anHourBefore)){
-            return `${moment.utc(timeLeft * 1000).format('HH')} hr`
+            return `${moment.utc(timeLeft * 1000).format('HH')} hour`
         }else if ((now.isAfter(anHourBefore)) && (now.isBefore(outfitWarningTime))){
             return `${moment.utc(timeLeft * 1000).format('m')} min`
         }
