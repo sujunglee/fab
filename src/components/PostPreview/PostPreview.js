@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react"
-import { View, TouchableHighlight, Text, StyleSheet, Image } from "react-native"
+import { View, TouchableHighlight, Text, StyleSheet, Image, Dimensions } from "react-native"
 import moment from "moment"
 import { screens } from "../../Navigation/constants"
 import getMyPostData from "../../db/getMyPostData"
 import { useNavigation } from "@react-navigation/native"
 import { StyledText } from "../StyledText"
 import {RoomTitle} from "../RoomTitle";
+import { Ionicons } from '@expo/vector-icons';
+import CountDown from "../../components/countdown/CountDown"
 
 const winnerPicture = ({postData}) =>{
   return (postData.scoreA >= postData.scoreB) ? postData.pictureA : postData.pictureB;
@@ -14,9 +16,8 @@ const winnerPicture = ({postData}) =>{
 
 const PostPreview = ({ roomID, userInfo }) => {
   const navigation = useNavigation()
-
   const [postData, setPostData] = useState({})
-
+  const [timeElapsed, setTimeElapsed] = useState(0)
 
   useEffect(() => {
     const getPostData = async () => {
@@ -27,9 +28,31 @@ const PostPreview = ({ roomID, userInfo }) => {
         createdAt: createdAt
       })
 
+      console.log("***POST DATA: ", postData)
+
     }
 
     getPostData()
+    const currentTime = moment()
+    const postCreatedAt = moment(postData.timeCreated)
+    let difference = 0
+
+    const calculateTime = () => {
+      if (currentTime !== postCreatedAt) {
+        difference = moment.duration(currentTime.diff(postCreatedAt)).asHours()
+        setTimeElapsed(difference)
+
+        if (timeElapsed > 24) {
+          console.log("Should see a checkmark for this post.")
+        }
+      }
+    }
+
+    if (currentTime !== postCreatedAt) {
+      calculateTime()
+    }
+
+
   }, [])
 
   return postData ? (
@@ -46,11 +69,25 @@ const PostPreview = ({ roomID, userInfo }) => {
       <View style={styles.innerContainer}>
         <Image source={{ uri: winnerPicture({postData:postData})}} style={styles.image} />
         <View style={styles.textWrapper}>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.timeText}>{postData.createdAt}</Text>
-            {/* <Text style={styles.timeText}>{time}</Text> */}
+          <View style={{flexDirection: 'row'}}>
+            <View style={styles.titleWrapper}>
+              <Text style={styles.timeText}>{postData.createdAt}</Text>
+              <Text style={styles.text}> {postData.title} </Text>
+            </View>
+            {(timeElapsed > 24) ? (
+              <View style={styles.iconWrapper}>
+                <Ionicons style={styles.icon} name="md-checkmark-circle" size={45} color="#DD8300" />
+              </View>
+            ) : (
+              <View style={styles.countDownWrapper}>
+                <CountDown
+                  startTime={postData.timeCreated}
+                  isFinished={() => console.log()}
+                  seconds={true}
+                />
+              </View>
+            )}
           </View>
-          <Text style={styles.text}> {postData.title} </Text>
         </View>
       </View>
     </TouchableHighlight>
@@ -59,13 +96,13 @@ const PostPreview = ({ roomID, userInfo }) => {
   )
 }
 
+const windowWidth = Dimensions.get('window').width;
+
 const styles = StyleSheet.create({
   container: {
     width: "100%",
     backgroundColor: "white",
     marginBottom: 2,
-    // borderColor: "grey",
-    // borderWidth: 1,
     padding: 16
   },
   innerContainer: {
@@ -97,6 +134,19 @@ const styles = StyleSheet.create({
     height: 75,
     width: 75,
     borderRadius:3
+  },
+  icon: {
+    paddingTop: 40
+  },
+  titleWrapper: {
+    width: windowWidth/2.1
+  },
+  iconWrapper: {
+    paddingLeft: 20
+  },
+  countDownWrapper: {
+    paddingTop: 40,
+    paddingLeft: 5
   }
 })
 export default PostPreview
