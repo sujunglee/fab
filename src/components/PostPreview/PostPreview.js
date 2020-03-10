@@ -77,9 +77,11 @@ const PostPreview = ({ roomID, userInfo }) => {
             {(timeElapsed > 24) ? (
               <Ionicons style={styles.icon} name="md-checkmark-circle" size={45} color="#DD8300" />
             ) : (
-              <Text>Not yet</Text>
+              <CountDown
+                startTime={postData.timeCreated}
+                isFinished={() => console.log("Hello there")}
+              />
             )}
-
             </View>
           </View>
         </View>
