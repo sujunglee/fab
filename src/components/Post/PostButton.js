@@ -26,7 +26,6 @@ const PostButton = ({title, outfitA, outfitB, postFinishedCallback}) => {
     const defaultTitle='Which one should I choose?';
 
     const navigation = useNavigation();
-
     const [outfitA_url, setOutfitA_url] = useState(null);
     const [outfitB_url, setOutfitB_url] = useState(null);
     const [urlsLoaded, setUrlsLoaded] = useState(false);
@@ -55,7 +54,9 @@ const PostButton = ({title, outfitA, outfitB, postFinishedCallback}) => {
                     // Navigate to the results room
                     navigation.navigate(screens.POSTS_PAGE);
 
-                })
+
+        });
+            
         }
     }, [outfitA_url, outfitB_url]);
 
