@@ -19,7 +19,6 @@ const VoteResults = (props) => {
             flexDirection: "row",
             alignItems: "center",
             justifyContent: 'center',
-            borderWidth: 1 ,
             height: props.viewport.height,
             width: props.viewport.width
         }}>
