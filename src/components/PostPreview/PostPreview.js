@@ -117,14 +117,14 @@ const styles = StyleSheet.create({
     paddingTop: 40
   },
   titleWrapper: {
-    width: windowWidth/2.1
+    width: windowWidth/2.3
   },
   iconWrapper: {
     paddingLeft: 20
   },
   countDownWrapper: {
     paddingTop: 40,
-    paddingLeft: 5
+    paddingLeft: 5,
   }
 })
 export default PostPreview
