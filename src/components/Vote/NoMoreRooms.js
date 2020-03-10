@@ -10,7 +10,8 @@ const NoMoreRooms = () => (
             flex: 1,
             alignItems: "center",
             justifyContent: "center",
-            margin: 16
+            margin: 16,
+            backgroundColor: colors.general.white
         }}
     >
         <View

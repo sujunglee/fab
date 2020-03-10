@@ -117,7 +117,7 @@ const RoomImages = props => {
                 }>
                 <ImageBackground source={{uri:roomData.optionA.picture}} style={styles.image} onLoad={() =>
                     setAreImagesLoaded({...areImagesLoaded, A: true})}>
-                    <MaterialCommunityIcons name="arrow-expand" size={32} color="white" onPress={() =>
+                    <MaterialCommunityIcons style={styles.icon_shadow}  name="arrow-expand" size={32} color="white" onPress={() =>
                        openImageA()
                     }/>    
                 </ImageBackground>
@@ -131,7 +131,7 @@ const RoomImages = props => {
                 }>
                 <ImageBackground source={{uri:roomData.optionB.picture}} style={styles.image} onLoad={() =>
                         setAreImagesLoaded({...areImagesLoaded, B: true})}>
-                        <MaterialCommunityIcons name="arrow-expand" size={32} color="white" onPress={() =>
+                        <MaterialCommunityIcons style={styles.icon_shadow} name="arrow-expand" size={32} color="white" onPress={() =>
                            openImageB()
                         }/>    
                 </ImageBackground>
@@ -163,8 +163,19 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "row",
       backgroundColor: 'transparent'
-  }
-})
+  },
+    icon_shadow:{
+        shadowOpacity: .5,
+        shadowRadius: 2,
+        shadowColor:'#000000',
+        textShadowOffset:{width: 5,height: 2},
+        textShadowRadius: 10,
+        shadowOffset: {
+            width: 1,            // Same rules apply from above
+            height: 0,           // Can't both be 0
+        }
+    }
+});
 
 RoomImages.propTypes = {
   roomData: PropTypes.object.isRequired,

@@ -29,6 +29,8 @@ const TitleEntry = ({placeholderText, roomTitle, onTitleChangeCallBack}) => {
             }
         }, []);
 
+
+
     return (
         <View style={styles.container}>
             <View style={styles.icon_container}>
@@ -36,7 +38,7 @@ const TitleEntry = ({placeholderText, roomTitle, onTitleChangeCallBack}) => {
             </View>
             <View style={styles.text_container}>
                 <TextInput
-                    placeholder ={placeholderText}
+                    placeholder ={showCharLimit? null: placeholderText}
                     style={{height: normalize(46), backgroundColor: colors.general.white}}
                     label={''}
                     error={showCharLimit&& titleCharsLeft < 5}
