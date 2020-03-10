@@ -1,5 +1,5 @@
 import moment from "moment";
-import {TouchableOpacity, View, StyleSheet} from 'react-native';
+import {TouchableOpacity, View, StyleSheet, Text} from 'react-native';
 import StyledText from "../StyledText/StyledText";
 import Constants from 'expo-constants';
 import createRoom from "../../db/createRoom";
@@ -53,10 +53,6 @@ const PostButton = ({title, outfitA, outfitB, postFinishedCallback}) => {
                     setIsPressed(false);
                     postFinishedCallback();
 
-                    // Navigate to the results room
-                    navigation.navigate(screens.RESULTS, {
-                        roomID: roomID,
-                        roomData: postData});
                 })
 
         }
@@ -105,7 +101,8 @@ const PostButton = ({title, outfitA, outfitB, postFinishedCallback}) => {
     return (
         isPressed ?
             <View style={styles.container}>
-                 <ActivityIndicator animating={true} color={colors.general.white} />
+                 {/*<ActivityIndicator animating={true} color={colors.general.white} />*/}
+                 <Text>We submitted a post!</Text>
             </View>
             :
             <TouchableOpacity onPress={handlePress}>

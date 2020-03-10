@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react"
-import {View, StyleSheet, TouchableWithoutFeedback, Keyboard} from "react-native"
+import {View, StyleSheet, TouchableWithoutFeedback, Keyboard, Text} from "react-native"
 import {SafeAreaView} from "react-native-safe-area-context"
 import {useNavigation} from "@react-navigation/native"
 import PostButton from "./PostButton";
 import {colors, normalize} from "../../constants/styles";
 import PostPhoto from "./PostPhoto";
 import TitleEntry from "./TitleEntry";
+import { PostPreview } from "../PostPreview";
 
 // The actual post page
 const PostPage = ({route, navigation}) => {
@@ -13,6 +14,7 @@ const PostPage = ({route, navigation}) => {
     const [outfitA, setOutfitA] = useState({uri: undefined, outfitOption: 'A'});
     const [outfitB, setOutfitB] = useState({uri: undefined, outfitOption: 'B'});
     const [roomTitle, setRoomTitle] = useState('');
+    const [isPressed, setIsPressed] = useState(false);
     //const navigation = useNavigation();
 
 
@@ -60,6 +62,7 @@ const PostPage = ({route, navigation}) => {
         setOutfitA({uri: undefined, outfitOption: 'A'});
         setOutfitB({uri: undefined, outfitOption: 'B'});
         setRoomTitle('');
+        setIsPressed(true);
     };
 
     return (
@@ -75,6 +78,12 @@ const PostPage = ({route, navigation}) => {
                     <PostPhoto outfit={outfitA} onCloseCallback={onPictureCloseCallback} />
                     <PostPhoto outfit={outfitB} onCloseCallback={onPictureCloseCallback}/>
                 </View>
+
+                {isPressed ? (
+                  <Text>We created a post!</Text>
+                ) : (
+                  <Text>We did NOT create a post yet.</Text>
+                )}
 
 
                 <PostButton title={roomTitle} outfitA={outfitA} outfitB={outfitB}
