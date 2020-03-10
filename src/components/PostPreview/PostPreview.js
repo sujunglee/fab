@@ -17,6 +17,7 @@ const winnerPicture = ({postData}) =>{
 const PostPreview = ({ roomID, userInfo }) => {
   const navigation = useNavigation()
   const [postData, setPostData] = useState({})
+  const [timeElapsed, setTimeElapsed] = useState(0)
 
   useEffect(() => {
     const getPostData = async () => {
@@ -42,6 +43,7 @@ const PostPreview = ({ roomID, userInfo }) => {
         console.log("POST WAS MADE AT: ", postCreatedAt)
         difference = moment.duration(currentTime.diff(postCreatedAt)).asHours()
         console.log("DIFFERENCE: ", difference)
+        setTimeElapsed(difference)
       }
     }
 
@@ -72,7 +74,12 @@ const PostPreview = ({ roomID, userInfo }) => {
               <Text style={styles.text}> {postData.title} </Text>
             </View>
             <View style={styles.iconWrapper}>
+            {(timeElapsed > 24) ? (
               <Ionicons style={styles.icon} name="md-checkmark-circle" size={45} color="#DD8300" />
+            ) : (
+              <Text>Not yet</Text>
+            )}
+
             </View>
           </View>
         </View>
