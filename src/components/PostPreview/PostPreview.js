@@ -109,10 +109,14 @@ const PostPreview = ({ roomID, userInfo }) => {
               </View>
             ) : ((timeLeft !== undefined) && (minsLeft > 0)) ? (
               <View style={styles.countDownWrapper}>
+              <StyledText type="semibold" style={styles.title}>TIME LEFT</StyledText>
                 <CountDown
+                  digitStyle={{backgroundColor: '#FFF', borderWidth: 2, borderColor: '#fff'}}
                   until={(hoursLeft*3600) + (minsLeft*60)}
                   size={15}
+                  timeLabels={{m: null, s: null}}
                   timeToShow={['H', 'M']}
+                  showSeparator
                 />
               </View>
             ) : (
@@ -176,7 +180,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20
   },
   countDownWrapper: {
-    paddingTop: 40,
+    paddingTop: 30,
     paddingLeft: 5
   }
 })
