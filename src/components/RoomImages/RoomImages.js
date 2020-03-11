@@ -9,6 +9,8 @@ import {colors, normalize} from "../../constants/styles";
 import StyledText from "../StyledText/StyledText";
 import { Ionicons } from '@expo/vector-icons';
 import Fade from "../Animations/Fade";
+import getVoteData from "../../db/getVoteData"
+
 let x =
   "https://firebasestorage.googleapis.com/v0/b/fabapp-a1ea0.appspot.com/o/my-image.jpg?alt=media&token=995d6347-0435-41ac-96e1-91106786ab2c"
 
@@ -21,15 +23,12 @@ const RoomImages = props => {
     setImageViewport
   } = props
 
-
-  //roomData.optionA.picture = testPictures;
-  //roomData.optionB.picture = testPictures;
-
   const [isImageOpen, setIsImageOpen] = useState(false)
   const [areImagesLoaded, setAreImagesLoaded] = useState({
     A: false,
     B: false
   })
+  const [winningImage, setWinningImage] = useState("")
 
   const closeImage = () => {
       StatusBar.setHidden(false,'slide');
@@ -55,6 +54,18 @@ const RoomImages = props => {
     if (areImagesLoaded.A === true && areImagesLoaded.B === true) {
       imageLoadCallback()
     }
+
+    const votes = getVoteData(roomData)
+    console.log("UPDATED VOTE DATA: ", votes)
+    if (votes.scoreA > votes.scoreB) {
+      setWinningImage("A")
+    }
+    else if (votes.scoreB > votes.scoreA) {
+      setWinningImage("B")
+    }
+
+    console.log("IMAGE: ", winningImage)
+
   }, [areImagesLoaded])
 
     // sets hides or shows the status bar depending on if the image expander is open
@@ -119,7 +130,7 @@ const RoomImages = props => {
                     setAreImagesLoaded({...areImagesLoaded, A: true})}>
                     <MaterialCommunityIcons style={styles.icon_shadow}  name="arrow-expand" size={32} color="white" onPress={() =>
                        openImageA()
-                    }/>    
+                    }/>
                 </ImageBackground>
             </TouchableWithoutFeedback>
         </View>
@@ -133,7 +144,7 @@ const RoomImages = props => {
                         setAreImagesLoaded({...areImagesLoaded, B: true})}>
                         <MaterialCommunityIcons style={styles.icon_shadow} name="arrow-expand" size={32} color="white" onPress={() =>
                            openImageB()
-                        }/>    
+                        }/>
                 </ImageBackground>
             </TouchableWithoutFeedback>
         </View>
