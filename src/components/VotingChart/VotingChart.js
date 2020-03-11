@@ -58,7 +58,7 @@ const VotingChart = ({voteResults}) =>{
     const totalNumVoters = voteResults.scoreA + voteResults.scoreB;
 
     return (
-        <View style={{ display: "flex", flexDirection: "row" }}>
+        <View style={{ display: "flex", flexDirection: "row",marginTop:normalize(10)}}>
             <View style={{ alignItems: "center", textAlign: "center", justifyContent: "center", flex: 1 }}>
               <PieChart
                   innerRadius={"65%"}

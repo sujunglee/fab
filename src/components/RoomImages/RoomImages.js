@@ -144,7 +144,9 @@ const RoomImages = props => {
               </TouchableWithoutFeedback>
           </View>
           {(winningImage == "A") ? (
-            <Ionicons style={styles.icon} name="md-checkmark-circle" size={45} color="#DD8300" />
+              <View style={styles.icon_container}>
+                  <Ionicons style={styles.icon} name="md-checkmark-circle" size={50} color="#DD8300" />
+              </View>
           ) : (
             <View></View>
           )}
@@ -165,7 +167,9 @@ const RoomImages = props => {
               </TouchableWithoutFeedback>
           </View>
           {(winningImage == "B") ? (
-            <Ionicons style={styles.icon} name="md-checkmark-circle" size={45} color="#DD8300" />
+              <View style={styles.icon_container}>
+                  <Ionicons style={styles.icon} name="md-checkmark-circle" size={50} color="#DD8300" />
+              </View>
           ) : (
             <View></View>
           )}
@@ -211,10 +215,21 @@ const styles = StyleSheet.create({
           height: 0,           // Can't both be 0
       }
   },
-  icon: {
-    bottom: 20,
-    left: 75
-  }
+    icon: {
+      height:50,
+      width:50,
+      textAlign:'center',
+  },
+    icon_container:{
+        bottom: normalize(18),
+        left: normalize(65),
+        alignItems:'center',
+        justifyContent:'center',
+        height:40,
+        width:40,
+        backgroundColor:'white',
+        borderRadius: 40/2
+    }
 });
 
 RoomImages.propTypes = {
