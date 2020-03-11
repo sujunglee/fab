@@ -139,13 +139,14 @@ const getTotalNumVoters = roomData =>{
 
 const Results = ({ route }) => {
   const [roomData, setRoomData] = useState(null);
+  const [winningPhoto, setWinningPhoto] = "TIE"
 
   useEffect(()=>{
     const { roomID } = route.params;
     let isActive = false;
     let dbRef_active =db.ref('rooms/active/').child(roomID);
 
-    const handleData = snapshot =>{
+    const handleData = snapshot => {
         snapshot.val() && setRoomData(snapshot.val())
     };
 
@@ -179,7 +180,7 @@ const Results = ({ route }) => {
         </View>
 
         <View style={styles.photo_container}>
-              <RoomImages roomData={roomData} setImageViewport={()=>{}} imageLoadCallback={()=>{}} />
+              <RoomImages roomData={roomData} setImageViewport={()=>{}} imageLoadCallback={()=>{}} voting={false} />
         </View>
 
 

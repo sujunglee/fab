@@ -9,6 +9,8 @@ import {colors, normalize} from "../../constants/styles";
 import StyledText from "../StyledText/StyledText";
 import { Ionicons } from '@expo/vector-icons';
 import Fade from "../Animations/Fade";
+import getVoteData from "../../db/getVoteData"
+
 let x =
   "https://firebasestorage.googleapis.com/v0/b/fabapp-a1ea0.appspot.com/o/my-image.jpg?alt=media&token=995d6347-0435-41ac-96e1-91106786ab2c"
 
@@ -18,18 +20,16 @@ const RoomImages = props => {
   const {
     roomData,
     imageLoadCallback,
-    setImageViewport
+    setImageViewport,
+    voting
   } = props
-
-
-  //roomData.optionA.picture = testPictures;
-  //roomData.optionB.picture = testPictures;
 
   const [isImageOpen, setIsImageOpen] = useState(false)
   const [areImagesLoaded, setAreImagesLoaded] = useState({
     A: false,
     B: false
   })
+  const [winningImage, setWinningImage] = useState("")
 
   const closeImage = () => {
       StatusBar.setHidden(false,'slide');
@@ -55,6 +55,26 @@ const RoomImages = props => {
     if (areImagesLoaded.A === true && areImagesLoaded.B === true) {
       imageLoadCallback()
     }
+
+    const votes = getVoteData(roomData)
+    console.log("UPDATED VOTE DATA: ", votes)
+    if (voting) {
+      setWinningImage("")
+    }
+    else {
+      if (votes.scoreA > votes.scoreB) {
+        setWinningImage("A")
+      }
+      else if (votes.scoreB > votes.scoreA) {
+        setWinningImage("B")
+      }
+      else {
+        setWinningImage("TIE")
+      }  
+    }
+
+    console.log("IMAGE: ", winningImage)
+
   }, [areImagesLoaded])
 
     // sets hides or shows the status bar depending on if the image expander is open
@@ -109,48 +129,64 @@ const RoomImages = props => {
             </View>
         </Modal>
       )}
-
-      <View style={styles.photo_option}>
-            <TouchableWithoutFeedback
-                onPress={() =>
-                    openImageA()
-                }>
-                <ImageBackground source={{uri:roomData.optionA.picture}} style={styles.image} onLoad={() =>
-                    setAreImagesLoaded({...areImagesLoaded, A: true})}>
-                    <MaterialCommunityIcons style={styles.icon_shadow}  name="arrow-expand" size={32} color="white" onPress={() =>
-                       openImageA()
-                    }/>    
-                </ImageBackground>
-            </TouchableWithoutFeedback>
+      <View style={styles.photo_container}>
+        <View style={styles.photo_option}>
+              <TouchableWithoutFeedback
+                  onPress={() =>
+                      openImageA()
+                  }>
+                  <ImageBackground source={{uri:roomData.optionA.picture}} style={styles.image} onLoad={() =>
+                      setAreImagesLoaded({...areImagesLoaded, A: true})}>
+                      <MaterialCommunityIcons style={styles.icon_shadow}  name="arrow-expand" size={32} color="white" onPress={() =>
+                         openImageA()
+                      }/>
+                  </ImageBackground>
+              </TouchableWithoutFeedback>
+          </View>
+          {(winningImage == "A") ? (
+            <Ionicons style={styles.icon} name="md-checkmark-circle" size={45} color="#DD8300" />
+          ) : (
+            <View></View>
+          )}
         </View>
 
-        <View style={styles.photo_option}>
-            <TouchableWithoutFeedback
-                onPress={() =>
-                    openImageB()
-                }>
-                <ImageBackground source={{uri:roomData.optionB.picture}} style={styles.image} onLoad={() =>
-                        setAreImagesLoaded({...areImagesLoaded, B: true})}>
-                        <MaterialCommunityIcons style={styles.icon_shadow} name="arrow-expand" size={32} color="white" onPress={() =>
-                           openImageB()
-                        }/>    
-                </ImageBackground>
-            </TouchableWithoutFeedback>
+        <View style={styles.photo_container}>
+          <View style={styles.photo_option}>
+              <TouchableWithoutFeedback
+                  onPress={() =>
+                      openImageB()
+                  }>
+                  <ImageBackground source={{uri:roomData.optionB.picture}} style={styles.image} onLoad={() =>
+                          setAreImagesLoaded({...areImagesLoaded, B: true})}>
+                          <MaterialCommunityIcons style={styles.icon_shadow} name="arrow-expand" size={32} color="white" onPress={() =>
+                             openImageB()
+                          }/>
+                  </ImageBackground>
+              </TouchableWithoutFeedback>
+          </View>
+          {(winningImage == "B") ? (
+            <Ionicons style={styles.icon} name="md-checkmark-circle" size={45} color="#DD8300" />
+          ) : (
+            <View></View>
+          )}
         </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
+  photo_container: {
+    width: "50%",
+  },
   photo_option: {
-    width: "49%",
     height: "100%",
+    width: "100%",
     borderColor: "#A9A9A9",
     borderWidth: 0.5,
     backgroundColor: "#E8E8E8",
     borderRadius: 2,
-    alignItems: "center",
-    justifyContent: "center"
+    // alignItems: "center",
+    // justifyContent: "center"
   },
   image: {
     height: "100%",
@@ -160,21 +196,25 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: "100%",
-    justifyContent: "space-between",
+    // justifyContent: "space-between",
     flexDirection: "row",
-      backgroundColor: 'transparent'
+    backgroundColor: 'transparent'
   },
-    icon_shadow:{
-        shadowOpacity: .5,
-        shadowRadius: 2,
-        shadowColor:'#000000',
-        textShadowOffset:{width: 5,height: 2},
-        textShadowRadius: 10,
-        shadowOffset: {
-            width: 1,            // Same rules apply from above
-            height: 0,           // Can't both be 0
-        }
-    }
+  icon_shadow:{
+      shadowOpacity: .5,
+      shadowRadius: 2,
+      shadowColor:'#000000',
+      textShadowOffset:{width: 5,height: 2},
+      textShadowRadius: 10,
+      shadowOffset: {
+          width: 1,            // Same rules apply from above
+          height: 0,           // Can't both be 0
+      }
+  },
+  icon: {
+    bottom: 20,
+    left: 75
+  }
 });
 
 RoomImages.propTypes = {
