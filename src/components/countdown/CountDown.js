@@ -51,7 +51,7 @@ const CountDown = ({startTime, isFinished,prettyFormat}) => {
             return `${moment.utc(timeLeft * 1000).format('HH')} hour`
         }
 
-        return `${moment.utc(timeLeft * 1000).format('m')} min`
+        return `${moment.utc(timeLeft * 1000).format('m')} mins`
 
     };
 
@@ -90,7 +90,7 @@ const CountDown = ({startTime, isFinished,prettyFormat}) => {
             <StyledText type="bold" style={
                 {...styles.content,
                     color:isCloseToEnd && !hasEnded? colors.general.hot_purple:'#414141',
-                    fontSize: isCloseToEnd && !hasEnded? sizes.xlarge.fontSize:sizes.large.fontSize
+                    fontSize: sizes.large.fontSize
                 }
 
             }>{hasEnded? 'COMPLETED' : (prettyFormat && !isCloseToEnd? getPrettyFormat(): moment.utc(timeLeft * 1000).format('HH:mm:ss'))}</StyledText>
