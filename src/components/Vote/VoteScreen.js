@@ -142,6 +142,7 @@ const VoteScreen = ({ roomInfo }) => {
               selectedOption={voteState.selectedOption}
               imageLoadCallback={imageLoadCallback}
               setImageViewport={setImageViewport}
+              voting={true}
             />
           </View>
 

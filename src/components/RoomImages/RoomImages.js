@@ -20,7 +20,8 @@ const RoomImages = props => {
   const {
     roomData,
     imageLoadCallback,
-    setImageViewport
+    setImageViewport,
+    voting
   } = props
 
   const [isImageOpen, setIsImageOpen] = useState(false)
@@ -57,11 +58,19 @@ const RoomImages = props => {
 
     const votes = getVoteData(roomData)
     console.log("UPDATED VOTE DATA: ", votes)
-    if (votes.scoreA > votes.scoreB) {
-      setWinningImage("A")
+    if (voting) {
+      setWinningImage("")
     }
-    else if (votes.scoreB > votes.scoreA) {
-      setWinningImage("B")
+    else {
+      if (votes.scoreA > votes.scoreB) {
+        setWinningImage("A")
+      }
+      else if (votes.scoreB > votes.scoreA) {
+        setWinningImage("B")
+      }
+      else {
+        setWinningImage("TIE")
+      }  
     }
 
     console.log("IMAGE: ", winningImage)

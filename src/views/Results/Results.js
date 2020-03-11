@@ -180,7 +180,7 @@ const Results = ({ route }) => {
         </View>
 
         <View style={styles.photo_container}>
-              <RoomImages roomData={roomData} setImageViewport={()=>{}} imageLoadCallback={()=>{}} />
+              <RoomImages roomData={roomData} setImageViewport={()=>{}} imageLoadCallback={()=>{}} voting={false} />
         </View>
 
 
