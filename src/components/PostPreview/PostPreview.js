@@ -23,7 +23,11 @@ const PostPreview = ({ roomID, userInfo }) => {
   useEffect(() => {
     const getPostData = async () => {
       const data = await getMyPostData({ roomID });
-      setPostData(data);
+      const createdAt = moment(data.timeCreated).format("ddd h:mm A")
+      setPostData({
+        ...data,
+        createdAt: createdAt
+      });
     };
     getPostData()
   }, []);
@@ -96,19 +100,14 @@ const styles = StyleSheet.create({
   },
   timeText: {
     fontFamily: "source-sans-pro-regular",
-    color: "#DEDEDE",
-    // flex: 1,
-    // flexWrap: "wrap",
-    marginRight: 5,
-    fontSize: 24
+    color: "#d3d3d3",
+    marginRight: 10,
+    fontSize: 20
   },
   text: {
     fontFamily: "source-sans-pro-semibold",
     fontSize: 16,
-    // flex: 1,
-
     marginTop: 16
-    // flexWrap: "wrap"
   },
   image: {
     aspectRatio: 2 / 3,
