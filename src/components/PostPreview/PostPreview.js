@@ -25,13 +25,24 @@ const PostPreview = ({ roomID, userInfo }) => {
       const data = await getMyPostData({ roomID });
       let createdAt;
       let now = moment();
-      if (now.diff(moment(data.timeCreated),'days')<7){
-        createdAt = moment(data.timeCreated).format("ddd h:mm A")
-      }else if (now.diff(moment(data.timeCreated),'years')<1){
-        createdAt = moment(data.timeCreated).format("ddd, MMM Do h:mm A")
+
+      const today = moment().endOf('day');
+      const yesterday = moment().subtract(1,'day').endOf('day');
+      const twoDaysAgo = moment().subtract(2,'day').endOf('day');
+      let moment_createdAt= moment(data.timeCreated);
+
+      if (moment_createdAt.isBetween(yesterday,today)){
+        createdAt = `Today ${moment_createdAt.format("h:mm A")}`
+      }else if (moment_createdAt.isBetween(twoDaysAgo,yesterday)){
+        createdAt = `Yesterday ${moment_createdAt.format("h:mm A")}`
+      }
+      else if (now.diff(moment_createdAt,'days')<7){
+        createdAt = moment_createdAt.format("ddd h:mm A")
+      }else if (now.diff(moment_createdAt,'years')<1){
+        createdAt = moment_createdAt.format("ddd, MMM Do h:mm A")
       }
       else{
-        createdAt = moment(data.timeCreated).format("MMM Do YYYY h:mm A")
+        createdAt = moment_createdAt.format("MMM Do YYYY h:mm A")
       }
 
 
