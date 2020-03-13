@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect } from "react"
 import getUserInfo from "../../db/getUserInfo";
-import db from "../../db/init"
 import Constants from 'expo-constants';
 
 //const SAMPLE_USERID = "jbrain98";

@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react"
-import { View, TouchableHighlight, Text, StyleSheet, Image, Dimensions } from "react-native"
+import { View, TouchableHighlight, StyleSheet, Image, Dimensions } from "react-native"
 import moment from "moment"
 import { screens } from "../../Navigation/constants"
 import getMyPostData from "../../db/getMyPostData"
 import { useNavigation } from "@react-navigation/native"
 import { StyledText } from "../StyledText"
-import {RoomTitle} from "../RoomTitle";
 import { Ionicons } from '@expo/vector-icons';
 import CountDown from "../../components/countdown/CountDown"
-import {normalize, sizes} from "../../constants/styles";
+import { normalize, sizes } from "../../constants/styles";
 
-const winnerPicture = ({postData}) =>{
+const winnerPicture = ({ postData }) => {
   return (postData.scoreA >= postData.scoreB) ? postData.pictureA : postData.pictureB;
 }
 
@@ -27,18 +26,18 @@ const PostPreview = ({ roomID, userInfo }) => {
       let now = moment();
 
       const today = moment().endOf('day');
-      const yesterday = moment().subtract(1,'day').endOf('day');
-      const twoDaysAgo = moment().subtract(2,'day').endOf('day');
-      let moment_createdAt= moment(data.timeCreated);
+      const yesterday = moment().subtract(1, 'day').endOf('day');
+      const twoDaysAgo = moment().subtract(2, 'day').endOf('day');
+      let moment_createdAt = moment(data.timeCreated);
 
-      if (moment_createdAt.isBetween(yesterday,today)){
+      if (moment_createdAt.isBetween(yesterday, today)) {
         createdAt = `Today ${moment_createdAt.format("h:mm A")}`
-      }else if (moment_createdAt.isBetween(twoDaysAgo,yesterday)){
+      } else if (moment_createdAt.isBetween(twoDaysAgo, yesterday)) {
         createdAt = `Yesterday ${moment_createdAt.format("h:mm A")}`
-      } else if (now.diff(moment_createdAt,'years')<1){
+      } else if (now.diff(moment_createdAt, 'years') < 1) {
         createdAt = moment_createdAt.format("ddd, MMM Do h:mm A")
       }
-      else{
+      else {
         createdAt = moment_createdAt.format("MMM Do YYYY h:mm A")
       }
 
@@ -51,7 +50,7 @@ const PostPreview = ({ roomID, userInfo }) => {
     getPostData()
   }, []);
 
-  const isFinishedCallback = ()=>{
+  const isFinishedCallback = () => {
     setIsFinished(true)
   };
 
@@ -67,12 +66,12 @@ const PostPreview = ({ roomID, userInfo }) => {
       underlayColor="#F4F4F4"
     >
       <View style={styles.innerContainer}>
-        <Image source={{ uri: winnerPicture({postData:postData})}} style={styles.image} resizeMode={'cover'} />
+        <Image source={{ uri: winnerPicture({ postData: postData }) }} style={styles.image} resizeMode={'cover'} />
         <View style={styles.textWrapper}>
           <View style={styles.timeWrapper}>
-              <StyledText style={styles.timeText}>{postData.createdAt}</StyledText>
-            </View>
-          <View style={{flexDirection: 'row'}}>
+            <StyledText style={styles.timeText}>{postData.createdAt}</StyledText>
+          </View>
+          <View style={{ flexDirection: 'row' }}>
             <View style={styles.titleWrapper}>
               <StyledText type={"semibold"} > {postData.title} </StyledText>
             </View>
@@ -82,22 +81,22 @@ const PostPreview = ({ roomID, userInfo }) => {
               </View>
             ) : (
 
-              <View style={styles.countDownWrapper}>
-                <CountDown
-                  startTime={postData.timeCreated}
-                  isFinished={isFinishedCallback}
-                  prettyFormat={true}
-                />
-              </View>
+                <View style={styles.countDownWrapper}>
+                  <CountDown
+                    startTime={postData.timeCreated}
+                    isFinished={isFinishedCallback}
+                    prettyFormat={true}
+                  />
+                </View>
 
-            )}
+              )}
           </View>
         </View>
       </View>
     </TouchableHighlight>
   ) : (
-    <StyledText>Loading...</StyledText>
-  )
+      <StyledText>Loading...</StyledText>
+    )
 }
 
 const windowWidth = Dimensions.get('window').width;
@@ -116,12 +115,12 @@ const styles = StyleSheet.create({
     height: 110,
     width: normalize(300)
   },
-  timeWrapper:{
+  timeWrapper: {
     width: normalize(222)
   },
   textWrapper: {
     marginLeft: normalize(5),
-    width:'60%',
+    width: '60%',
     height: 110
   },
   timeText: {
@@ -137,32 +136,32 @@ const styles = StyleSheet.create({
     aspectRatio: 2 / 3,
     height: 75,
     width: 75,
-    borderRadius:3,
+    borderRadius: 3,
     borderColor: 'rgba(0,0,0,.1)',
-    borderWidth:1
+    borderWidth: 1
   },
   icon: {
 
   },
   titleWrapper: {
     width: normalize(150),
-    alignItems:'flex-start',
-    justifyContent:'flex-start',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
     height: 85
   },
   iconWrapper: {
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection:'row',
+    flexDirection: 'row',
     width: normalize(85),
     alignSelf: 'flex-end',
-    height:85
+    height: 85
   },
   countDownWrapper: {
     alignItems: 'center',
     justifyContent: 'center',
     width: normalize(85),
-    height:85
+    height: 85
   }
 })
 export default PostPreview

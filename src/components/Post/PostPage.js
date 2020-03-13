@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react"
 import {View, StyleSheet, TouchableWithoutFeedback, Keyboard} from "react-native"
 import {SafeAreaView} from "react-native-safe-area-context"
-import {useNavigation} from "@react-navigation/native"
 import PostButton from "./PostButton";
 import {colors, normalize} from "../../constants/styles";
 import PostPhoto from "./PostPhoto";

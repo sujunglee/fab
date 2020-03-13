@@ -1,4 +1,3 @@
-import fb from "./init"
 import {getNumberOfVoters} from './Utility'
 
 

@@ -1,14 +1,10 @@
 import {View, Image, Modal, ImageBackground, StyleSheet, StatusBar, TouchableWithoutFeedback,TouchableOpacity} from "react-native"
 import PropTypes from 'prop-types';
 import ImageViewer from "react-native-image-zoom-viewer";
-import CloseButton from "../CameraApp/components/CloseButton"
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import React, { useState, useEffect, forwardRef } from "react"
-import {SafeAreaView} from "react-native-safe-area-context"
+import React, { useState, useEffect } from "react"
 import {colors, normalize} from "../../constants/styles";
-import StyledText from "../StyledText/StyledText";
 import { Ionicons } from '@expo/vector-icons';
-import Fade from "../Animations/Fade";
 import getVoteData from "../../db/getVoteData"
 
 let x =

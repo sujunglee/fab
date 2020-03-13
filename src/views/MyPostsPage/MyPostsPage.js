@@ -1,20 +1,15 @@
 import React, { useEffect, useState, useContext } from "react"
 import {
   View,
-  Text,
   SafeAreaView,
   ScrollView,
-  RefreshControl,
-  Button,
-  StyleSheet
+  RefreshControl
 } from "react-native"
 import { PostPreview } from "../../components/PostPreview"
-import getUserInfo from "../../db/getUserInfo"
 import { StyledText } from "../../components/StyledText"
 import { AppContext } from "../../context/AppContext"
 import { colors, normalize, sizes } from "../../constants/styles"
 import fb from "../../db/init"
-import closeRoom from "../../db/closeRoom"
 import Loader from "../../components/FancyLoader/FancyLoader"
 import Constants from "expo-constants"
 import moment from "moment"

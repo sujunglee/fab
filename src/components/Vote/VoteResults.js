@@ -1,9 +1,5 @@
 import React, {
-  useState,
-  useRef,
-  useEffect,
-  useLayoutEffect,
-  useContext
+  useState
 } from "react"
 import { View, StyleSheet } from "react-native"
 import { StyledText } from "../StyledText"
@@ -145,34 +141,34 @@ const VotePercents = props => {
       </View>
     </View>
   ) : (
-    <View style={{ ...borderStyles, borderColor: borderColors.borderB }}>
-      <View
-        style={{
-          flexDirection: "row",
-          height: normalize(40),
-          width: normalize(60),
-          justifyContent: "center"
-        }}
-      >
-        <StyledText
-          type={"bold"}
-          style={{ ...textStyles, alignSelf: "flex-end" }}
-        >
-          {((props.scoreB / (props.scoreA + props.scoreB)) * 100).toFixed()}
-        </StyledText>
-        <StyledText
+      <View style={{ ...borderStyles, borderColor: borderColors.borderB }}>
+        <View
           style={{
-            ...textStyles,
-            fontSize: sizes.small.fontSize,
-            alignSelf: "flex-end",
-            marginBottom: normalize(5)
+            flexDirection: "row",
+            height: normalize(40),
+            width: normalize(60),
+            justifyContent: "center"
           }}
         >
-          %
+          <StyledText
+            type={"bold"}
+            style={{ ...textStyles, alignSelf: "flex-end" }}
+          >
+            {((props.scoreB / (props.scoreA + props.scoreB)) * 100).toFixed()}
+          </StyledText>
+          <StyledText
+            style={{
+              ...textStyles,
+              fontSize: sizes.small.fontSize,
+              alignSelf: "flex-end",
+              marginBottom: normalize(5)
+            }}
+          >
+            %
         </StyledText>
+        </View>
       </View>
-    </View>
-  )
+    )
 }
 
 const YourVote = ({ selectedOption }) => {
