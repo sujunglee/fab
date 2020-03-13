@@ -21,8 +21,8 @@ const RoomImages = props => {
     roomData,
     imageLoadCallback,
     setImageViewport,
-    voting
-  } = props
+    voting, isFinished
+  } = props;
 
   const [isImageOpen, setIsImageOpen] = useState(false)
   const [areImagesLoaded, setAreImagesLoaded] = useState({
@@ -143,7 +143,7 @@ const RoomImages = props => {
                   </ImageBackground>
               </TouchableWithoutFeedback>
           </View>
-          {(winningImage == "A") ? (
+          {(winningImage == "A") && isFinished ? (
               <View style={styles.icon_container}>
                   <Ionicons style={styles.icon} name="md-checkmark-circle" size={50} color="#DD8300" />
               </View>
@@ -166,7 +166,7 @@ const RoomImages = props => {
                   </ImageBackground>
               </TouchableWithoutFeedback>
           </View>
-          {(winningImage == "B") ? (
+          {(winningImage == "B") && isFinished ? (
               <View style={styles.icon_container}>
                   <Ionicons style={styles.icon} name="md-checkmark-circle" size={50} color="#DD8300" />
               </View>
@@ -237,5 +237,9 @@ RoomImages.propTypes = {
   selectedOption: PropTypes.string,
   imageLoadCallback: PropTypes.func
 }
+
+RoomImages.defaultProps = {
+    isFinished: false
+};
 
 export default RoomImages

@@ -140,6 +140,7 @@ const getTotalNumVoters = roomData =>{
 const Results = ({ route }) => {
   const [roomData, setRoomData] = useState(null);
   const [winningPhoto, setWinningPhoto] = "TIE"
+    const [isFinished, setIsFinished] = useState(false);
 
   useEffect(()=>{
     const { roomID } = route.params;
@@ -171,7 +172,11 @@ const Results = ({ route }) => {
   },[]);
 
 
-  console.log(roomData)
+  const isFinishedCallback = ()=>{
+      closeRoom({roomID:route.params.roomID});
+      setIsFinished(true);
+  };
+
   return roomData ? (
 
       <View style={styles.container}>
@@ -180,7 +185,7 @@ const Results = ({ route }) => {
         </View>
 
         <View style={styles.photo_container}>
-              <RoomImages roomData={roomData} setImageViewport={()=>{}} imageLoadCallback={()=>{}} voting={false} />
+              <RoomImages roomData={roomData} setImageViewport={()=>{}} imageLoadCallback={()=>{}} voting={false} isFinished={isFinished} />
         </View>
 
 
@@ -196,7 +201,7 @@ const Results = ({ route }) => {
           )
         }
         <View style={styles.countdown_container}>
-          <CountDown startTime={roomData.meta_data.time_created}  isFinished={() => closeRoom({roomID:route.params.roomID})} />
+          <CountDown startTime={roomData.meta_data.time_created}  isFinished={isFinishedCallback} />
         </View>
 
       </View>

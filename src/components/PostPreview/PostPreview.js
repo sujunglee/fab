@@ -35,10 +35,7 @@ const PostPreview = ({ roomID, userInfo }) => {
         createdAt = `Today ${moment_createdAt.format("h:mm A")}`
       }else if (moment_createdAt.isBetween(twoDaysAgo,yesterday)){
         createdAt = `Yesterday ${moment_createdAt.format("h:mm A")}`
-      }
-      else if (now.diff(moment_createdAt,'days')<7){
-        createdAt = moment_createdAt.format("ddd h:mm A")
-      }else if (now.diff(moment_createdAt,'years')<1){
+      } else if (now.diff(moment_createdAt,'years')<1){
         createdAt = moment_createdAt.format("ddd, MMM Do h:mm A")
       }
       else{
